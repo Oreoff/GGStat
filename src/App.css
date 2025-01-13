@@ -1,0 +1,49 @@
+.container{
+  margin:0 auto;
+}
+.header-container
+{
+  background-color:rgb(219, 218, 218);
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+}
+.logo{
+font-size:24px;
+}
+.navigation-menu-list
+{
+  display:flex;
+  gap:40px;
+}
+.navigation-menu-item{
+  list-style-type:none;
+}
+.navigation-menu-link{
+  text-decoration: none;
+  color:black;
+}
+.input-item
+{
+  font-size:14px;
+  border:0px;
+}
+.navigation-menu-link:hover
+{
+color: blue;
+}
+.buttons-container
+{
+  margin-bottom: 10px;
+}
+footer{
+  background-color:lightgrey
+}
+.selectors-container
+{
+  display: flex;
+  gap:40px;
+}
+.rank,.race{
+  max-width:100px;
+}

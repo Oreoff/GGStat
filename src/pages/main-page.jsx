@@ -24,7 +24,20 @@ const rows = [
 export default function MainPage()
 {
   const [page, setPage] = React.useState(1);
-  var rowsPerPage = 10;
+  const [rowsPerPage,setRowsPerPage] = React.useState(25);
+  const [rank, setRank] = React.useState('');  
+  const [race, setRace] = React.useState('');
+  const handleRowsChange = (event) => {
+    setRowsPerPage(event.target.value);
+  };
+ 
+  const handleRankChange = (event) => {
+    setRank(event.target.value);
+  };
+ 
+  const handleRaceChange = (event) => {
+    setRace(event.target.value);
+  };
   const handleChangePage = (event, value) => {
     setPage(value);
   };
@@ -33,17 +46,7 @@ export default function MainPage()
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
-        const [rank, setRank] = React.useState('');  
-         
-          
-        const handleRankChange = (event) => {
-          setRank(event.target.value);
-        };
-        const [race, setRace] = React.useState('');
-      
-        const handleRaceChange = (event) => {
-          setRace(event.target.value);
-        };
+       
     return(
         <div class="container">
             <div className="section-name-container">
@@ -127,6 +130,22 @@ export default function MainPage()
     <MenuItem value={300}>Protoss</MenuItem>
   </Select>
 </FormControl>
+<FormControl fullWidth className="selector-item players">
+  <InputLabel id="rank-label">Players</InputLabel>
+  <Select
+    labelId="players-label"
+    id="players-select"
+    value={rowsPerPage}
+
+    label="Players"
+    onChange={handleRowsChange}
+  >
+    <MenuItem value={25}>25</MenuItem>
+    <MenuItem value={50}>50</MenuItem>
+    <MenuItem value={75}>75</MenuItem>
+    <MenuItem value={100}>100</MenuItem>
+  </Select>
+</FormControl>
             </div>
             <div className="table-container">
             <TableContainer component={Paper}>
@@ -141,7 +160,7 @@ export default function MainPage()
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {paginatedRows.map((row, index) => (
             <TableRow key={index}>
               <TableCell>{row.standing}</TableCell>
               <TableCell>

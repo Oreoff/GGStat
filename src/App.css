@@ -44,6 +44,10 @@ footer{
   display: flex;
   gap:40px;
 }
-.rank,.race{
+.rank,.players{
   max-width:100px;
+}
+.race
+{
+  max-width:150px;
 }

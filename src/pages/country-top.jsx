@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Box from '@mui/material/Box';
 import  Typography  from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
 const rows = [
     {player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://via.placeholder.com/20", },
       country: {name: "South Korea",flag: "https://flagcdn.com/w40/kr.png", }, rank: {points: 9999,icon: "https://via.placeholder.com/20", },
@@ -35,6 +36,7 @@ export default function CountryTop()
         <TableBody>
           {rows.map((row, index) => (
             <TableRow key={index}>
+              
                 <TableCell>
                 <Box display="flex" alignItems="center">
                   <img
@@ -49,6 +51,7 @@ export default function CountryTop()
               </TableCell>
               
               <TableCell>
+              <Link to="/player-page" className="player-link">
                 <Box display="flex" alignItems="center">
                   <img
                     src={row.player.avatar}
@@ -58,12 +61,13 @@ export default function CountryTop()
                     style={{ marginRight: 8 }}
                   />
                   <Box>
-                    <Typography variant="body2">{row.player.name}</Typography>
+                  <Typography variant="body2">{row.player.name}</Typography>
                     <Typography variant="caption" color="textSecondary">
                       {row.player.region} {row.player.alias}
                     </Typography>
                   </Box>
                 </Box>
+                </Link>
               </TableCell>
               <TableCell>{row.MMR}</TableCell>
               

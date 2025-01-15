@@ -40,9 +40,60 @@ import {
       ],
     },
   ];
+
+  const League = ({ text,MMR}) => {
+      
+    let textColor;
+    if (text.includes("F")) {
+      textColor = '#9E9E9E';
+    } else if (text.includes("E")) {
+     textColor = '#10FE40';
+    } else if (text.includes("D")) {
+      textColor = '#0BFEE6';
+    }
+    else if (text.includes("C")) {
+      textColor = '#0B1BFE';
+    }
+    else if (text.includes("B")) {
+      textColor = '#EE0BFE';
+    }
+    else if (text.includes("B")) {
+      textColor = '#9E9E9E';
+    }
+    else if (text.includes("A")) {
+      textColor = '#FE0606';
+    }else if (text.includes("S")) {
+      textColor = '#DAA520';
+    }
   
+
+  return (
+    <p className='rating' style={{backgroundColor:textColor}}>{text}<span className = 'mmr' style={{color:textColor,backgroundColor:'black'}}>{MMR}</span></p>
+  );
+};
+  
+    const Race = ({ text}) => {
+      
+      let className = '';
+    
+      if (text.includes("terran")) {
+        className = 'terran';
+      } else if (text.includes("zerg")) {
+        className = 'zerg';
+      } else if (text.includes("protoss")) {
+        className = 'protoss';
+      }
+    
+  
+    return (
+      <p className={className}>{text} </p>
+    );
+  };
 export default function PlayerPage()
 {
+ 
+  
+  
     const handlePageChange = (event, value) => {
         setPage(value);
         setOpenChatIndex(null); 
@@ -72,12 +123,12 @@ export default function PlayerPage()
                     <p className="tag">/flash/</p>  
                     </div>
                     <div className="info-container">
-                        <p className="race">terran</p>
-                    <p className="rank">S <span>2506</span></p> 
-                    <p className="standing">2</p>
-                    <p className="wins">50</p>
-                    <p className="loses">2</p>
-                    <p className="server">korea</p>
+                        < Race text = "terran"/>
+                    <League text = "S" MMR = "2506"/> 
+                    <p className="standing">#2</p>
+                    <p className="wins">50W</p>
+                    <p className="loses">2L</p>
+                    <p className="server">Korea</p>
                     </div>
                     
                     </div>

@@ -87,3 +87,60 @@ margin-left:250px;
 {
   text-align: center;
 }
+.loses
+{
+
+  color:lightcoral;
+  border: 1px solid lightcoral;
+  background-color: darkred;
+  padding:5px 20px;
+  border-radius: 3px;
+}
+.wins
+{
+  color:lightgreen;
+  border:1px solid lightgreen;
+  background-color: darkgreen;
+  padding:5px 20px;
+  border-radius: 3px;
+}
+.standing
+{
+  background-color:lightgray;
+  border:1px solid black;
+  padding:5px 20px;
+  border-radius: 3px;
+}
+.server{
+  padding:5px 20px;
+  background-color:#708090;
+  color:lightgray;
+  border:1px solid lightgray;
+  border-radius: 3px;
+}
+.rating{
+  background-color:black;
+padding:5px 5px;
+}
+.mmr
+{
+  margin-left:5px;
+  padding:0px 3px;
+}
+
+.terran{
+  padding:5px 20px;
+  background-color:#3679FE;
+  border-radius:3px;
+}
+.zerg{
+  padding:5px 20px;
+  background-color:#AE36FE;
+  border-radius:3px;
+}
+.protoss
+{
+  padding:5px 20px;
+  background-color:#F0C722;
+  border-radius:3px; 
+}

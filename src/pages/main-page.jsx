@@ -19,13 +19,20 @@ import { Link } from 'react-router-dom';
 import League from './league.jsx'; 
 import Race from './race';
 const rows = [
-  {standing: 1,player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://via.placeholder.com/20", },
-    country: {name: "South Korea",flag: "https://flagcdn.com/w40/kr.png", }, rank: {points: 9999,league:"S", },
+  {standing: 1,player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://scrassets.classic.blizzard.com/avatar-icons/S1/580e4f797aacffcf5cda5e3ec0bfbaee.png", },
+    country: {name: "Korea",flag: "https://flagcdn.com/w40/kr.png", }, rank: {points: 9999,league:"S", },
+    race: "T",
+  },
+  {standing: 1,player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://scrassets.classic.blizzard.com/avatar-icons/S1/580e4f797aacffcf5cda5e3ec0bfbaee.png", },
+    country: {name: "Ukraine",flag: "https://flagcdn.com/w40/ua.png", }, rank: {points: 9999,league:"S", },
     race: "T",
   },
 ];
+
 export default function MainPage()
 {
+  const [country, setCountry] = React.useState('');
+
   const [page, setPage] = React.useState(1);
   const [rowsPerPage,setRowsPerPage] = React.useState(25);
   const [rank, setRank] = React.useState('');  
@@ -37,28 +44,51 @@ export default function MainPage()
   const handleRankChange = (event) => {
     setRank(event.target.value);
   };
- 
+  const handleCountryChange = (event, value) => {
+    setCountry(value ? value.code : '');
+  };
   const handleRaceChange = (event) => {
     setRace(event.target.value);
   };
   const handleChangePage = (event, value) => {
     setPage(value);
   };
-
-  const paginatedRows = rows.slice(
+  const SetKoreans = (value) => 
+  {
+    setCountry("KR");
+  }
+  const setGlobal = (value) =>
+  {
+    setCountry("");
+  }
+  const setNonKoreans = (value) =>
+    {
+      setCountry("!KR");
+    }
+  const filteredRows = rows.filter((row) => {
+    const matchesCountry = country === "!KR"
+    ? row.country.flag !== "https://flagcdn.com/w40/kr.png" 
+    : country
+    ? row.country.flag.includes(country.toLowerCase())
+    : true;
+    const matchesRank = rank ? row.rank.league.includes(rank): true;
+    const matchesRace = race ? row.race.includes(race): true;
+    return matchesCountry && matchesRank && matchesRace;
+  });
+  const paginatedRows = filteredRows.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
-       
+  
     return(
         <div class="container">
             <div className="section-name-container">
                 <h2>Leaderboards</h2>
             </div>
             <div className="buttons-container">
-                <button className="buttons-container-item">Global</button>
-                <button className="buttons-container-item">Korea</button>
-                <button className="buttons-container-item">Non-Korea</button>
+                <button className="buttons-container-item" onClick={setGlobal}>Global</button>
+                <button className="buttons-container-item" onClick={SetKoreans} >Korea</button>
+                <button className="buttons-container-item" onClick={setNonKoreans}>Non-Korea</button>
             </div>
             <div className="selectors-container">
             <Autocomplete
@@ -68,6 +98,7 @@ export default function MainPage()
       autoHighlight
       getOptionLabel={(option) => option.label}
       className="selector-item"
+      onChange={handleCountryChange}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
         return (
@@ -110,13 +141,14 @@ export default function MainPage()
     label="Rank"
     onChange={handleRankChange}
   >
-    <MenuItem value={10}>S</MenuItem>
-    <MenuItem value={20}>A</MenuItem>
-    <MenuItem value={30}>B</MenuItem>
-    <MenuItem value={40}>C</MenuItem>
-    <MenuItem value={50}>D</MenuItem>
-    <MenuItem value={60}>E</MenuItem>
-    <MenuItem value={70}>F</MenuItem>
+    <MenuItem value={"S"}>S</MenuItem>
+    <MenuItem value={"A"}>A</MenuItem>
+    <MenuItem value={"B"}>B</MenuItem>
+    <MenuItem value={"C"}>C</MenuItem>
+    <MenuItem value={"D"}>D</MenuItem>
+    <MenuItem value={"E"}>E</MenuItem>
+    <MenuItem value={"F"}>F</MenuItem>
+    <MenuItem value={""}>All</MenuItem>
   </Select>
 </FormControl>
 <FormControl fullWidth className="selector-item race">
@@ -128,9 +160,10 @@ export default function MainPage()
     label="Race"
     onChange={handleRaceChange}
   >
-    <MenuItem value={100}>Terran</MenuItem>
-    <MenuItem value={200}>Zerg</MenuItem>
-    <MenuItem value={300}>Protoss</MenuItem>
+    <MenuItem value={"T"}>Terran</MenuItem>
+    <MenuItem value={"Z"}>Zerg</MenuItem>
+    <MenuItem value={"P"}>Protoss</MenuItem>
+    <MenuItem value={""}>All</MenuItem>
   </Select>
 </FormControl>
 <FormControl fullWidth className="selector-item players">
@@ -427,12 +460,7 @@ const countries = [
       label: 'Saint Kitts and Nevis',
       phone: '1-869',
     },
-    {
-      code: 'KP',
-      label: "Korea, Democratic People's Republic of",
-      phone: '850',
-    },
-    { code: 'KR', label: 'Korea, Republic of', phone: '82' },
+    { code: 'KR', label: 'Korea', phone: '82' },
     { code: 'KW', label: 'Kuwait', phone: '965' },
     { code: 'KY', label: 'Cayman Islands', phone: '1-345' },
     { code: 'KZ', label: 'Kazakhstan', phone: '7' },

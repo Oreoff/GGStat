@@ -2,7 +2,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import League from './league';
 import * as React from 'react';
+import Race from './race';
 import {
     Table,
     TableBody,
@@ -41,54 +43,7 @@ import {
     },
   ];
 
-  const League = ({ text,MMR}) => {
-      
-    let textColor;
-    if (text.includes("F")) {
-      textColor = '#9E9E9E';
-    } else if (text.includes("E")) {
-     textColor = '#10FE40';
-    } else if (text.includes("D")) {
-      textColor = '#0BFEE6';
-    }
-    else if (text.includes("C")) {
-      textColor = '#0B1BFE';
-    }
-    else if (text.includes("B")) {
-      textColor = '#EE0BFE';
-    }
-    else if (text.includes("B")) {
-      textColor = '#9E9E9E';
-    }
-    else if (text.includes("A")) {
-      textColor = '#FE0606';
-    }else if (text.includes("S")) {
-      textColor = '#DAA520';
-    }
-  
 
-  return (
-    <p className='rating' style={{backgroundColor:textColor}}>{text}<span className = 'mmr' style={{color:textColor,backgroundColor:'black'}}>{MMR}</span></p>
-  );
-};
-  
-    const Race = ({ text}) => {
-      
-      let className = '';
-    
-      if (text.includes("terran")) {
-        className = 'terran';
-      } else if (text.includes("zerg")) {
-        className = 'zerg';
-      } else if (text.includes("protoss")) {
-        className = 'protoss';
-      }
-    
-  
-    return (
-      <p className={className}>{text} </p>
-    );
-  };
 export default function PlayerPage()
 {
  

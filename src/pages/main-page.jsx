@@ -16,9 +16,11 @@ import Paper from '@mui/material/Paper';
 import  Typography  from '@mui/material/Typography';
 import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
+import League from './league.jsx'; 
+import Race from './race';
 const rows = [
   {standing: 1,player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://via.placeholder.com/20", },
-    country: {name: "South Korea",flag: "https://flagcdn.com/w40/kr.png", }, rank: {points: 9999,icon: "https://via.placeholder.com/20", },
+    country: {name: "South Korea",flag: "https://flagcdn.com/w40/kr.png", }, rank: {points: 9999,league:"S", },
     race: "T",
   },
 ];
@@ -199,17 +201,11 @@ export default function MainPage()
               </TableCell>
               <TableCell>
                 <Box display="flex" alignItems="center">
-                  <img
-                    src={row.rank.icon}
-                    alt="Rank Icon"
-                    width="20"
-                    height="20"
-                    style={{ marginRight: 8 }}
-                  />
-                  <Typography variant="body2">{row.rank.points}</Typography>
+                 
+                  <League text={row.rank.league}MMR={row.rank.points} />
                 </Box>
               </TableCell>
-              <TableCell>{row.race}</TableCell>
+              <TableCell><Race text = {row.race}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

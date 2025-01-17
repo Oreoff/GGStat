@@ -19,50 +19,35 @@ import {
     Collapse,
     Pagination,
   } from '@mui/material';
-  const matches = [
-    { result: 'Victory', points: '+99', timeAgo: '2 days ago', map: 'Deja Vu 1.1', duration: '12m 5s', race: 'T vs P', opponent: 'lllllllll', chat: [] },
-    { result: 'Defeat', points: '-99', timeAgo: '2 days ago', map: 'Deja Vu 1.1', duration: '12m 5s', race: 'T vs Z', opponent: 'lllllllll', chat: [] },
-    { result: 'Victory', points: '+99', timeAgo: '2 days ago', map: 'Deja Vu 1.1', duration: '12m 5s', race: 'T vs P', opponent: 'lllllllll', chat: [] },
-    {
-      result: 'Victory',
-      points: '+99',
-      timeAgo: '2 days ago',
-      map: 'Deja Vu 1.1',
-      duration: '12m 5s',
-      race: 'T vs P',
-      opponent: 'lllllllll',
-      chat: [
-        { time: '0:32', player: 'FlaShWkdWkdman', message: '잠재?' },
-        { time: '0:35', player: 'lllllllll', message: '아뇨' },
-        { time: '0:37', player: 'lllllllll', message: '영혼님?' },
-        { time: '0:39', player: 'FlaShWkdWkdman', message: '야' },
-        { time: '0:40', player: 'FlaShWkdWkdman', message: '너' },
-        { time: '0:44', player: 'FlaShWkdWkdman', message: '잠깐' },
-        { time: '0:45', player: 'FlaShWkdWkdman', message: '좋은데' },
-      ],
-    },
-  ];
+  import {players} from './data/players.js';
+import { useParams } from 'react-router-dom';
 
 
 export default function PlayerPage()
 {
+  const {name} = useParams();
+  const handlePageChange = (event, value) => {
+    setPage(value);
+    setOpenChatIndex(null); 
+  };
+const [openChatIndex, setOpenChatIndex] = React.useState(null);
+ const [page, setPage] = React.useState(1);
+  const [rowsPerPage,setRowsPerPage] = React.useState(25);
+  const handleRowsChange = (event) => {
+    setRowsPerPage(event.target.value);
+  };
+  const toggleChat = (index) => {
+    setOpenChatIndex(openChatIndex === index ? null : index);
+  };
  
-  
-  
-    const handlePageChange = (event, value) => {
-        setPage(value);
-        setOpenChatIndex(null); 
-      };
-    const [openChatIndex, setOpenChatIndex] = React.useState(null);
-     const [page, setPage] = React.useState(1);
-      const [rowsPerPage,setRowsPerPage] = React.useState(25);
-      const handleRowsChange = (event) => {
-        setRowsPerPage(event.target.value);
-      };
-      const toggleChat = (index) => {
-        setOpenChatIndex(openChatIndex === index ? null : index);
-      };
-    
+  const setPlayer = players.find(
+    p => p.player.name.toLowerCase() === decodeURIComponent(name).toLowerCase()
+  );
+  const matches = setPlayer.matches;
+  if (!setPlayer) {
+    return <p>Player not found</p>;
+  }
+
     return (
         <div className="container">
             <div className="player-page-container">
@@ -71,19 +56,19 @@ export default function PlayerPage()
                 <p className="refresh-stats-text">Last updated 99999 mins ago</p>
             </div>
             <div className="player-container">
-                <img src="https://scrassets.classic.blizzard.com/avatar-icons/S1/580e4f797aacffcf5cda5e3ec0bfbaee.png" alt="portrait" width={100}/>
+                <img src={setPlayer.player.avatar} alt="portrait" width={100}/>
                 <div className="player-data">
                     <div className="name-container">
-                      <p className="name">FlashWkdWkdMan</p>
-                    <p className="tag">/flash/</p>  
+                      <p className="name">{setPlayer.player.name}</p>
+                    <p className="tag">{setPlayer.player.alias}</p>  
                     </div>
                     <div className="info-container">
-                        < Race text = "terran"/>
-                    <League text = "S" MMR = "2506"/> 
-                    <p className="standing">#2</p>
-                    <p className="wins">50W</p>
-                    <p className="loses">2L</p>
-                    <p className="server">Korea</p>
+                        < Race text = {setPlayer.race}/>
+                    <League text = {setPlayer.rank.league} MMR = {setPlayer.rank.points}/> 
+                    <p className="standing">#{setPlayer.standing}</p>
+                    <p className="wins">{setPlayer.wins}W</p>
+                    <p className="loses">{setPlayer.loses}L</p>
+                    <p className="server">{setPlayer.player.region}</p>
                     </div>
                     
                     </div>
@@ -92,18 +77,18 @@ export default function PlayerPage()
             </div>
             <div className="country-container">
                 <p className="country-name">Country</p>
-                <img src="https://flagcdn.com/w40/kr.png" alt="country-flag" width={100}/>
-                <p className="country-description">South Korea</p>
+                <img src={setPlayer.country.flag} alt="country-flag" width={100}/>
+                <p className="country-description">{setPlayer.country.name}</p>
             </div>
             <div className="recent-matches-table-container">
                 <h2 className="recent-matches-logo">
                     Recent ranked matches
                 </h2>
                 <FormControl fullWidth className="selector-item players">
-  <InputLabel id="rank-label">Players</InputLabel>
+  <InputLabel id="matches-label">Matches</InputLabel>
   <Select
-    labelId="players-label"
-    id="players-select"
+    labelId="matches-label"
+    id="matches-select"
     value={rowsPerPage}
 
     label="Players"

@@ -18,27 +18,18 @@ import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
 import League from './league.jsx'; 
 import Race from './race';
-const rows = [
-  {standing: 1,player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://scrassets.classic.blizzard.com/avatar-icons/S1/580e4f797aacffcf5cda5e3ec0bfbaee.png", },
-    country: {name: "Korea",flag: "https://flagcdn.com/w40/kr.png", }, rank: {points: 9999,league:"S", },
-    race: "T",
-  },
-  {standing: 1,player: {name: "FlaShWkdWkdman",region: "Europe",alias: "/flash/",avatar: "https://scrassets.classic.blizzard.com/avatar-icons/S1/580e4f797aacffcf5cda5e3ec0bfbaee.png", },
-    country: {name: "Ukraine",flag: "https://flagcdn.com/w40/ua.png", }, rank: {points: 9999,league:"S", },
-    race: "T",
-  },
-];
+import {players} from './data/players.js';
 
 export default function MainPage()
 {
   const [country, setCountry] = React.useState('');
 
   const [page, setPage] = React.useState(1);
-  const [rowsPerPage,setRowsPerPage] = React.useState(25);
+  const [playersPerPage,setPlayersPerPage] = React.useState(25);
   const [rank, setRank] = React.useState('');  
   const [race, setRace] = React.useState('');
-  const handleRowsChange = (event) => {
-    setRowsPerPage(event.target.value);
+  const handlePlayersChange = (event) => {
+    setPlayersPerPage(event.target.value);
   };
  
   const handleRankChange = (event) => {
@@ -65,7 +56,7 @@ export default function MainPage()
     {
       setCountry("!KR");
     }
-  const filteredRows = rows.filter((row) => {
+  const filteredPlayers = players.filter((row) => {
     const matchesCountry = country === "!KR"
     ? row.country.flag !== "https://flagcdn.com/w40/kr.png" 
     : country
@@ -75,9 +66,9 @@ export default function MainPage()
     const matchesRace = race ? row.race.includes(race): true;
     return matchesCountry && matchesRank && matchesRace;
   });
-  const paginatedRows = filteredRows.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
+  const paginatedPlayers = filteredPlayers.slice(
+    (page - 1) * playersPerPage,
+    page * playersPerPage
   );
   
     return(
@@ -171,10 +162,10 @@ export default function MainPage()
   <Select
     labelId="players-label"
     id="players-select"
-    value={rowsPerPage}
+    value={playersPerPage}
 
     label="Players"
-    onChange={handleRowsChange}
+    onChange={handlePlayersChange}
   >
     <MenuItem value={25}>25</MenuItem>
     <MenuItem value={50}>50</MenuItem>
@@ -196,11 +187,11 @@ export default function MainPage()
           </TableRow>
         </TableHead>
         <TableBody>
-          {paginatedRows.map((row, index) => (
+          {paginatedPlayers.map((row, index) => (
             <TableRow key={index}>
               <TableCell>{row.standing}</TableCell>
               <TableCell>
-              <Link to="/player-page" className="player-link">
+              <Link to={`/player-page/${encodeURIComponent(row.player.name)}`}className="player-link">
                 <Box display="flex" alignItems="center">
                   <img
                     src={row.player.avatar}
@@ -246,7 +237,7 @@ export default function MainPage()
     </TableContainer>
     <Box display="flex" justifyContent="center" mt={2}>
         <Pagination
-          count={Math.ceil(rows.length / rowsPerPage)}
+          count={Math.ceil(players.length / playersPerPage)}
           page={page}
           onChange={handleChangePage}
           color="primary"

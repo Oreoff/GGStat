@@ -2,6 +2,7 @@ import CountryTop from './pages/country-top.jsx';
 import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {players} from './pages/data/players.js';
 import './App.css';
 const App = () =>  {
   return (
@@ -22,7 +23,7 @@ const App = () =>  {
     <Routes>
       <Route path="/" element={<MainPage/>} />
       <Route path="/country-tops" element={<CountryTop/>}/>
-      <Route path="/player-page" element={<PlayerPage/>}/>
+      <Route path="/player-page/:name" element={<PlayerPage/>}/>
     </Routes>
   </Router> 
   

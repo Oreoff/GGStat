@@ -3,8 +3,16 @@ import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {players} from './pages/data/players.js';
+import {useState} from 'react';
 import './App.css';
 const App = () =>  {
+  const [query,setQuery] = useState('');
+  const filteredPlayers = players.filter(player => player.player.name.toLowerCase().includes(query.toLowerCase()));
+  function ShowList()
+  {
+    const container = document.querySelector(".search-list");
+    container.classList.toggle("active");
+  }
   return (
     <div>
       <Router>
@@ -17,7 +25,41 @@ const App = () =>  {
       </ul>
     </nav>
     <form action="" className="input-container">
-    <input type="text" className="input-item" placeholder="Find a player"/>
+    <input type="text" 
+    className="input-item
+  " placeholder="Find a player"
+  value={query}
+  onChange={(e) => setQuery(e.target.value) }
+  onClick= {ShowList}
+  />
+  <ul className="search-list">
+    
+  {filteredPlayers.map((player, index) => (
+    <Link to={`/player-page/${encodeURIComponent(player.player.name)}`}className="player-link">
+          <li
+            key={index}
+            style={{
+              padding: '10px',
+              marginBottom: '10px',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <img
+              src={player.player.avatar}
+              alt={player.player.name}
+              style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+            />
+            <div>
+              <p style={{ margin: 0, fontWeight: 'bold' }}>{player.player.name}</p>
+              <p style={{ margin: 0, color: '#888' }}>{player.country.name}</p>
+            </div>
+          </li>
+          </Link>
+        ))}
+  </ul>
   </form>
   </header>
     <Routes>

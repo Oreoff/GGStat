@@ -72,7 +72,7 @@ export default function MainPage()
   );
   
     return(
-        <div class="container">
+        <div className="container">
             <div className="section-name-container">
                 <h2>Leaderboards</h2>
             </div>

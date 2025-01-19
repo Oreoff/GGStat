@@ -150,13 +150,14 @@ padding:5px 5px;
 .search-list
 {
   position:absolute;
-  right:0px;
+  left:0px;
   display:none;
   border:1px solid lightgray;
 }
 .input-container
 {
   margin-right:40px;
+  position: relative;
 }
 .active
 {
@@ -170,4 +171,12 @@ padding:5px 5px;
 .buttons-container-item
 {
   padding:5px;
+}
+.input-item{
+  width: 200px;
+  padding:10px;
+}
+.search-list-item
+{
+  width:200px;
 }

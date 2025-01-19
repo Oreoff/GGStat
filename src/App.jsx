@@ -11,8 +11,14 @@ const App = () =>  {
   function ShowList()
   {
     const container = document.querySelector(".search-list");
-    container.classList.toggle("active");
+    if(container) container.classList.toggle("active");
   }
+  function RemoveList()
+  {
+    const container = document.querySelector(".search-list");
+    if(container) container.classList.remove("active");
+  }
+  
   return (
     <div>
       <Router>
@@ -29,15 +35,19 @@ const App = () =>  {
     className="input-item
   " placeholder="Find a player"
   value={query}
-  onChange={(e) => setQuery(e.target.value) }
-  onClick= {ShowList}
+  onChange={(e) => {
+    setQuery(e.target.value);
+    ShowList();
+  }
+   }
   />
   <ul className="search-list">
     
   {filteredPlayers.map((player, index) => (
-    <Link to={`/player-page/${encodeURIComponent(player.player.name)}`}className="player-link">
+    <Link to={`/player-page/${encodeURIComponent(player.player.name)}`}className="player-link" onClick = {()=>RemoveList()}>
           <li
             key={index}
+            className='search-list-item'
             style={{
               padding: '10px',
               marginBottom: '10px',

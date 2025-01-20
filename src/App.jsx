@@ -2,7 +2,7 @@ import CountryTop from './pages/country-top.jsx';
 import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import {players} from './pages/data/players.js';
+import players from './pages/data/players.json';
 import {useState} from 'react';
 import './App.css';
 const App = () =>  {

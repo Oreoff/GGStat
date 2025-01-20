@@ -18,7 +18,7 @@ import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
 import League from './league.jsx'; 
 import Race from './race';
-import {players} from './data/players.js';
+import players from './data/players.json';
 import { countries } from './data/countries.js';
 export default function MainPage()
 {

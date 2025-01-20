@@ -180,3 +180,9 @@ padding:5px 5px;
 {
   width:200px;
 }
+.matchup-container
+{
+  display: flex;
+  align-items: center;
+  gap:10px
+}

@@ -11,7 +11,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import * as React from 'react';
 import { TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { players } from './data/players';
+import  players  from './data/players.json';
 import { countries } from './data/countries.js';
 export default function CountryTop()
 {

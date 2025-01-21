@@ -18,8 +18,9 @@ import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
 import League from './league.jsx'; 
 import Race from './race';
-import players from './data/players.json';
+
 import { countries } from './data/countries.js';
+import fetchPlayers from './services/playersFetch.js';
 export default function MainPage()
 {
   const [country, setCountry] = React.useState('');
@@ -28,6 +29,26 @@ export default function MainPage()
   const [playersPerPage,setPlayersPerPage] = React.useState(25);
   const [rank, setRank] = React.useState('');  
   const [race, setRace] = React.useState('');
+  const [players, setPlayers] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState(null);
+  
+    React.useEffect(() => {
+      const loadPlayers = async () => {
+        try {
+          const data = await fetchPlayers();
+          setPlayers(data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      loadPlayers();
+    }, []);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
   const handlePlayersChange = (event) => {
     setPlayersPerPage(event.target.value);
   };

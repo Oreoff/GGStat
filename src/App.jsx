@@ -2,11 +2,32 @@ import CountryTop from './pages/country-top.jsx';
 import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import players from './pages/data/players.json';
-import {useState} from 'react';
+
+import {useState, useEffect} from 'react';
 import './App.css';
+import fetchPlayers from './pages/services/playersFetch.js';
 const App = () =>  {
   const [query,setQuery] = useState('');
+  const [players, setPlayers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+    useEffect(() => {
+      const loadPlayers = async () => {
+        try {
+          const data = await fetchPlayers();
+          setPlayers(data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      loadPlayers();
+    }, []);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
   const filteredPlayers = players.filter(player => player.player.name.toLowerCase().includes(query.toLowerCase()));
   function ShowList()
   {

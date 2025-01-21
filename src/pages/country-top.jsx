@@ -11,15 +11,35 @@ import Autocomplete from '@mui/material/Autocomplete';
 import * as React from 'react';
 import { TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
-import  players  from './data/players.json';
 import { countries } from './data/countries.js';
+import fetchPlayers from './services/playersFetch.js';
 export default function CountryTop()
 {
    const [country, setCountry] = React.useState('');
+   const [players, setPlayers] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    const loadPlayers = async () => {
+      try {
+        const data = await fetchPlayers();
+        setPlayers(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPlayers();
+  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
    const handleCountryChange = (event, value) => {
     setCountry(value ? value.code : '');
   };
-  
+
   var uniquePlayers = [];
   const seenCountries = new Set();
 

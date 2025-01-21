@@ -5,6 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import League from './league';
 import * as React from 'react';
 import Race from './race';
+import fetchPlayers from './services/playersFetch.js';
 import {
   Table,
   TableBody,
@@ -19,7 +20,6 @@ import {
   Collapse,
   Pagination,
 } from '@mui/material';
-import players from './data/players.json';
 import { useParams } from 'react-router-dom';
 
 export default function PlayerPage() {
@@ -27,7 +27,26 @@ export default function PlayerPage() {
   const [openChatIndex, setOpenChatIndex] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
+const [players, setPlayers] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
 
+  React.useEffect(() => {
+    const loadPlayers = async () => {
+      try {
+        const data = await fetchPlayers();
+        setPlayers(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPlayers();
+  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
   const handlePageChange = (event, value) => {
     setPage(value);
     setOpenChatIndex(null);

@@ -138,8 +138,8 @@ const [players, setPlayers] = React.useState([]);
                 <React.Fragment key={index}>
                   <TableRow
                     sx={{
-                      backgroundColor: match.result === 'Victory' ? '#d4edda' : '#f8d7da',
-                      border: `2px solid ${match.result === 'Victory' ? '#28a745' : '#dc3545'}`,
+                      backgroundColor: match.result === 'win' ? '#d4edda' : '#f8d7da',
+                      border: `2px solid ${match.result === 'win' ? '#28a745' : '#dc3545'}`,
                     }}
                   >
                     <TableCell>{match.result}</TableCell>
@@ -165,7 +165,7 @@ const [players, setPlayers] = React.useState([]);
                       <Collapse in={openChatIndex === index} timeout="auto" unmountOnExit>
                         <Box sx={{ padding: 2, backgroundColor: '#f9f9f9' }}>
                           <Typography variant="subtitle1">Chat:</Typography>
-                          {match.chat.length > 0 ? (
+                          {match.chat && match.chat.length > 0  ? (
                             match.chat.map((line, i) => (
                               <Typography key={i} variant="body2">
                                 <strong>{line.time} {line.player}:</strong> {line.message}

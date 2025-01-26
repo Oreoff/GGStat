@@ -14,4 +14,3 @@
 4) Change a Port value in Settings.cs file.
 5) Launch project.
 6) Do POST-request.
-This may take a lot of time.

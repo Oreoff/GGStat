@@ -59,7 +59,10 @@ const [players, setPlayers] = React.useState([]);
   const toggleChat = (index) => {
     setOpenChatIndex(prevIndex => (prevIndex === index ? null : index));
   };
-
+const handleClick = (target) =>
+{
+  window.location.href = target;
+}
   const playerName = name ? decodeURIComponent(name).toLowerCase() : '';
   const setPlayer = players.find(p => p.player.name.toLowerCase() === playerName);
   const matches = setPlayer ? setPlayer.matches : [];
@@ -156,7 +159,7 @@ const [players, setPlayers] = React.useState([]);
                     <TableCell>
                       <Box display="flex" gap={1}>
                         <Button variant="outlined" size="small" onClick={() => toggleChat(index)}>Info</Button>
-                        <Button variant="outlined" size="small">Replay</Button>
+                        <Button variant="outlined" size="small" onClick={() => handleClick(match.match_link)}>Replay</Button>
                       </Box>
                     </TableCell>
                   </TableRow>

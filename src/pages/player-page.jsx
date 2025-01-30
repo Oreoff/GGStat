@@ -6,6 +6,7 @@ import League from './league';
 import * as React from 'react';
 import Race from './race';
 import fetchPlayers from './services/playersFetch.js';
+import { fetchReplayLink } from './services/replayLinkFetch.js';
 import {
   Table,
   TableBody,
@@ -30,9 +31,21 @@ export default function PlayerPage() {
 const [players, setPlayers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
-
+  const [replayLink, setReplayLink] = React.useState(null);
+  const handleFetchReplay = async (match) => {
+    setLoading(true);
+    const link = await fetchReplayLink(match.match_id);
+    setReplayLink(link);
+    setLoading(false);
+  
+    if (link) {
+      window.open(link, '_blank');
+    } else {
+      alert("Replay link not available");
+    }
+  };
   React.useEffect(() => {
-    const loadPlayers = async () => {
+    const loadPlayers = async (match) => {
       try {
         const data = await fetchPlayers();
         setPlayers(data);
@@ -159,7 +172,7 @@ const handleClick = (target) =>
                     <TableCell>
                       <Box display="flex" gap={1}>
                         <Button variant="outlined" size="small" onClick={() => toggleChat(index)}>Info</Button>
-                        <Button variant="outlined" size="small" onClick={() => handleClick(match.match_link)}>Replay</Button>
+                        <Button variant="outlined" size="small" onClick={() => handleFetchReplay(match)}>Replay</Button>
                       </Box>
                     </TableCell>
                   </TableRow>

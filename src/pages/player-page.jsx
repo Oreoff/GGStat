@@ -114,7 +114,7 @@ const handleClick = (target) =>
       <div className="country-container">
         <p className="country-name">Country</p>
         <img src={setPlayer.country.flag} alt="country-flag" width={100} />
-        <p className="country-description">{setPlayer.country.name}</p>
+        <p className="country-description">{setPlayer.country.code}</p>
       </div>
       <div className="recent-matches-table-container">
         <h2 className="recent-matches-logo">Recent ranked matches</h2>

@@ -45,12 +45,12 @@ export default function CountryTop()
 
   players.forEach(player => {
     if (
-      !seenCountries.has(player.country.name) ||
-      player.rank.points > uniquePlayers.find(p => p.country.name === player.country.name).rank.points
+      !seenCountries.has(player.country.code) ||
+      player.rank.points > uniquePlayers.find(p => p.country.code === player.country.code).rank.points
     ) {
-      uniquePlayers = uniquePlayers.filter(p => p.country.name !== player.country.name);
+      uniquePlayers = uniquePlayers.filter(p => p.country.code !== player.country.code);
       uniquePlayers.push(player);
-      seenCountries.add(player.country.name);
+      seenCountries.add(player.country.code);
     }
   });
 const filteredPlayers = uniquePlayers.filter((row) => {
@@ -124,11 +124,11 @@ const filteredPlayers = uniquePlayers.filter((row) => {
                   <img
                     src={row.country.flag}
                     alt="Flag"
-                    width="20"
+                    width="40"
                     height="20"
                     style={{ marginRight: 8 }}
                   />
-                  <Typography variant="body2">{row.country.name}</Typography>
+                  <Typography variant="body2">{row.country.code}</Typography>
                 </Box>
               </TableCell>
               

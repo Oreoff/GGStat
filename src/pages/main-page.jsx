@@ -38,6 +38,7 @@ export default function MainPage()
         try {
           const data = await fetchPlayers();
           setPlayers(data);
+          
         } catch (err) {
           setError(err.message);
         } finally {
@@ -47,12 +48,13 @@ export default function MainPage()
   
       loadPlayers();
     }, []);
+    console.log("Players:" + players);
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
   const handlePlayersChange = (event) => {
     setPlayersPerPage(event.target.value);
   };
- 
+
   const handleRankChange = (event) => {
     setRank(event.target.value);
   };
@@ -91,7 +93,7 @@ export default function MainPage()
     (page - 1) * playersPerPage,
     page * playersPerPage
   );
-  
+
     return(
         <div className="container">
             <div className="section-name-container">
@@ -113,6 +115,7 @@ export default function MainPage()
       onChange={handleCountryChange}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
+        
         return (
           <Box
             key={key}
@@ -241,7 +244,7 @@ export default function MainPage()
                     height="20"
                     style={{ marginRight: 8 }}
                   />
-                  <Typography variant="body2">{row.country.name}</Typography>
+                  <Typography variant="body2">{row.country.code}</Typography>
                 </Box>
               </TableCell>
               <TableCell>

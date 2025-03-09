@@ -1,3 +1,4 @@
+@import url('https://fonts.cdnfonts.com/css/tt-firs-neue-trl');
 .container{
   margin:0 auto;
   padding-top:40px;
@@ -12,9 +13,14 @@
   align-items:center;
   justify-content: space-between;
   padding:0;
+  background-color:#232B35;
 }
 .logo{
-font-size:24px;
+font-size:38px;
+font-family: 'TT Firs Neue Trl', sans-serif;
+color:white;
+font-weight: 600;
+
 }
 .navigation-menu-list
 {
@@ -26,7 +32,9 @@ font-size:24px;
 }
 .navigation-menu-link{
   text-decoration: none;
-  color:black;
+  color:white;
+  font-family: 'TT Firs Neue Trl' , sans-serif;
+  font-size:14px;
 }
 .input-item
 {

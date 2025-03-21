@@ -1,4 +1,5 @@
 import CountryTop from './pages/country-top.jsx';
+import Icons from "./pages/img/icons.svg";
 import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -47,7 +48,12 @@ const App = () =>  {
               <h1 className="logo">GGStat</h1>
     <nav className = "navigation-menu">
       <ul className = "navigation-menu-list">
-        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'>Leaderboard</Link></li>
+        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'> 
+        <svg width={20} height={20} className=''>
+        <use href={`${Icons}#leaderboard`} />
+    </svg>
+    <p className="navigation-menu-text">
+    Leaderboard</p></Link></li>
         <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link'>Country tops</Link></li>
       </ul>
     </nav>

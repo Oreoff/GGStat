@@ -2,6 +2,17 @@
 .container{
   margin:0 auto;
   padding-top:40px;
+  background-color:#232B35;
+  border-bottom:1px solid #616060;
+}
+.section-title
+{
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:white;
+  
+  font-size:32px;
+  font-weight: 400;
+  
 }
 *, *::before,*::after{
   padding:0px;
@@ -40,31 +51,47 @@ font-weight: 600;
   font-size:14px;
   display:flex;
   justify-content: center;
-  padding:10px;
+  padding:1px 5px;
   align-items:center;
   gap:10px;
   
+}
+.navigation-menu-svg-container
+{
+  border: 1px solid #00F89F;
+  background-color: #00F89F;
+  border-radius:5px;
+  padding:5px;
+  color:black;
+
 }
 .navigation-menu-svg
 {
   padding:10px;
   background-color:#00F89F;
+  fill:black;
+}
+.search-field-svg
+{
+  position:absolute;
+  right:5%;
+  top:15%;
+  background-color:#2e3946;
+  border-radius:5px;
+  padding: 3px;
+  color:grey;
+}
+.country-top{
+  background-color:#2e3946;
+  color:yellow;
+  border:none;
 }
 .input-item
 {
   font-size:14px;
   border:0px;
 }
-.navigation-menu-item:hover
-{
-  background-color: #00F89F;
-  
-  transform: cubic-bezier( 0.79, 0.33, 0.14, 0.53 ) ;
-}
-.navigation-menu-link:hover
-{
-  color:black;
-}
+
 .buttons-container
 {
   margin-bottom: 10px;
@@ -181,11 +208,13 @@ padding:5px 5px;
   left:0px;
   display:none;
   border:1px solid lightgray;
+  background-color:#232B35;
 }
 .input-container
 {
   margin-right:40px;
   position: relative;
+  
 }
 .active
 {
@@ -198,11 +227,17 @@ padding:5px 5px;
 }
 .buttons-container-item
 {
-  padding:5px;
+  padding:1px;
 }
 .input-item{
   width: 200px;
   padding:10px;
+  background-color:#232B35;
+  border:1px solid grey;
+  border-radius: 6px;
+  color:white;
+  font-size: 16px;
+  font-family: 'TT Firs Neue Trl' , sans-serif;
 }
 .search-list-item
 {

@@ -48,16 +48,31 @@ const App = () =>  {
               <h1 className="logo">GGStat</h1>
     <nav className = "navigation-menu">
       <ul className = "navigation-menu-list">
-        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'> 
-        <svg width={20} height={20} className=''>
+        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'>
+        <div className="navigation-menu-svg-container">
+        <svg width={20} height={20} className='navgation-menu-svg'>
         <use href={`${Icons}#leaderboard`} />
     </svg>
-    <p className="navigation-menu-text">
-    Leaderboard</p></Link></li>
-        <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link'>Country tops</Link></li>
+          </div> 
+        
+    <p className="navigation-menu-text">Leaderboard</p></Link></li>
+    <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link '>
+        <div className="navigation-menu-svg-container country-top">
+        <svg width={20} height={20} className='navgation-menu-svg'>
+        <use href={`${Icons}#team-leader 2`} />
+    </svg>
+          </div> 
+        
+    <p className="navigation-menu-text">Country top</p></Link></li>
       </ul>
     </nav>
     <form action="" className="input-container">
+      <div className="search-field-svg">
+      <svg width={20} height={20} className='navgation-menu-svg'>
+        <use href={`${Icons}#Vector`} />
+    </svg>
+      </div>
+    
     <input type="text" 
     className="input-item
   " placeholder="Find a player"

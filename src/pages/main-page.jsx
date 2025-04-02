@@ -97,7 +97,7 @@ export default function MainPage()
     return(
         <div className="container">
             <div className="section-name-container">
-                <h2>Leaderboards</h2>
+                <h2 className='section-title'>Leaderboards</h2>
             </div>
             <div className="buttons-container">
                 <button className="buttons-container-item" onClick={setGlobal}>Global</button>

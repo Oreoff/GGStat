@@ -1,7 +1,7 @@
 export default async function fetchPlayers() {
   try {
     
-    const getResponse = await fetch('https://localhost:52045/api/players', {
+    const getResponse = await fetch('https://localhost:51392/api/players', {
       method: 'GET',
     
     });

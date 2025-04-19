@@ -24,6 +24,7 @@
 *, *::before,*::after{
   padding:0px;
 }
+
 .header-container
 {
   background-color:rgb(219, 218, 218);
@@ -154,6 +155,27 @@ footer{
 .buttons-container-item:focus svg, .buttons-container-item:hover svg
 {
   color:#00F89F;
+}
+.table
+{
+  background-color:#2e3946;
+}
+
+  
+.table-row{
+  border: 10px solid #232B35;
+  border-radius:50%;
+  
+}
+.table-text
+{
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:white;
+  
+}
+.table-title
+{
+  font-size: 16px;
 }
 .rank,.players{
   max-width:100px;

@@ -125,11 +125,11 @@ export default function MainPage()
 
             <div className="table-container">
             <TableContainer component={Paper}>
-      <Table>
+      <Table className="table">
         <TableHead>
           <TableRow>
-            <TableCell>Standing</TableCell>
-            <TableCell>Player</TableCell>
+            <TableCell><p className="table-text table-title">Standing</p></TableCell>
+            <TableCell><p className="table-text table-title">Player</p></TableCell>
             <TableCell><Autocomplete
       id="country-select-demo"
       sx={{ width: 300 }}
@@ -210,11 +210,11 @@ export default function MainPage()
         </TableHead>
         <TableBody>
           {paginatedPlayers.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell>{row.standing}</TableCell>
-              <TableCell>
+            <TableRow key={index}className="table-row">
+              <TableCell className="table-cell"><p className="table-text">{row.standing}</p></TableCell>
+              <TableCell >
               <Link to={`/player-page/${encodeURIComponent(row.player.name)}`}className="player-link">
-                <Box display="flex" alignItems="center">
+                <Box display="flex" alignItems="center" >
                   <img
                     src={row.player.avatar}
                     alt="Avatar"
@@ -222,11 +222,10 @@ export default function MainPage()
                     height="20"
                     style={{ marginRight: 8 }}
                   />
-                  
                   <Box>
-                    <Typography variant="body2" >{row.player.name}</Typography>
+                    <Typography variant="body2" ><p className="table-text">{row.player.name}</p></Typography>
                     <Typography variant="caption" color="textSecondary">
-                      {row.player.region} {row.player.alias}
+                      <p className="table-text">{row.player.region}</p>
                     </Typography>
                   </Box>
                   
@@ -234,16 +233,31 @@ export default function MainPage()
                 </Link>
               </TableCell>
               <TableCell>
-                <Box display="flex" alignItems="center">
-                  <img
-                    src={row.country.flag}
-                    alt="Flag"
-                    width="20"
-                    height="20"
-                    style={{ marginRight: 8 }}
-                  />
-                  <Typography variant="body2">{row.country.code}</Typography>
-                </Box>
+                
+              <Box display="flex" alignItems="center">
+    <Box
+      sx={{
+        width: 30,         // Розмір "вікна"
+        height: 25,
+        overflow: 'hidden',
+        borderRadius: '5px', // (опціонально)
+        marginRight: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <img
+        src={row.country.flag}
+        alt="Flag"
+        style={{
+          width: 40,       // реальний розмір прапора (може бути більше)
+          height: 'auto',
+        }}
+      />
+    </Box>
+    <Typography variant="body2"><p className="table-text">{row.country.code}</p></Typography>
+  </Box>
               </TableCell>
               <TableCell>
                 <Box display="flex" alignItems="center">

@@ -18,7 +18,7 @@ import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
 import League from './league.jsx'; 
 import Race from './race';
-
+import Icons from "./img/icons.svg";
 import { countries } from './data/countries.js';
 import fetchPlayers from './services/playersFetch.js';
 export default function MainPage()
@@ -96,16 +96,41 @@ export default function MainPage()
 
     return(
         <div className="container">
-            <div className="section-name-container">
+          <div className="section-container">
+          <div className="section-name-container">
                 <h2 className='section-title'>Leaderboards</h2>
+                <p className="section-description">Welcome to cwal.gg, the StarCraft: Remastered ladder rankings browser. </p>
             </div>
             <div className="buttons-container">
-                <button className="buttons-container-item" onClick={setGlobal}>Global</button>
-                <button className="buttons-container-item" onClick={SetKoreans} >Korea</button>
-                <button className="buttons-container-item" onClick={setNonKoreans}>Non-Korea</button>
+                <button className="buttons-container-item" onClick={setGlobal}>
+                  
+                          <svg width={20} height={20} className='buttons-svg-item'>
+                          <use href={`${Icons}#statisctics 1`} />
+                      </svg>
+                            
+                            Global</button>
+                <button className="buttons-container-item" onClick={SetKoreans}> 
+                          <svg width={20} height={20} className='buttons-svg-item'>
+                          <use href={`${Icons}#korea`} />
+                      </svg>
+                             Korea</button>
+                <button className="buttons-container-item" onClick={setNonKoreans}>
+                
+                          <svg width={20} height={20} className='buttons-svg-item'>
+                          <use href={`${Icons}#team-leader 2`} />
+                      </svg>
+                            Non-Korea</button>
             </div>
-            <div className="selectors-container">
-            <Autocomplete
+          </div>
+
+            <div className="table-container">
+            <TableContainer component={Paper}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Standing</TableCell>
+            <TableCell>Player</TableCell>
+            <TableCell><Autocomplete
       id="country-select-demo"
       sx={{ width: 300 }}
       options={countries}
@@ -146,8 +171,8 @@ export default function MainPage()
           }}
         />
       )}
-    />
-<FormControl fullWidth className="selector-item rank">
+    /></TableCell>
+            <TableCell><FormControl fullWidth className="selector-item rank">
   <InputLabel id="rank-label">Rank</InputLabel>
   <Select
     labelId="rank-label"
@@ -165,8 +190,8 @@ export default function MainPage()
     <MenuItem value={"F"}>F</MenuItem>
     <MenuItem value={""}>All</MenuItem>
   </Select>
-</FormControl>
-<FormControl fullWidth className="selector-item race">
+</FormControl></TableCell>
+            <TableCell><FormControl fullWidth className="selector-item race">
   <InputLabel id="rank-label">Race</InputLabel>
   <Select
     labelId="rank-label"
@@ -180,34 +205,7 @@ export default function MainPage()
     <MenuItem value={"P"}>Protoss</MenuItem>
     <MenuItem value={""}>All</MenuItem>
   </Select>
-</FormControl>
-<FormControl fullWidth className="selector-item players">
-  <InputLabel id="rank-label">Players</InputLabel>
-  <Select
-    labelId="players-label"
-    id="players-select"
-    value={playersPerPage}
-
-    label="Players"
-    onChange={handlePlayersChange}
-  >
-    <MenuItem value={25}>25</MenuItem>
-    <MenuItem value={50}>50</MenuItem>
-    <MenuItem value={75}>75</MenuItem>
-    <MenuItem value={100}>100</MenuItem>
-  </Select>
-</FormControl>
-            </div>
-            <div className="table-container">
-            <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Standing</TableCell>
-            <TableCell>Player</TableCell>
-            <TableCell>Country</TableCell>
-            <TableCell>Rank</TableCell>
-            <TableCell>Race</TableCell>
+</FormControl></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

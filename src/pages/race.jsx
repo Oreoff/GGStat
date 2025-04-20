@@ -9,9 +9,10 @@ export default function Race ({ text}) {
     } else if (text.includes("protoss")|| text.includes("P")) {
       className = 'protoss';
     }
-  
-
   return (
-    <p className={className}>{text} </p>
+    <div className="race-container">
+<p className={className}>{text}</p>
+<p className="race-full-text">{className}</p>
+    </div>
   );
 };

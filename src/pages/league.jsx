@@ -26,12 +26,16 @@ export default function League({ text = '', MMR = '' }) {
   }
 
   return (
-    <p className="rating" style={{ backgroundColor: textColor }}>
+    <div className='league-container'>
+    <p className="rating" style={{ backgroundColor: textColor }}>  
       {text}
-      <span className="mmr" style={{ color: textColor, backgroundColor: 'black' }}>
-        {MMR}
-      </span>
+      
     </p>
+    <p className="mmr" style={{ color: textColor}}>
+    {MMR}
+  </p>
+    </div>
+    
   );
 }
 

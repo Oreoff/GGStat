@@ -23,6 +23,7 @@
 }
 *, *::before,*::after{
   padding:0px;
+  margin:0;
 }
 
 .header-container
@@ -31,8 +32,9 @@
   display:flex;
   align-items:center;
   justify-content: space-between;
-  padding:0;
+  padding:10px ;
   background-color:#232B35;
+  
 }
 .logo{
 font-size:38px;
@@ -116,6 +118,7 @@ footer{
 {
   display:flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 .buttons-container-item
 {
@@ -167,6 +170,7 @@ footer{
   border-radius:50%;
   
 }
+
 .table-text
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
@@ -179,6 +183,42 @@ footer{
 }
 .rank,.players{
   max-width:100px;
+}
+.select-rank-button-container,.select-race-button-container
+{
+  display:flex;
+  gap:10px;
+}
+.select-rank-button,.select-race-button
+{
+  background-color:#232B35;
+  display:block;
+  color:gray;
+  border:0;
+  border-radius:5px;
+  font-size: 16px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  padding:8px 13px;
+  transition: 300ms ease;
+  border: 2px solid #232B35;
+}
+
+.select-rank-button:hover ,.select-rank-button:focus, .select-race-button:hover, .select-race-button:focus{
+  color:#00F89F;
+  border:2px solid #00F89F;
+}
+.terran-button:hover, .terran-button:focus{
+  border:2px solid #3679FE;
+  
+  color:#3679FE;
+}
+.zerg-button:hover, .zerg-button:focus{
+  border:2px solid #AE36FE;
+  color:#AE36FE;
+}
+.protoss-button:hover, .protoss-button:focus{
+  border:2px solid #F0C722;
+  color:#F0C722;
 }
 .race
 {
@@ -208,6 +248,7 @@ footer{
 {
   display:flex;
   gap:10px;
+
 }
 .country-container{
 display:flex;
@@ -249,31 +290,84 @@ margin-left:250px;
   border:1px solid lightgray;
   border-radius: 3px;
 }
+.league-container
+{
+  display:flex;
+  text-align: center;
+  background-color:#232B35;
+  align-items:center;
+  margin:0;
+  gap:10px;
+  width:400px;
+  border-radius:10px;
+  padding:5px;
+}
+.country-selector
+{
+  color:white;
+}
+
 .rating{
-  background-color:black;
-padding:5px 5px;
+  font-size:16px;
+  font-weight: 600;
+padding:10px 15px;
+border-radius:5px;
+font-family: 'TT Firs Neue Trl', sans-serif;
+
 }
 .mmr
 {
-  margin-left:5px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  width: 100%;
+  text-align: center;
   padding:0px 3px;
 }
-
+.race-container
+{
+  display:flex;
+  align-items:center;
+  background-color:#232B35;
+  margin:5px;
+  border-radius:5px;
+}
+.race-full-text
+{
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  font-size: 15px;
+  text-align: center;
+  width: 100%;
+  color:gray;
+}
 .terran{
-  padding:5px 20px;
-  background-color:#3679FE;
-  border-radius:3px;
+  padding:11px 15px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:#3679FE;
+  background-color:#2e3946;
+  max-width: 20px;
+  text-align: center;
+  border-radius:5px;
+  margin:5px;
 }
 .zerg{
-  padding:5px 20px;
-  background-color:#AE36FE;
-  border-radius:3px;
+  padding:11px 15px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:#AE36FE;
+  background-color:#2e3946;
+  border-radius:5px;
+  text-align: center;
+  max-width: 20px;
+  margin:5px;
 }
 .protoss
 {
-  padding:5px 20px;
-  background-color:#F0C722;
-  border-radius:3px; 
+  padding:11px 15px;
+  color:#F0C722;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  background-color:#2e3946;
+  border-radius:5px; 
+  text-align: center;
+  max-width: 20px;
+  margin:5px;
 }
 .search-list
 {

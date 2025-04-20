@@ -414,3 +414,21 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   align-items: center;
   gap:10px
 }
+.footer{
+  background-color:#232B35;
+  border-top:1px solid gray;
+  padding:50px;
+}
+.footer-container{
+  display: flex;
+  gap:40px;
+}
+.copyright{
+  font-family: 'TT Firs Neue Trl' , sans-serif;
+  color:gray;
+  font-size:14px;
+}
+.all-rights
+{
+  white-space: nowrap;
+}

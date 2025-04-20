@@ -227,7 +227,7 @@ export default function MainPage()
             </div></TableCell>
             <TableCell className="table-cell" style={{ padding: 0 }}>
               <div className="select-race-button-container">
-                <button className="select-race-button terran-button " onClick={() => handleRaceChange("T")}>T</button>
+                <button className="terran-button select-race-button " onClick={() => handleRaceChange("T")}>T</button>
                 <button className="zerg-button select-race-button" onClick={() => handleRaceChange("Z")}>Z</button>
                 <button className="protoss-button select-race-button" onClick={() => handleRaceChange("P")}>P</button>
                 <button className="select-race-button" onClick={() => handleRaceChange("")}>All</button>

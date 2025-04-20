@@ -204,7 +204,26 @@ const handleClick = (target) =>
             count={Math.ceil(matches.length / rowsPerPage)}
             page={page}
             onChange={handlePageChange}
-            shape="rounded"
+            shape="square"
+            sx={{
+              '& .MuiPaginationItem-root': {
+                borderRadius: '8px', // ← ось тут твій кут!
+                border: '1px solid #ccc',
+                width: '40px',
+                height: '40px',
+                fontWeight: 'bold',
+                color: '#fff',
+                backgroundColor: '#333',
+                '&:hover': {
+                  backgroundColor: '#555',
+                },
+                '&.Mui-selected': {
+                  backgroundColor: '#2196f3',
+                  color: '#fff',
+                  borderColor: '#2196f3',
+                }
+              }
+            }}
           />
         </Box>
       </div>

@@ -129,8 +129,8 @@ export default function MainPage()
       <Table className="table">
         <TableHead>
           <TableRow>
-            <TableCell className="table-cell" style={{ padding: 0 }}><p className="table-text table-title">Standing</p></TableCell>
-            <TableCell className="table-cell" style={{ padding: 0 }}><p className="table-text table-title">Player</p></TableCell>
+            <TableCell className="table-cell" style={{ padding: 0, textAlign:"center"}}><p className="table-text table-title">Place</p></TableCell>
+            <TableCell className="table-cell" style={{ padding: 0 ,textAlign:"center"}}><p className="table-text table-title">Player</p></TableCell>
             <TableCell className="table-cell" style={{ padding: 5 }}><Autocomplete 
       id="country-select-demo"
       sx={{ width: 300 }}
@@ -160,6 +160,7 @@ export default function MainPage()
               width="20"
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+             
               alt=""
               style={{borderRadius:'5px'}}
             />
@@ -188,7 +189,7 @@ export default function MainPage()
             },
           }}
           sx={{
-            // Колір рамки
+
             '& .MuiOutlinedInput-root': {
               '& fieldset': {
                 borderColor: '#fff',
@@ -200,7 +201,6 @@ export default function MainPage()
                 borderColor: '#fff',
               },
             },
-            // Колір стрілки (іконки)
             '& .MuiSvgIcon-root': {
               color: '#fff',
             },
@@ -237,14 +237,18 @@ export default function MainPage()
         </TableHead>
         <TableBody>
           {paginatedPlayers.map((row, index) => (
-            <TableRow key={index}className="table-row" style={{ padding: 0 }}>
-              <TableCell className="table-cell" style={{ padding: 0 }}><p className="table-text">{row.standing}</p></TableCell>
+            <TableRow key={index}className="table-row" style={{ padding: 0, borderRadius: "15px"}}>
+              <TableCell className="table-cell" style={{ padding: 0,textAlign:"center" }}><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></TableCell>
               <TableCell className="table-cell" style={{ padding: 0 }}>
               <Link to={`/player-page/${encodeURIComponent(row.player.name)}`}className="player-link">
                 <Box display="flex" alignItems="center" >
                   <img
                     src={row.player.avatar}
                     alt="Avatar"
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
+                    }}
                     width="50"
                     height="50"
                     style={{ marginRight: 8 }}
@@ -264,10 +268,10 @@ export default function MainPage()
               <Box display="flex" alignItems="center">
     <Box
       sx={{
-        width: 30,         // Розмір "вікна"
+        width: 30,     
         height: 25,
         overflow: 'hidden',
-        borderRadius: '5px', // (опціонально)
+        borderRadius: '5px',
         marginRight: 1,
         display: 'flex',
         alignItems: 'center',
@@ -278,7 +282,7 @@ export default function MainPage()
         src={row.country.flag}
         alt="Flag"
         style={{
-          width: 40,       // реальний розмір прапора (може бути більше)
+          width: 40,      
           height: 'auto',
         }}
       />
@@ -298,14 +302,37 @@ export default function MainPage()
         </TableBody>
       </Table>
     </TableContainer>
+    <div className="pagination-container">
+
+    
     <Box display="flex" justifyContent="center" mt={2}>
-        <Pagination
-          count={Math.ceil(players.length / playersPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          color="primary"
-        />
+          <Pagination
+                    count={Math.ceil(filteredPlayers.length / playersPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                    shape="square"
+                    sx={{
+                      '& .MuiPaginationItem-root': {
+                        borderRadius: '8px',
+                        border: '1px solid gray',
+                        width: '40px',
+                        height: '40px',
+                        fontWeight: 'bold',
+                        color: 'gray',
+                        backgroundColor: '#232B35',
+                        '&:hover': {
+                          backgroundColor: '#00F89F',
+                        },
+                        '&.Mui-selected': {
+                          backgroundColor: '#232B35',
+                          color: '#00F89F',
+                          borderColor: '#00F89F',
+                        }
+                      }
+                    }}
+                  />
       </Box>
+      </div>
             </div>
         </div>
         

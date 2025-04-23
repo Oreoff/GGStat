@@ -4,7 +4,7 @@ import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import './App.css';
 import fetchPlayers from './pages/services/playersFetch.js';
 const App = () =>  {
@@ -14,6 +14,13 @@ const App = () =>  {
     const [error, setError] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
+    const inputRef = useRef(null);
+    const handleSearchClick = () => {
+      setSearchOpen((prev) => !prev);
+      setTimeout(() => {
+        inputRef.current?.focus(); // 👈
+      }, 0);
+    };
     useEffect(() => {
       const loadPlayers = async () => {
         try {
@@ -102,7 +109,7 @@ const App = () =>  {
     <button
       type="button"
       className="search-button"
-      onClick={() => setSearchOpen((prev) => !prev)}
+      onClick={handleSearchClick}
     >
       <svg className="navigation-menu-svg" viewBox='0 0 20 20'>
         <use href={`${Icons}#Vector`} />
@@ -111,6 +118,7 @@ const App = () =>  {
   </div>
   <input
   type="text"
+  ref={inputRef}
     className={`input-item ${searchOpen ? 'active' : ''}`}
    placeholder="Find a player"
   value={query}

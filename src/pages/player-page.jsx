@@ -15,8 +15,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Box,
-  Typography,
   Button,
   Collapse,
   Pagination,
@@ -170,27 +168,27 @@ const handleClick = (target) =>
                     </TableCell>
                     <TableCell>{match.opponent}</TableCell>
                     <TableCell>
-                      <Box display="flex" gap={1}>
+                      <div style={{ display: "flex", gap: "8px" }}>
                         <Button variant="outlined" size="small" onClick={() => toggleChat(index)}>Info</Button>
                         <Button variant="outlined" size="small" onClick={() => handleFetchReplay(match)}>Replay</Button>
-                      </Box>
+                      </div>
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell colSpan={8} sx={{ padding: 0 }}>
                       <Collapse in={openChatIndex === index} timeout="auto" unmountOnExit>
-                        <Box sx={{ padding: 2, backgroundColor: '#f9f9f9' }}>
-                          <Typography variant="subtitle1">Chat:</Typography>
+                        <div style={{ padding: "16px", backgroundColor: '#f9f9f9' }}>
+                          <h4 style={{ margin: "0 0 8px 0" }}>Chat:</h4>
                           {match.chat && match.chat.length > 0  ? (
                             match.chat.map((line, i) => (
-                              <Typography key={i} variant="body2">
+                              <p key={i} style={{ margin: "4px 0", fontSize: "0.875rem" }}>
                                 <strong>{line.time} {line.player}:</strong> {line.message}
-                              </Typography>
+                              </p>
                             ))
                           ) : (
-                            <Typography variant="body2">No chat available.</Typography>
+                            <p style={{ margin: "4px 0", fontSize: "0.875rem" }}>No chat available.</p>
                           )}
-                        </Box>
+                        </div>
                       </Collapse>
                     </TableCell>
                   </TableRow>
@@ -199,7 +197,7 @@ const handleClick = (target) =>
             </TableBody>
           </Table>
         </TableContainer>
-        <Box display="flex" justifyContent="center" sx={{ marginTop: 2 }}>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "16px" }}>
           <Pagination
             count={Math.ceil(matches.length / rowsPerPage)}
             page={page}
@@ -225,7 +223,7 @@ const handleClick = (target) =>
               }
             }}
           />
-        </Box>
+        </div>
       </div>
     </div>
   );

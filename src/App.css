@@ -1,11 +1,21 @@
 @import url('https://fonts.cdnfonts.com/css/tt-firs-neue-trl');
-
+body
+{
+background-color:#232B35;
+}
 .container{
   margin:0 auto;
   padding-top:40px;
   background-color:#232B35;
   border-bottom:1px solid #616060;
   padding-bottom: 100px;
+  max-width:1440px;
+}
+.navigation-menu-svg
+{
+  fill:black;
+  width:20px;
+  height: 20px;
 }
 .section-title
 {
@@ -35,8 +45,9 @@
   justify-content: space-between;
   padding:10px ;
   background-color:#232B35;
-  
+  max-width:100%;
 }
+
 .logo{
 font-size:38px;
 font-family: 'TT Firs Neue Trl', sans-serif;
@@ -49,6 +60,39 @@ font-weight: 600;
   display:flex;
   gap:10px;
 }
+.burger-icon {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.burger-icon .line {
+  width: 25px;
+  height: 3px;
+  background-color: #00F89F;
+  transition: all 0.3s ease;
+}
+.search-button
+{
+background-color:#2e3946;
+border:none;
+color:gray;
+}
+.input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-item {
+  transition: all 0.3s ease;
+}
+.burger-menu
+{
+  display:none;
+}
+
 .navigation-menu-item{
   list-style-type:none;
   border:1px solid #00F89F;
@@ -76,12 +120,7 @@ font-weight: 600;
   color:black;
 
 }
-.navigation-menu-svg
-{
-  padding:10px;
-  background-color:#00F89F;
-  fill:black;
-}
+
 .search-field-svg
 {
   position:absolute;
@@ -165,13 +204,30 @@ footer{
   background-color:#2e3946;
 }
 
-  
+.country-flag
+{
+  border-radius:5px;
+  width:40px;
+  height:25px;
+  object-fit: cover;
+}
+.country-flag-container
+{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
 .table-row{
   border: 10px solid #232B35;
   border-radius:50%;
   text-align: center;
 }
-
+.player-container
+{
+  max-width: 100%;
+  display:flex;
+  justify-content: center;
+}
 .table-text
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
@@ -311,7 +367,7 @@ margin-left:250px;
   align-items:center;
   margin:0;
   gap:10px;
-  width:400px;
+  width:100%;
   border-radius:10px;
   padding:5px;
 }
@@ -453,4 +509,95 @@ font-family: 'TT Firs Neue Trl', sans-serif;
 .all-rights
 {
   white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .logo{
+    font-size:13px;
+  }
+  .burger-menu
+  {
+    display:flex;
+    position: relative;
+  } 
+  .navigation-menu.open
+  {
+    flex-direction: column;
+  }
+  .navigation-menu-svg
+  {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+  }
+  .search-field-svg
+  {
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+
+  }
+  .search-button
+  {
+    width: 15px;
+    height: 15px;
+  }
+  .input-container
+  {
+    margin-right:10px;
+  }
+  .input-item
+  {
+    font-size: 9px;
+    width:100px;
+  }
+  .navigation-menu-link{
+    font-size:12px;
+  }
+  .input-item.active {
+    display: inline-block;
+  }
+ 
+  .input-container
+  {
+    align-items: start;
+    max-height: 100%;
+  }
+
+  .burger-icon {
+    display: flex;
+  }
+  .container{
+    width: 375px;
+  }
+  .header-container
+  {
+    width: 100%;
+  }
+  .navigation-menu {
+    display: none;
+    flex-direction: column;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .navigation-menu.open {
+   display:flex;
+    position:absolute;
+    top:37px;
+    left:-70px;
+    background-color:#232B35;
+    border:2px solid gray;
+    border-top:none;
+    padding:10px;
+  }
+  .navigation-menu-list
+  {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+  }
 }

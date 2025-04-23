@@ -1,11 +1,3 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Box from '@mui/material/Box';
-import  Typography  from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Autocomplete from '@mui/material/Autocomplete';
 import * as React from 'react';
@@ -13,10 +5,10 @@ import { TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { countries } from './data/countries.js';
 import fetchPlayers from './services/playersFetch.js';
-export default function CountryTop()
-{
-   const [country, setCountry] = React.useState('');
-   const [players, setPlayers] = React.useState([]);
+
+export default function CountryTop() {
+  const [country, setCountry] = React.useState('');
+  const [players, setPlayers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
@@ -34,9 +26,11 @@ export default function CountryTop()
 
     loadPlayers();
   }, []);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-   const handleCountryChange = (event, value) => {
+
+  const handleCountryChange = (event, value) => {
     setCountry(value ? value.code : '');
   };
 
@@ -53,113 +47,188 @@ export default function CountryTop()
       seenCountries.add(player.country.code);
     }
   });
-const filteredPlayers = uniquePlayers.filter((row) => {
-    const matchesCountry = 
-    country ? row.country.flag.includes(country.toLowerCase())
-    : true;
+
+  const filteredPlayers = uniquePlayers.filter((row) => {
+    const matchesCountry =
+      country ? row.country.flag.includes(country.toLowerCase())
+        : true;
     return matchesCountry;
   });
-    return (
-        <div className="container">
-          <h2 className="page-title">Top 1 for each country</h2>
-          <div className="filters-container">
-          <Autocomplete
+
+  return (
+    <div className="container">
+      <h2 className="section-title">Top 1 for each country</h2>
+      
+      <div className="table-container">
+        <div className="table-wrapper" style={{
+          width: '100%',
+          overflowX: 'auto',
+          maxWidth: '100%',
+          backgroundColor: '#232B35',
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+        }}>
+          <table className="table" style={{
+            minWidth: 650,
+            width: '100%',
+            borderCollapse: 'collapse',
+            borderSpacing: 0
+          }}>
+            <thead>
+              <tr className="table-header-row">
+                <th className="table-cell" style={{ padding: '8px 16px' }}><div className="filters-container">
+                <Autocomplete 
       id="country-select-demo"
-      sx={{ width: 300 }}
+      sx={{ 
+        width: 300,
+        '@media (max-width: 768px)': {
+          width: '100%',
+          maxWidth: '200px',
+        }
+      }}
       options={countries}
       autoHighlight
       getOptionLabel={(option) => option.label}
-      className="selector-item"
+      className="country-selector"
       onChange={handleCountryChange}
       renderOption={(props, option) => {
         const { key, ...optionProps } = props;
+        
         return (
-          <Box
+          <div className='country-box'
+          
             key={key}
-            component="li"
-            sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
             {...optionProps}
+            style={{backgroundColor:"#232B35",
+              color:"white",
+              fontSize: 16,
+              fontFamily: 'TT Firs Neue Trl',
+              display: 'flex',
+              alignItems: 'center'}}
+
           >
             <img
               loading="lazy"
               width="20"
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+             
               alt=""
+              style={{borderRadius:'5px'}}
             />
             {option.label} ({option.code})
-          </Box>
+          </div>
         );
       }}
       renderInput={(params) => (
         <TextField
           {...params}
           label="Choose a country"
+          className="country-selector-label"
+          InputProps={{
+            ...params.InputProps,
+            style: {
+              color: '#fff',
+              fontSize: 16,
+              fontFamily: 'TT Firs Neue Trl',
+            },
+          }}
+          InputLabelProps={{
+            style: {
+              color: '#fff',
+              fontSize: 16,
+              fontFamily: 'TT Firs Neue Trl',
+            },
+          }}
+          sx={{
+
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: '#fff',
+              },
+              '&:hover fieldset': {
+                borderColor: '#fff',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#fff',
+              },
+            },
+            '& .MuiSvgIcon-root': {
+              color: '#fff',
+            },
+          }}
           slotProps={{
             htmlInput: {
               ...params.inputProps,
-              autoComplete: 'new-password', 
+              autoComplete: 'new-password',
             },
           }}
         />
       )}
     />
-          </div>
-          <div className="table-container">
-          <TableContainer component={Paper}>
-          <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Country</TableCell>
-            <TableCell>Player</TableCell>
-            <TableCell>MMR</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {filteredPlayers.map((row, index) => (
-            <TableRow key={index}>
-              
-                <TableCell>
-                <Box display="flex" alignItems="center">
+      </div></th>
+                <th className="table-cell" style={{ padding: '8px 16px' }}><h3 className='table-title'>Player</h3></th>
+                <th className="table-cell" style={{ padding: '8px 16px' }}><h3 className='table-title'>MMR</h3></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredPlayers.map((row, index) => (
+                <tr key={index} className="table-row">
+                  <td className="table-cell" style={{ padding: '8px 16px' }}>
+                  <div
+                  style={{
+                    overflow: 'hidden',
+                    borderRadius: '5px',
+                    marginRight: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    '@media (max-width: 768px)': {
+                      width: '25px',
+                      height: '20px',
+                    }
+                  }}
+                >
                   <img
+                    className="country-flag"  
                     src={row.country.flag}
                     alt="Flag"
-                    width="40"
-                    height="20"
-                    style={{ marginRight: 8 }}
+                    
                   />
-                  <Typography variant="body2">{row.country.code}</Typography>
-                </Box>
-              </TableCell>
-              
-              <TableCell>
-              <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
-                <Box display="flex" alignItems="center">
-                  <img
+                  <p className="table-text">{row.country.code}</p>
+                </div>
+                  </td>
+                  <td className="table-cell" style={{ padding: '8px 16px' }}>
+                    <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
+                     <div className="player-container">
+                     <div style={{ display: "flex", alignItems: "center" }}>
+                     <img
                     src={row.player.avatar}
                     alt="Avatar"
-                    width="20"
-                    height="20"
-                    style={{ marginRight: 8 }}
-                  />
-                  <Box>
-                  <Typography variant="body2">{row.player.name}</Typography>
-                    <Typography variant="caption" color="textSecondary">
-                      {row.player.region} {row.player.alias}
-                    </Typography>
-                  </Box>
-                </Box>
-                </Link>
-              </TableCell>
-              <TableCell>{row.rank.points}</TableCell>
-              
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-          </div>
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
+                    }}
+                    width="50"
+                    height="50"
+                    />
+                        <div>
+                          <p className="table-text">{row.player.name}</p>
+                          <p className="table-text" >
+                            {row.player.region}
+                          </p>
+                        </div>
+                      </div>
+                      </div> 
+                    </Link>
+                  </td>
+                  <td className="table-cell" style={{ padding: '8px 16px' }}><p className='table-text'>{row.rank.points}</p></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        
-    );
+      </div>
+    </div>
+  );
 }

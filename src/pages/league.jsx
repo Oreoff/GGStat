@@ -31,7 +31,7 @@ export default function League({ text = '', MMR = '' }) {
       {text}
       
     </p>
-    <p className="mmr" style={{ color: textColor}}>
+    <p className="mmr" style={{ color: textColor }}>
     {MMR}
   </p>
     </div>

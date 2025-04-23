@@ -12,7 +12,8 @@ const App = () =>  {
   const [players, setPlayers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-  
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
     useEffect(() => {
       const loadPlayers = async () => {
         try {
@@ -46,7 +47,13 @@ const App = () =>  {
       <Router>
     <header className="container header-container">
               <h1 className="logo">GGStat</h1>
-    <nav className = "navigation-menu">
+              <div className="burger-menu">
+              <div className="burger-icon" onClick={() => setMenuOpen(!menuOpen)}>
+  <div className={menuOpen ? "line open" : "line"}></div>
+  <div className={menuOpen ? "line open" : "line"}></div>
+  <div className={menuOpen ? "line open" : "line"}></div>
+</div>
+  <nav className={`navigation-menu ${menuOpen ? 'open' : ''}`}>
       <ul className = "navigation-menu-list">
         <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'>
         <div className="navigation-menu-svg-container">
@@ -66,16 +73,46 @@ const App = () =>  {
     <p className="navigation-menu-text">Country top</p></Link></li>
       </ul>
     </nav>
-    <form action="" className="input-container">
-      <div className="search-field-svg">
-      <svg width={20} height={20} className='navgation-menu-svg'>
-        <use href={`${Icons}#Vector`} />
+
+              </div>
+              
+
+<nav className={`navigation-menu `}>
+      <ul className = "navigation-menu-list">
+        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'>
+        <div className="navigation-menu-svg-container">
+        <svg  className='navigation-menu-svg' viewBox='0 0 20 20'>
+        <use href={`${Icons}#leaderboard`} />
     </svg>
-      </div>
-    
-    <input type="text" 
-    className="input-item
-  " placeholder="Find a player"
+          </div> 
+        
+    <p className="navigation-menu-text">Leaderboard</p></Link></li>
+    <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link '>
+        <div className="navigation-menu-svg-container country-top">
+        <svg className='navigation-menu-svg' viewBox='0 0 20 20'>
+        <use href={`${Icons}#team-leader 2`} />
+    </svg>
+          </div> 
+        
+    <p className="navigation-menu-text">Country top</p></Link></li>
+      </ul>
+    </nav>
+    <form action="" className="input-container">
+  <div className="search-field-svg">
+    <button
+      type="button"
+      className="search-button"
+      onClick={() => setSearchOpen((prev) => !prev)}
+    >
+      <svg className="navigation-menu-svg" viewBox='0 0 20 20'>
+        <use href={`${Icons}#Vector`} />
+      </svg>
+    </button>
+  </div>
+  <input
+  type="text"
+    className={`input-item ${searchOpen ? 'active' : ''}`}
+   placeholder="Find a player"
   value={query}
   onChange={(e) => {
     setQuery(e.target.value);
@@ -114,6 +151,7 @@ const App = () =>  {
   </ul>
   </form>
   </header>
+
     <Routes>
       <Route path="/" element={<MainPage/>} />
       <Route path="/country-tops" element={<CountryTop/>}/>

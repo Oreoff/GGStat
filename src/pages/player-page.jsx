@@ -151,10 +151,7 @@ const handleClick = (target) =>
               {paginatedMatches.map((match, index) => (
                 <React.Fragment key={index}>
                   <TableRow
-                    sx={{
-                      backgroundColor: match.result === 'win' ? '#d4edda' : '#f8d7da',
-                      border: `2px solid ${match.result === 'win' ? '#28a745' : '#dc3545'}`,
-                    }}
+                    className={match.result === 'win' ? 'match-row-win' : 'match-row-loss'}
                   >
                     <TableCell>{match.result}</TableCell>
                     <TableCell>{match.points}</TableCell>
@@ -168,25 +165,25 @@ const handleClick = (target) =>
                     </TableCell>
                     <TableCell>{match.opponent}</TableCell>
                     <TableCell>
-                      <div style={{ display: "flex", gap: "8px" }}>
+                      <div className="match-actions">
                         <Button variant="outlined" size="small" onClick={() => toggleChat(index)}>Info</Button>
                         <Button variant="outlined" size="small" onClick={() => handleFetchReplay(match)}>Replay</Button>
                       </div>
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={8} sx={{ padding: 0 }}>
+                    <TableCell colSpan={8} className="table-cell">
                       <Collapse in={openChatIndex === index} timeout="auto" unmountOnExit>
-                        <div style={{ padding: "16px", backgroundColor: '#f9f9f9' }}>
-                          <h4 style={{ margin: "0 0 8px 0" }}>Chat:</h4>
+                        <div className="match-chat-container">
+                          <h4 className="match-chat-title">Chat:</h4>
                           {match.chat && match.chat.length > 0  ? (
                             match.chat.map((line, i) => (
-                              <p key={i} style={{ margin: "4px 0", fontSize: "0.875rem" }}>
+                              <p key={i} className="match-chat-message">
                                 <strong>{line.time} {line.player}:</strong> {line.message}
                               </p>
                             ))
                           ) : (
-                            <p style={{ margin: "4px 0", fontSize: "0.875rem" }}>No chat available.</p>
+                            <p className="match-chat-message">No chat available.</p>
                           )}
                         </div>
                       </Collapse>
@@ -197,7 +194,7 @@ const handleClick = (target) =>
             </TableBody>
           </Table>
         </TableContainer>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "16px" }}>
+        <div className="pagination-wrapper">
           <Pagination
             count={Math.ceil(matches.length / rowsPerPage)}
             page={page}
@@ -205,20 +202,14 @@ const handleClick = (target) =>
             shape="square"
             sx={{
               '& .MuiPaginationItem-root': {
-                borderRadius: '8px', // ← ось тут твій кут!
-                border: '1px solid #ccc',
-                width: '40px',
-                height: '40px',
-                fontWeight: 'bold',
-                color: '#fff',
-                backgroundColor: '#333',
+                '&': {
+                  className: 'mui-pagination-item'
+                },
                 '&:hover': {
-                  backgroundColor: '#555',
+                  className: 'mui-pagination-item:hover'
                 },
                 '&.Mui-selected': {
-                  backgroundColor: '#2196f3',
-                  color: '#fff',
-                  borderColor: '#2196f3',
+                  className: 'mui-pagination-item-selected'
                 }
               }
             }}

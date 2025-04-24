@@ -24,7 +24,11 @@ export default function MainPage()
   const [players, setPlayers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
-  
+    const [bar, setBar] = React.useState(false);
+    const toggleWindow = () => {
+      setBar(!bar);
+    };
+    const closeModal = () => setBar(false);
     React.useEffect(() => {
       const loadPlayers = async () => {
         try {
@@ -93,6 +97,11 @@ export default function MainPage()
           <div className="section-name-container">
                 <h2 className='section-title'>Leaderboards</h2>
                 <p className="section-description">Welcome to cwal.gg, the StarCraft: Remastered ladder rankings browser. </p>
+                <button className="filter-button" onClick={toggleWindow}>
+                <p className="filter-button-text">Filter</p>
+                  <svg width={15} height={15} className='buttons-svg-item'>
+                          <use href={`${Icons}#filter`} />
+                      </svg></button>
             </div>
             <div className="buttons-container">
                 <button className="buttons-container-item" onClick={setGlobal}>
@@ -117,47 +126,21 @@ export default function MainPage()
           </div>
 
             <div className="table-container">
-            <div className="table-wrapper" style={{
-                width: '100%',
-                overflowX: 'auto',
-                maxWidth: '100%',
-                backgroundColor: '#232B35',
-                borderRadius: '8px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
-              }}>
+            <div className="table-wrapper" >
       <table 
         className="table" 
-        style={{ 
-          minWidth: 650,
-          width: '100%',
-          borderCollapse: 'collapse',
-          borderSpacing: 0
-        }}
+        
       >
         <thead>
           <tr className="table-header-row">
             <th 
-              className="table-cell" 
-              style={{ 
-                padding: 0, 
-                textAlign:"center",
-                minWidth: '40px'
-              }}
+              className="table-cell table-cell-center"
             ><p className="table-text table-title">Place</p></th>
             <th 
-              className="table-cell" 
-              style={{ 
-                padding: 0, 
-                textAlign:"center",
-                minWidth: '120px'
-              }}
+              className="table-cell table-cell-player"
             ><p className="table-text table-title">Player</p></th>
             <th 
-              className="table-cell" 
-              style={{ 
-                padding: 5,
-                minWidth: '100px'
-              }}
+              className="table-cell table-cell-country"
             ><Autocomplete 
       id="country-select-demo"
       sx={{ 
@@ -177,16 +160,8 @@ export default function MainPage()
         
         return (
           <div className='country-box'
-          
             key={key}
             {...optionProps}
-            style={{backgroundColor:"#232B35",
-              color:"white",
-              fontSize: 16,
-              fontFamily: 'TT Firs Neue Trl',
-              display: 'flex',
-              alignItems: 'center'}}
-
           >
             <img
               loading="lazy"
@@ -195,7 +170,6 @@ export default function MainPage()
               src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
              
               alt=""
-              style={{borderRadius:'5px'}}
             />
             {option.label} ({option.code})
           </div>
@@ -208,18 +182,10 @@ export default function MainPage()
           className="country-selector-label"
           InputProps={{
             ...params.InputProps,
-            style: {
-              color: '#fff',
-              fontSize: 16,
-              fontFamily: 'TT Firs Neue Trl',
-            },
+            className: 'country-selector-input'
           }}
           InputLabelProps={{
-            style: {
-              color: '#fff',
-              fontSize: 16,
-              fontFamily: 'TT Firs Neue Trl',
-            },
+            className: 'country-selector-label'
           }}
           sx={{
 
@@ -248,18 +214,9 @@ export default function MainPage()
       )}
     /></th>
             <th 
-              className="table-cell" 
-              style={{ 
-                padding: 0,
-                minWidth: '80px'
-              }}
+              className="table-cell table-cell-rank"
             >
-              <div className="select-rank-button-container" style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                gap: '2px'
-              }}>
+              <div className="select-rank-button-container">
             <button className="select-rank-button" onClick={() => handleRankChange("S")}>S</button>
             <button className="select-rank-button" onClick={() => handleRankChange("A")}>A</button>
             <button className="select-rank-button" onClick={() => handleRankChange("B")}>B</button>
@@ -270,18 +227,9 @@ export default function MainPage()
             <button className="select-rank-button" onClick={() => handleRankChange("")}>All</button>
             </div></th>
             <th 
-              className="table-cell" 
-              style={{ 
-                padding: 0,
-                minWidth: '60px'
-              }}
+              className="table-cell table-cell-race"
             >
-              <div className="select-race-button-container" style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                gap: '2px'
-              }}>
+              <div className="select-race-button-container">
                 <button className="terran-button select-race-button " onClick={() => handleRaceChange("T")}>T</button>
                 <button className="zerg-button select-race-button" onClick={() => handleRaceChange("Z")}>Z</button>
                 <button className="protoss-button select-race-button" onClick={() => handleRaceChange("P")}>P</button>
@@ -292,29 +240,15 @@ export default function MainPage()
         </thead>
         <tbody>
           {paginatedPlayers.map((row, index) => (
-            <tr key={index} className="table-row" style={{ padding: 0, borderRadius: "15px"}}>
+            <tr key={index} className="table-row">
               <td 
-                className="table-cell" 
-                style={{ 
-                  padding: 0, 
-                  textAlign:"center"
-                }}
+                className="table-cell table-cell-standing"
               ><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></td>
               <td 
-                className="table-cell" 
-                style={{ padding: 0 }}
+                className="table-cell"
               >
               <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
-                <div className="player-container"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    '@media (max-width: 768px)': {
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                    }
-                  }}
-                >
+                <div className="player-container player-container-flex">
                  
 
                   
@@ -327,18 +261,11 @@ export default function MainPage()
                     }}
                     width="50"
                     height="50"
-                    style={{ 
-                      marginRight: 8,
-                      '@media (max-width: 768px)': {
-                        width: '40px',
-                        height: '40px',
-                        marginBottom: '4px',
-                      }
-                    }}
+                    className="player-avatar"
                   />
                   <div>
                     <p className="table-text">{row.player.name}</p>
-                    <p className="table-text" style={{color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.8rem'}}>{row.player.region}</p>
+                    <p className="table-text player-region-text">{row.player.region}</p>
                   </div>
                   
             
@@ -346,8 +273,7 @@ export default function MainPage()
                 </Link>
               </td>
               <td 
-                className="table-cell" 
-                style={{ padding: 0 }}
+                className="table-cell country-cell"
               >
               <div className="country-flag-container">
               <img
@@ -361,23 +287,14 @@ export default function MainPage()
 
               </td>
               <td 
-                className="table-cell" 
-                style={{ padding: 0 }}
+                className="table-cell rank-cell"
               >
-                <div 
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    '@media (max-width: 768px)': {
-                      justifyContent: 'center',
-                    }
-                  }}
-                >
+                <div className="race-container">
                   <League text={row.rank.league}MMR={row.rank.points} />
                 </div>
               </td>
               <td 
-                className='table-cell'
+                className='table-cell race-cell'
                 style={{ padding: 0 }}
               ><Race text = {row.race}/></td>
             </tr>
@@ -388,17 +305,7 @@ export default function MainPage()
     <div className="pagination-container">
 
     
-    <div 
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        marginTop: "16px",
-        '@media (max-width: 768px)': {
-          overflowX: 'auto',
-          padding: '0 10px',
-        }
-      }}
-    >
+    <div className="pagination-wrapper">
           <Pagination
                     count={Math.ceil(filteredPlayers.length / playersPerPage)}
                     page={page}
@@ -406,20 +313,14 @@ export default function MainPage()
                     shape="square"
                     sx={{
                       '& .MuiPaginationItem-root': {
-                        borderRadius: '8px',
-                        border: '1px solid gray',
-                        width: '40px',
-                        height: '40px',
-                        fontWeight: 'bold',
-                        color: 'gray',
-                        backgroundColor: '#232B35',
+                        '&': {
+                          className: 'mui-pagination-item-main'
+                        },
                         '&:hover': {
-                          backgroundColor: '#00F89F',
+                          className: 'mui-pagination-item-main:hover'
                         },
                         '&.Mui-selected': {
-                          backgroundColor: '#232B35',
-                          color: '#00F89F',
-                          borderColor: '#00F89F',
+                          className: 'mui-pagination-item-main-selected'
                         }
                       }
                     }}
@@ -427,6 +328,126 @@ export default function MainPage()
       </div>
       </div>
             </div>
+            {bar && (
+              <div
+              className="backdrop"
+              onClick={closeModal}
+            >
+        <div className="filter-container">
+           <div className="buttons-container modal">
+                <button className="buttons-container-item" onClick={setGlobal}>
+                  
+                          <svg width={20} height={20} className='buttons-svg-item'>
+                          <use href={`${Icons}#statisctics 1`} />
+                      </svg>
+                            
+                            Global</button>
+                <button className="buttons-container-item" onClick={SetKoreans}> 
+                          <svg width={20} height={20} className='buttons-svg-item'>
+                          <use href={`${Icons}#korea`} />
+                      </svg>
+                             Korea</button>
+                <button className="buttons-container-item" onClick={setNonKoreans}>
+                
+                          <svg width={20} height={20} className='buttons-svg-item'>
+                          <use href={`${Icons}#team-leader 2`} />
+                      </svg>
+                            Non-Korea</button>
+            </div>
+            <Autocomplete 
+      id="country-select-demo"
+      sx={{ 
+        width: 300,
+        '@media (max-width: 768px)': {
+          width: '100%',
+          maxWidth: '200px',
+        }
+      }}
+      options={countries}
+      autoHighlight
+      getOptionLabel={(option) => option.label}
+      className="country-selector modal"
+      onChange={handleCountryChange}
+      renderOption={(props, option) => {
+        const { key, ...optionProps } = props;
+        
+        return (
+          <div className='country-box'
+            key={key}
+            {...optionProps}
+          >
+            <img
+              loading="lazy"
+              
+              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+             
+              alt=""
+            />
+            {option.label} ({option.code})
+          </div>
+        );
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Choose a country"
+          className="country-selector-label"
+          InputProps={{
+            ...params.InputProps,
+            className: 'country-selector-input'
+          }}
+          InputLabelProps={{
+            className: 'country-selector-label'
+          }}
+          sx={{
+
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: '#fff',
+              },
+              '&:hover fieldset': {
+                borderColor: '#fff',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#fff',
+              },
+            },
+            '& .MuiSvgIcon-root': {
+              color: '#fff',
+            },
+          }}
+          slotProps={{
+            htmlInput: {
+              ...params.inputProps,
+              autoComplete: 'new-password',
+            },
+          }}
+        />
+      )}
+    />
+    <div className="select-rank-button-container modal">
+            <button className="select-rank-button" onClick={() => handleRankChange("S")}>S</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("A")}>A</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("B")}>B</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("C")}>C</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("D")}>D</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("E")}>E</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("F")}>F</button>
+            <button className="select-rank-button" onClick={() => handleRankChange("")}>All</button>
+            </div>
+            <div className="select-race-button-container">
+                <button className="terran-button select-race-button " onClick={() => handleRaceChange("T")}>T</button>
+                <button className="zerg-button select-race-button" onClick={() => handleRaceChange("Z")}>Z</button>
+                <button className="protoss-button select-race-button" onClick={() => handleRaceChange("P")}>P</button>
+                <button className="select-race-button" onClick={() => handleRaceChange("")}>All</button>
+              </div>
+              <div className="close-button-container  ">
+                <button className="close-button" onClick={toggleWindow}>Close</button>
+              </div>
+        </div>
+        </div>
+      )}
         </div>
         
     );

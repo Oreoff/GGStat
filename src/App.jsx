@@ -17,10 +17,11 @@ const App = () =>  {
     const inputRef = useRef(null);
     const handleSearchClick = () => {
       setSearchOpen((prev) => !prev);
-      setTimeout(() => {
-        inputRef.current?.focus(); // 👈
-      }, 0);
+      
     };
+    setTimeout(() => {
+      inputRef.current?.focus(); // 👈
+    }, 0);
     useEffect(() => {
       const loadPlayers = async () => {
         try {

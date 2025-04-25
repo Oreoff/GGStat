@@ -56,7 +56,7 @@ const [players, setPlayers] = React.useState([]);
 
     loadPlayers();
   }, []);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="loading-text">Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   const handlePageChange = (event, value) => {
     setPage(value);

@@ -19,9 +19,11 @@ const App = () =>  {
       setSearchOpen((prev) => !prev);
       
     };
-    setTimeout(() => {
-      inputRef.current?.focus(); // 👈
-    }, 0);
+    useEffect(() => {
+      if (searchOpen) {
+        inputRef.current?.focus();
+      }
+    }, [searchOpen]);
     useEffect(() => {
       const loadPlayers = async () => {
         try {
@@ -36,7 +38,7 @@ const App = () =>  {
   
       loadPlayers();
     }, []);
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p className="loading-text">Loading...</p>;
     if (error) return <p>Error: {error}</p>;
   const filteredPlayers = players.filter(player => player.player.name.toLowerCase().includes(query.toLowerCase()));
   function ShowList()
@@ -72,7 +74,7 @@ const App = () =>  {
         
     <p className="navigation-menu-text">Leaderboard</p></Link></li>
     <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link '>
-        <div className="navigation-menu-svg-container country-top">
+        <div className="navigation-menu-svg-container country-top-svg">
         <svg width={20} height={20} className='navgation-menu-svg'>
         <use href={`${Icons}#team-leader 2`} />
     </svg>
@@ -96,7 +98,7 @@ const App = () =>  {
         
     <p className="navigation-menu-text">Leaderboard</p></Link></li>
     <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link '>
-        <div className="navigation-menu-svg-container country-top">
+        <div className="navigation-menu-svg-container country-top-svg">
         <svg className='navigation-menu-svg' viewBox='0 0 20 20'>
         <use href={`${Icons}#team-leader 2`} />
     </svg>
@@ -120,7 +122,7 @@ const App = () =>  {
   <input
   type="text"
   ref={inputRef}
-    className={`input-item ${searchOpen ? 'active' : ''}`}
+    className="input-item"
    placeholder="Find a player"
   value={query}
   onChange={(e) => {
@@ -146,9 +148,15 @@ const App = () =>  {
             }}
           >
             <img
-              src={player.player.avatar}
-              alt={player.player.name}
-              style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+             src={player.player.avatar}
+             alt="Avatar"
+             onError={(e) => {
+               e.target.onerror = null; 
+               e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
+             }}
+             width="50"
+             height="50"
+             className="player-avatar"
             />
             <div>
               <p style={{ margin: 0, fontWeight: 'bold' }}>{player.player.name}</p>

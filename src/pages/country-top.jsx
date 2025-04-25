@@ -1,11 +1,13 @@
-import Paper from '@mui/material/Paper';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import * as React from 'react';
-import { TextField } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { countries } from './data/countries.js';
 import fetchPlayers from './services/playersFetch.js';
-
+import Icons from "./img/icons.svg";
+import Popper from '@mui/material/Popper';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
 export default function CountryTop() {
   const [country, setCountry] = React.useState('');
   const [players, setPlayers] = React.useState([]);
@@ -27,13 +29,17 @@ export default function CountryTop() {
     loadPlayers();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="loading-text">Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   const handleCountryChange = (event, value) => {
     setCountry(value ? value.code : '');
   };
-
+  const CustomPopper = (props) => {
+    return (
+      <Popper {...props} modifiers={[{ name: 'offset', options: { offset: [0, 0] } }]} />
+    );
+  };
   var uniquePlayers = [];
   const seenCountries = new Set();
 
@@ -63,89 +69,132 @@ export default function CountryTop() {
         <div className="table-wrapper">
           <table className="table">
             <thead>
-              <tr className="table-header-row">
-                <th className="table-cell"><div className="filters-container">
-                <Autocomplete 
-      id="country-select-demo"
-      sx={{ 
-        width: 300,
-        '@media (max-width: 768px)': {
-          width: '100%',
-          maxWidth: '200px',
-        }
-      }}
-      options={countries}
-      autoHighlight
-      getOptionLabel={(option) => option.label}
-      className="country-selector"
-      onChange={handleCountryChange}
-      renderOption={(props, option) => {
-        const { key, ...optionProps } = props;
-        
-        return (
-          <div className='country-box'
-            key={key}
-            {...optionProps}
-          >
-            <img
-              loading="lazy"
-              width="20"
-              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-             
-              alt=""
-            />
-            {option.label} ({option.code})
-          </div>
-        );
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Choose a country"
-          className="country-selector-label"
-          InputProps={{
-            ...params.InputProps,
-            className: 'country-selector-input'
-          }}
-          InputLabelProps={{
-            className: 'country-selector-label'
-          }}
-          sx={{
+              <tr className="table-header-row country-top">
+                <th className="table-cell country-top-cell country-cell header-cell"><div className="filters-container">
+                <Autocomplete
+  id="country-select-demo"
+  options={countries}
+  autoHighlight
+  getOptionLabel={(option) => option.label}
+  onChange={handleCountryChange}
+  PopperComponent={CustomPopper}
+  sx={{
+    width: 300,
+    borderRadius: '12px',
+    '@media (max-width: 768px)': {
+      width: '200px',
+      maxWidth: '200px',
+    },
+    '& .MuiAutocomplete-inputRoot': {
+      borderRadius: '8px',
+      backgroundColor: '#232B35',
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'white',
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'white',
+  },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'white',
+  },
+    '& .MuiAutocomplete-option': {
+      padding: '8px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+    },
+    '& .MuiAutocomplete-popupIndicator': {
+      color: 'white',
+    },
+    '& .MuiAutocomplete-popper': {
+      marginTop: '0px !important',
+    },
+    '& .MuiAutocomplete-paper': {
+      backgroundColor: '#232B35',
+      borderTop: 'none',         
+      boxShadow: 'none',          
+    },
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+    },
+    '& .MuiInputLabel-root': {
+      color: 'white', 
+      fontFamily: 'TT Firs Neue Trl',
+    },
+    '& .MuiInputLabel-root.Mui-focused': {
+      color: 'white', 
+    },
+  }}
+  componentsProps={{
+    paper: {
+      sx: {
+        backgroundColor: '#232B35',
+        boxShadow: 'none',
+        marginTop: '0px',
+        borderTop: 'none',
+      },
+    },
+  }}
+  renderOption={(props, option) => {
+    const { key, ...optionProps } = props;
 
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#fff',
-              },
-              '&:hover fieldset': {
-                borderColor: '#fff',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#fff',
-              },
-            },
-            '& .MuiSvgIcon-root': {
-              color: '#fff',
-            },
-          }}
-          slotProps={{
-            htmlInput: {
-              ...params.inputProps,
-              autoComplete: 'new-password',
-            },
-          }}
+    return (
+      <div
+        className="country-box"
+        key={key}
+        {...optionProps}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '4px 8px',
+          backgroundColor: '#232B35',
+          color: 'white',
+          fontFamily: 'TT Firs Neue Trl',
+          fontSize: '12px',
+        }}
+      >
+        <img
+          loading="lazy"
+          srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+          src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+          alt=""
+          style={{ width: 20, height: 15, borderRadius: 2 }}
         />
-      )}
+        {option.label} ({option.code})
+      </div>
+    );
+  }}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Choose a country"
+      InputProps={{
+        ...params.InputProps,
+        className: 'country-selector-input',
+      }}
+      InputLabelProps={{
+        className: 'country-selector-label',
+      }}
+      slotProps={{
+        htmlInput: {
+          ...params.inputProps,
+          autoComplete: 'new-password',
+        },
+      }}
     />
+  )}
+/>
       </div></th>
-                <th className="table-cell"><h3 className='table-title'>Player</h3></th>
-                <th className="table-cell"><h3 className='table-title'>MMR</h3></th>
+                <th className="table-cell country-top-cell header-cell"><h3 className='table-title'>Player</h3></th>
+                <th className="table-cell country-top-cell header-cell"><h3 className='table-title'>MMR</h3></th>
               </tr>
             </thead>
             <tbody>
               {filteredPlayers.map((row, index) => (
-                <tr key={index} className="table-row">
-                  <td className="table-cell">
+                <tr key={index} className="table-row country-top">
+                  <td className="table-cell country-top-cell">
                   <div className="country-flag-container">
                   <img
                     className="country-flag"  
@@ -156,7 +205,7 @@ export default function CountryTop() {
                   <p className="table-text">{row.country.code}</p>
                 </div>
                   </td>
-                  <td className="table-cell">
+                  <td className="table-cell country-top-cell player-cell">
                     <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
                      <div className="player-container">
                      <div style={{ display: "flex", alignItems: "center" }}>
@@ -180,7 +229,7 @@ export default function CountryTop() {
                       </div> 
                     </Link>
                   </td>
-                  <td className="table-cell"><p className='table-text'>{row.rank.points}</p></td>
+                  <td className="table-cell country-top-cell mmr-cell"><p className='table-text'>{row.rank.points}</p></td>
                 </tr>
               ))}
             </tbody>

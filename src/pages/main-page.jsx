@@ -6,13 +6,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Autocomplete from '@mui/material/Autocomplete';
 import Paper from '@mui/material/Paper';
-import { Pagination } from '@mui/material';
+import { Pagination } from '@mui/material';import { PaginationItem} from '@mui/material';
 import { Link } from 'react-router-dom';
 import League from './league.jsx'; 
 import Race from './race';
 import Icons from "./img/icons.svg";
 import { countries } from './data/countries.js';
 import fetchPlayers from './services/playersFetch.js';
+import Popper from '@mui/material/Popper';
 export default function MainPage()
 {
   const [country, setCountry] = React.useState('');
@@ -45,7 +46,7 @@ export default function MainPage()
       loadPlayers();
     }, []);
     console.log("Players:" + players);
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p className="loading-text">Loading...</p>;
     if (error) return <p>Error: {error}</p>;
   const handlePlayersChange = (event) => {
     setPlayersPerPage(event.target.value);
@@ -72,9 +73,20 @@ export default function MainPage()
   {
     setCountry("");
   }
+  const CustomPopper = (props) => {
+    return (
+      <Popper {...props} modifiers={[{ name: 'offset', options: { offset: [0, 0] } }]} />
+    );
+  };
   const setNonKoreans = (value) =>
     {
       setCountry("!KR");
+    }
+    const clearAll = () =>
+    {
+      setCountry("");
+      setRank("");
+      setRace("");
     }
   const filteredPlayers = players.filter((row) => {
     const matchesCountry = country === "!KR"
@@ -141,78 +153,117 @@ export default function MainPage()
             ><p className="table-text table-title">Player</p></th>
             <th 
               className="table-cell table-cell-country"
-            ><Autocomplete 
-      id="country-select-demo"
-      sx={{ 
-        width: 300,
-        '@media (max-width: 768px)': {
-          width: '100%',
-          maxWidth: '200px',
-        }
-      }}
-      options={countries}
-      autoHighlight
-      getOptionLabel={(option) => option.label}
-      className="country-selector"
-      onChange={handleCountryChange}
-      renderOption={(props, option) => {
-        const { key, ...optionProps } = props;
-        
-        return (
-          <div className='country-box'
-            key={key}
-            {...optionProps}
-          >
-            <img
-              loading="lazy"
-              
-              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-             
-              alt=""
-            />
-            {option.label} ({option.code})
-          </div>
-        );
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Choose a country"
-          className="country-selector-label"
-          InputProps={{
-            ...params.InputProps,
-            className: 'country-selector-input'
-          }}
-          InputLabelProps={{
-            className: 'country-selector-label'
-          }}
-          sx={{
-
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#fff',
+            > <Autocomplete
+            id="country-select-demo"
+            options={countries}
+            autoHighlight
+            getOptionLabel={(option) => option.label}
+            onChange={handleCountryChange}
+            PopperComponent={CustomPopper}
+            sx={{
+              width: 300,
+              borderRadius: '12px',
+              '& .MuiAutocomplete-inputRoot': {
+                borderRadius: '8px',
+                backgroundColor: '#232B35',
               },
-              '&:hover fieldset': {
-                borderColor: '#fff',
+              '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'white',
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'white',
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'white',
+            },
+              '& .MuiAutocomplete-option': {
+                padding: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
               },
-              '&.Mui-focused fieldset': {
-                borderColor: '#fff',
+              '& .MuiAutocomplete-popupIndicator': {
+                color: 'white',
               },
-            },
-            '& .MuiSvgIcon-root': {
-              color: '#fff',
-            },
-          }}
-          slotProps={{
-            htmlInput: {
-              ...params.inputProps,
-              autoComplete: 'new-password',
-            },
-          }}
-        />
-      )}
-    /></th>
+              '& .MuiAutocomplete-popper': {
+                marginTop: '0px !important',
+              },
+              '& .MuiAutocomplete-paper': {
+                backgroundColor: '#232B35',
+                borderTop: 'none',         
+                boxShadow: 'none',          
+              },
+              '& .MuiOutlinedInput-root': {
+                color: 'white',
+              },
+              '& .MuiInputLabel-root': {
+                color: 'white', 
+                fontFamily: 'TT Firs Neue Trl',
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: 'white', 
+              },
+            }}
+            componentsProps={{
+              paper: {
+                sx: {
+                  backgroundColor: '#232B35',
+                  boxShadow: 'none',
+                  marginTop: '0px',
+                  borderTop: 'none',
+                },
+              },
+            }}
+            renderOption={(props, option) => {
+              const { key, ...optionProps } = props;
+          
+              return (
+                <div
+                  className="country-box"
+                  key={key}
+                  {...optionProps}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '4px 8px',
+                    backgroundColor: '#232B35',
+                    color: 'white',
+                    fontFamily: 'TT Firs Neue Trl',
+                    fontSize: '12px',
+                  }}
+                >
+                  <img
+                    loading="lazy"
+                    srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+                    src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+                    alt=""
+                    style={{ width: 20, height: 15, borderRadius: 2 }}
+                  />
+                  {option.label} ({option.code})
+                </div>
+              );
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Choose a country"
+                InputProps={{
+                  ...params.InputProps,
+                  className: 'country-selector-input',
+                }}
+                InputLabelProps={{
+                  className: 'country-selector-label',
+                }}
+                slotProps={{
+                  htmlInput: {
+                    ...params.inputProps,
+                    autoComplete: 'new-password',
+                  },
+                }}
+              />
+            )}
+          /></th>
             <th 
               className="table-cell table-cell-rank"
             >
@@ -306,32 +357,32 @@ export default function MainPage()
 
     
     <div className="pagination-wrapper">
-          <Pagination
-                    count={Math.ceil(filteredPlayers.length / playersPerPage)}
-                    page={page}
-                    onChange={handleChangePage}
-                    shape="square"
-                    sx={{
-                      '& .MuiPaginationItem-root': {
-                        '&': {
-                          className: 'mui-pagination-item-main'
-                        },
-                        '&:hover': {
-                          className: 'mui-pagination-item-main:hover'
-                        },
-                        '&.Mui-selected': {
-                          className: 'mui-pagination-item-main-selected'
-                        }
-                      }
-                    }}
-                  />
+    <Pagination
+  count={Math.ceil(filteredPlayers.length / playersPerPage)}
+  page={page}
+  onChange={handleChangePage}
+  shape="square"
+  sx={{
+    '& .MuiPaginationItem-root': {
+      color: 'white',
+      border: '1px solid gray',
+      '&:hover': {
+        backgroundColor: '#333',
+        color: '#00F89F',
+      },
+      '&.Mui-selected': {
+        backgroundColor: '#00F89F',
+        color: '#232B35',
+      },
+    },
+  }}
+/>
       </div>
       </div>
             </div>
             {bar && (
               <div
               className="backdrop"
-              onClick={closeModal}
             >
         <div className="filter-container">
            <div className="buttons-container modal">
@@ -354,78 +405,119 @@ export default function MainPage()
                       </svg>
                             Non-Korea</button>
             </div>
-            <Autocomplete 
-      id="country-select-demo"
-      sx={{ 
-        width: 300,
-        '@media (max-width: 768px)': {
-          width: '100%',
-          maxWidth: '200px',
-        }
-      }}
-      options={countries}
-      autoHighlight
-      getOptionLabel={(option) => option.label}
-      className="country-selector modal"
-      onChange={handleCountryChange}
-      renderOption={(props, option) => {
-        const { key, ...optionProps } = props;
-        
-        return (
-          <div className='country-box'
-            key={key}
-            {...optionProps}
-          >
-            <img
-              loading="lazy"
-              
-              srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-              src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-             
-              alt=""
-            />
-            {option.label} ({option.code})
-          </div>
-        );
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Choose a country"
-          className="country-selector-label"
-          InputProps={{
-            ...params.InputProps,
-            className: 'country-selector-input'
-          }}
-          InputLabelProps={{
-            className: 'country-selector-label'
-          }}
-          sx={{
+           
+            <Autocomplete
+  id="country-select-demo"
+  options={countries}
+  autoHighlight
+  getOptionLabel={(option) => option.label}
+  onChange={handleCountryChange}
+  PopperComponent={CustomPopper}
+  sx={{
+    width: 300,
+    borderRadius: '12px',
+    '& .MuiAutocomplete-inputRoot': {
+      borderRadius: '8px',
+      backgroundColor: '#232B35',
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'white',
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'white',
+  },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: 'white',
+  },
+    '& .MuiAutocomplete-option': {
+      padding: '8px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '8px',
+    },
+    '& .MuiAutocomplete-popupIndicator': {
+      color: 'white',
+    },
+    '& .MuiAutocomplete-popper': {
+      marginTop: '0px !important',
+    },
+    '& .MuiAutocomplete-paper': {
+      backgroundColor: '#232B35',
+      borderTop: 'none',         
+      boxShadow: 'none',          
+    },
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+    },
+    '& .MuiInputLabel-root': {
+      color: 'white', 
+      fontFamily: 'TT Firs Neue Trl',
+    },
+    '& .MuiInputLabel-root.Mui-focused': {
+      color: 'white', 
+    },
+  }}
+  componentsProps={{
+    paper: {
+      sx: {
+        backgroundColor: '#232B35',
+        boxShadow: 'none',
+        marginTop: '0px',
+        borderTop: 'none',
+      },
+    },
+  }}
+  renderOption={(props, option) => {
+    const { key, ...optionProps } = props;
 
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: '#fff',
-              },
-              '&:hover fieldset': {
-                borderColor: '#fff',
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#fff',
-              },
-            },
-            '& .MuiSvgIcon-root': {
-              color: '#fff',
-            },
-          }}
-          slotProps={{
-            htmlInput: {
-              ...params.inputProps,
-              autoComplete: 'new-password',
-            },
-          }}
+    return (
+      <div
+        className="country-box"
+        key={key}
+        {...optionProps}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '4px 8px',
+          backgroundColor: '#232B35',
+          color: 'white',
+          fontFamily: 'TT Firs Neue Trl',
+          fontSize: '12px',
+        }}
+      >
+        <img
+          loading="lazy"
+          srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
+          src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
+          alt=""
+          style={{ width: 20, height: 15, borderRadius: 2 }}
         />
-      )}
+        {option.label} ({option.code})
+      </div>
+    );
+  }}
+  renderInput={(params) => (
+    <TextField
+      {...params}
+      label="Choose a country"
+      InputProps={{
+        ...params.InputProps,
+        className: 'country-selector-input',
+      }}
+      InputLabelProps={{
+        className: 'country-selector-label',
+      }}
+      slotProps={{
+        htmlInput: {
+          ...params.inputProps,
+          autoComplete: 'new-password',
+        },
+      }}
     />
+  )}
+/>
+<p className="select-rank-label">Choose rank</p>
     <div className="select-rank-button-container modal">
             <button className="select-rank-button" onClick={() => handleRankChange("S")}>S</button>
             <button className="select-rank-button" onClick={() => handleRankChange("A")}>A</button>
@@ -436,14 +528,16 @@ export default function MainPage()
             <button className="select-rank-button" onClick={() => handleRankChange("F")}>F</button>
             <button className="select-rank-button" onClick={() => handleRankChange("")}>All</button>
             </div>
+            <p className="select-race-label">Choose race</p>
             <div className="select-race-button-container">
                 <button className="terran-button select-race-button " onClick={() => handleRaceChange("T")}>T</button>
                 <button className="zerg-button select-race-button" onClick={() => handleRaceChange("Z")}>Z</button>
                 <button className="protoss-button select-race-button" onClick={() => handleRaceChange("P")}>P</button>
                 <button className="select-race-button" onClick={() => handleRaceChange("")}>All</button>
               </div>
-              <div className="close-button-container  ">
+              <div className="close-button-container">
                 <button className="close-button" onClick={toggleWindow}>Close</button>
+                <button className="close-button" onClick={clearAll}>Clear all</button>
               </div>
         </div>
         </div>

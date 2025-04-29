@@ -15,6 +15,8 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Box,
+  Typography,
   Button,
   Collapse,
   Pagination,
@@ -56,7 +58,7 @@ const [players, setPlayers] = React.useState([]);
 
     loadPlayers();
   }, []);
-  if (loading) return <p className="loading-text">Loading...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -87,13 +89,21 @@ const handleClick = (target) =>
   return (
     <div className="container">
       <div className="player-page-container">
-        <div className="update-stats-container">
-          <button className="refresh-stats-button">Refresh stats</button>
-          <p className="refresh-stats-text">Last updated 99999 mins ago</p>
-        </div>
+        
         <div className="player-container">
-          <img src={setPlayer.player.avatar} alt="portrait" width={100} />
+        <img
+                    src={setPlayer.player.avatar}
+                    alt="Avatar"
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
+                    }}
+                    width="100"
+                    height="100"
+                    className="player-avatar"
+                  />
           <div className="player-data">
+          
             <div className="name-container">
               <p className="name">{setPlayer.player.name}</p>
               <p className="tag">{setPlayer.player.alias}</p>
@@ -102,18 +112,22 @@ const handleClick = (target) =>
               <Race text={setPlayer.race} />
               <League text={setPlayer.rank.league} MMR={setPlayer.rank.points} />
               <p className="standing">#{setPlayer.standing}</p>
-              <p className="wins">{setPlayer.wins}W</p>
-              <p className="loses">{setPlayer.loses}L</p>
+              <p className="wins">{setPlayer.wins} wins</p>
+              <p className="loses">{setPlayer.loses} loses</p>
               <p className="server">{setPlayer.player.region}</p>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="country-container">
-        <p className="country-name">Country</p>
-        <img src={setPlayer.country.flag} alt="country-flag" width={100} />
+          <div className="country-container">
+        <img src={setPlayer.country.flag} alt="country-flag" className="country-flag player-page-flag"/>
         <p className="country-description">{setPlayer.country.code}</p>
       </div>
+          <div className="update-stats-container">
+          <button className="refresh-stats-button">Refresh stats</button>
+          <p className="refresh-stats-text">Last updated 99999 mins ago</p>
+        </div>
+        </div>
+      </div>
+      
       <div className="recent-matches-table-container">
         <h2 className="recent-matches-logo">Recent ranked matches</h2>
         <FormControl fullWidth className="selector-item players">
@@ -151,7 +165,10 @@ const handleClick = (target) =>
               {paginatedMatches.map((match, index) => (
                 <React.Fragment key={index}>
                   <TableRow
-                    className={match.result === 'win' ? 'match-row-win' : 'match-row-loss'}
+                    sx={{
+                      backgroundColor: match.result === 'win' ? '#d4edda' : '#f8d7da',
+                      border: `2px solid ${match.result === 'win' ? '#28a745' : '#dc3545'}`,
+                    }}
                   >
                     <TableCell>{match.result}</TableCell>
                     <TableCell>{match.points}</TableCell>
@@ -165,27 +182,27 @@ const handleClick = (target) =>
                     </TableCell>
                     <TableCell>{match.opponent}</TableCell>
                     <TableCell>
-                      <div className="match-actions">
+                      <Box display="flex" gap={1}>
                         <Button variant="outlined" size="small" onClick={() => toggleChat(index)}>Info</Button>
                         <Button variant="outlined" size="small" onClick={() => handleFetchReplay(match)}>Replay</Button>
-                      </div>
+                      </Box>
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={8} className="table-cell">
+                    <TableCell colSpan={8} sx={{ padding: 0 }}>
                       <Collapse in={openChatIndex === index} timeout="auto" unmountOnExit>
-                        <div className="match-chat-container">
-                          <h4 className="match-chat-title">Chat:</h4>
+                        <Box sx={{ padding: 2, backgroundColor: '#f9f9f9' }}>
+                          <Typography variant="subtitle1">Chat:</Typography>
                           {match.chat && match.chat.length > 0  ? (
                             match.chat.map((line, i) => (
-                              <p key={i} className="match-chat-message">
+                              <Typography key={i} variant="body2">
                                 <strong>{line.time} {line.player}:</strong> {line.message}
-                              </p>
+                              </Typography>
                             ))
                           ) : (
-                            <p className="match-chat-message">No chat available.</p>
+                            <Typography variant="body2">No chat available.</Typography>
                           )}
-                        </div>
+                        </Box>
                       </Collapse>
                     </TableCell>
                   </TableRow>
@@ -194,7 +211,7 @@ const handleClick = (target) =>
             </TableBody>
           </Table>
         </TableContainer>
-        <div className="pagination-wrapper">
+        <Box display="flex" justifyContent="center" sx={{ marginTop: 2 }}>
           <Pagination
             count={Math.ceil(matches.length / rowsPerPage)}
             page={page}
@@ -202,19 +219,25 @@ const handleClick = (target) =>
             shape="square"
             sx={{
               '& .MuiPaginationItem-root': {
-                '&': {
-                  className: 'mui-pagination-item'
-                },
+                borderRadius: '8px', 
+                border: '1px solid #ccc',
+                width: '40px',
+                height: '40px',
+                fontWeight: 'bold',
+                color: '#fff',
+                backgroundColor: '#333',
                 '&:hover': {
-                  className: 'mui-pagination-item:hover'
+                  backgroundColor: '#555',
                 },
                 '&.Mui-selected': {
-                  className: 'mui-pagination-item-selected'
+                  backgroundColor: '#2196f3',
+                  color: '#fff',
+                  borderColor: '#2196f3',
                 }
               }
             }}
           />
-        </div>
+        </Box>
       </div>
     </div>
   );

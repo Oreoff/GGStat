@@ -11,6 +11,9 @@ background-color:#232B35;
   padding-bottom: 100px;
   max-width:1440px;
 }
+p{
+  font-family: 'TT Firs Neue Trl', sans-serif;
+}
 .loading-text
 {
   font-size:20px;
@@ -263,7 +266,7 @@ footer{
 }
 .player-container
 {
-  max-width: 100%;
+  width: 100%;
   display:flex;
 }
 .table-text
@@ -358,6 +361,7 @@ border-radius:10px;
 {
   display: flex;
   gap:40px;
+  max-width: 100%;
 }
 .player-data
 {
@@ -368,53 +372,85 @@ border-radius:10px;
 .player-container 
 {
   display:flex;
-  gap:10px;
+  gap:40px;
+  max-width: 100%;
 }
 .name-container, .info-container
 {
   display:flex;
   gap:10px;
-
+  align-items: center;
 }
 .country-container{
 display:flex;
-gap:40px;
-margin-left:250px;
+gap:10px;
+align-items:center;
+}
+.country-description
+{
+  font-size:14px;
+  color:white;
 }
 .recent-matches-logo
 {
   text-align: center;
 }
+.update-stats-container
+{
+  display:flex;
+  width:100%;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+.update-stats-button
+{
+  max-width:fit-content ;
+}
 .loses
 {
-
-  color:lightcoral;
-  border: 1px solid lightcoral;
-  background-color: darkred;
+  border: 1px solid red;
   padding:5px 20px;
   border-radius: 3px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:white;
+  text-wrap: nowrap;
 }
 .wins
 {
-  color:lightgreen;
-  border:1px solid lightgreen;
-  background-color: darkgreen;
+  color:#232B35;
+  border:2px solid #00F89F;
   padding:5px 20px;
   border-radius: 3px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:white;
+  text-wrap: nowrap;
 }
 .standing
 {
-  background-color:lightgray;
-  border:1px solid black;
+  border:1px solid lightgray;
   padding:5px 20px;
   border-radius: 3px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:white;
 }
 .server{
   padding:5px 20px;
-  background-color:#708090;
-  color:lightgray;
+  color:white;
   border:1px solid lightgray;
   border-radius: 3px;
+}
+.name , .tag
+{
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  color:white;
+  font-size: 24px;
+}
+.wins , .loses , .server , .standing
+{
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  max-height: 20px;
 }
 .league-container
 {

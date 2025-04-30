@@ -7,20 +7,6 @@ import * as React from 'react';
 import Race from './race';
 import fetchPlayers from './services/playersFetch.js';
 import { fetchReplayLink } from './services/replayLinkFetch.js';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Box,
-  Typography,
-  Button,
-  Collapse,
-  Pagination,
-} from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 export default function PlayerPage() {
@@ -28,7 +14,7 @@ export default function PlayerPage() {
   const [openChatIndex, setOpenChatIndex] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-const [players, setPlayers] = React.useState([]);
+  const [players, setPlayers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const [replayLink, setReplayLink] = React.useState(null);
@@ -37,7 +23,7 @@ const [players, setPlayers] = React.useState([]);
     const link = await fetchReplayLink(match.match_id);
     setReplayLink(link);
     setLoading(false);
-  
+
     if (link) {
       window.open(link, '_blank');
     } else {
@@ -72,10 +58,10 @@ const [players, setPlayers] = React.useState([]);
   const toggleChat = (index) => {
     setOpenChatIndex(prevIndex => (prevIndex === index ? null : index));
   };
-const handleClick = (target) =>
-{
-  window.location.href = target;
-}
+  const handleClick = (target) =>
+  {
+    window.location.href = target;
+  }
   const playerName = name ? decodeURIComponent(name).toLowerCase() : '';
   const setPlayer = players.find(p => p.player.name.toLowerCase() === playerName);
   const matches = setPlayer ? setPlayer.matches : [];
@@ -146,98 +132,79 @@ const handleClick = (target) =>
           </Select>
         </FormControl>
       </div>
-      <div className="table">
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Result</TableCell>
-                <TableCell>Points</TableCell>
-                <TableCell>Time Ago</TableCell>
-                <TableCell>Map</TableCell>
-                <TableCell>Duration</TableCell>
-                <TableCell>Race</TableCell>
-                <TableCell>Opponent</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+      <div className="table-container">
+        <div className="table-wrapper">
+          <table className="matches-table">
+            <thead>
+              <tr>
+                <th>Result</th>
+                <th>Points</th>
+                <th>Time Ago</th>
+                <th>Map</th>
+                <th>Duration</th>
+                <th>Race</th>
+                <th>Opponent</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
               {paginatedMatches.map((match, index) => (
                 <React.Fragment key={index}>
-                  <TableRow
-                    sx={{
-                      backgroundColor: match.result === 'win' ? '#d4edda' : '#f8d7da',
-                      border: `2px solid ${match.result === 'win' ? '#28a745' : '#dc3545'}`,
-                    }}
-                  >
-                    <TableCell>{match.result}</TableCell>
-                    <TableCell>{match.points}</TableCell>
-                    <TableCell>{match.timeAgo}</TableCell>
-                    <TableCell>{match.map}</TableCell>
-                    <TableCell>{match.duration}</TableCell>
-                    <TableCell>
+                  <tr className={match.result === 'win' ? 'match-row-win' : 'match-row-loss'}>
+                    <td>{match.result}</td>
+                    <td>{match.points}</td>
+                    <td>{match.timeAgo}</td>
+                    <td>{match.map}</td>
+                    <td>{match.duration}</td>
+                    <td>
                       <div className="matchup-container">
                         <Race text={match.player_race} /> vs <Race text={match.opponent_race} />
                       </div>
-                    </TableCell>
-                    <TableCell>{match.opponent}</TableCell>
-                    <TableCell>
-                      <Box display="flex" gap={1}>
-                        <Button variant="outlined" size="small" onClick={() => toggleChat(index)}>Info</Button>
-                        <Button variant="outlined" size="small" onClick={() => handleFetchReplay(match)}>Replay</Button>
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={8} sx={{ padding: 0 }}>
-                      <Collapse in={openChatIndex === index} timeout="auto" unmountOnExit>
-                        <Box sx={{ padding: 2, backgroundColor: '#f9f9f9' }}>
-                          <Typography variant="subtitle1">Chat:</Typography>
-                          {match.chat && match.chat.length > 0  ? (
+                    </td>
+                    <td>{match.opponent}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <button className="info-button" onClick={() => toggleChat(index)}>Info</button>
+                        <button className="replay-button" onClick={() => handleFetchReplay(match)}>Replay</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className="chat-row">
+                    <td colSpan={8} className="chat-cell">
+                      <div className={`chat-container ${openChatIndex === index ? 'chat-open' : 'chat-closed'}`}>
+                        <div className="chat-content">
+                          <h4>Chat:</h4>
+                          {match.chat && match.chat.length > 0 ? (
                             match.chat.map((line, i) => (
-                              <Typography key={i} variant="body2">
+                              <p key={i} className="chat-message">
                                 <strong>{line.time} {line.player}:</strong> {line.message}
-                              </Typography>
+                              </p>
                             ))
                           ) : (
-                            <Typography variant="body2">No chat available.</Typography>
+                            <p className="no-chat-message">No chat available.</p>
                           )}
-                        </Box>
-                      </Collapse>
-                    </TableCell>
-                  </TableRow>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 </React.Fragment>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Box display="flex" justifyContent="center" sx={{ marginTop: 2 }}>
-          <Pagination
-            count={Math.ceil(matches.length / rowsPerPage)}
-            page={page}
-            onChange={handlePageChange}
-            shape="square"
-            sx={{
-              '& .MuiPaginationItem-root': {
-                borderRadius: '8px', 
-                border: '1px solid #ccc',
-                width: '40px',
-                height: '40px',
-                fontWeight: 'bold',
-                color: '#fff',
-                backgroundColor: '#333',
-                '&:hover': {
-                  backgroundColor: '#555',
-                },
-                '&.Mui-selected': {
-                  backgroundColor: '#2196f3',
-                  color: '#fff',
-                  borderColor: '#2196f3',
-                }
-              }
-            }}
-          />
-        </Box>
+            </tbody>
+          </table>
+        </div>
+        <div className="pagination-container">
+          <div className="pagination">
+            {Array.from({ length: Math.ceil(matches.length / rowsPerPage) }, (_, i) => i + 1).map((pageNum) => (
+              <button
+                key={pageNum}
+                className={`pagination-button ${pageNum === page ? 'active' : ''}`}
+                onClick={(e) => handlePageChange(e, pageNum)}
+              >
+                {pageNum}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

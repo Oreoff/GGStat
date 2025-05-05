@@ -2,11 +2,11 @@ export default function Race ({ text}) {
       
     let className = '';
   
-    if (text.includes("terran") || text.includes("T")) {
+    if (text.includes("terran") || text.includes("T")|| text.includes("t")) {
       className = 'terran';
-    } else if (text.includes("zerg")|| text.includes("Z")) {
+    } else if (text.includes("zerg")|| text.includes("Z") || text.includes("z")) {
       className = 'zerg';
-    } else if (text.includes("protoss")|| text.includes("P")) {
+    } else if (text.includes("protoss")|| text.includes("P") || text.includes("p")) {
       className = 'protoss';
     }
   return (

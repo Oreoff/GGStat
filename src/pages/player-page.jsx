@@ -116,21 +116,6 @@ export default function PlayerPage() {
       
       <div className="recent-matches-table-container">
         <h2 className="recent-matches-logo">Recent ranked matches</h2>
-        <FormControl fullWidth className="selector-item players">
-          <InputLabel id="matches-label">Matches</InputLabel>
-          <Select
-            labelId="matches-label"
-            id="matches-select"
-            value={rowsPerPage}
-            label="Players"
-            onChange={handleRowsChange}
-          >
-            <MenuItem value={25}>25</MenuItem>
-            <MenuItem value={50}>50</MenuItem>
-            <MenuItem value={75}>75</MenuItem>
-            <MenuItem value={100}>100</MenuItem>
-          </Select>
-        </FormControl>
       </div>
       <div className="table-container">
         <div className="table-wrapper">
@@ -158,7 +143,7 @@ export default function PlayerPage() {
                     <td>{match.duration}</td>
                     <td>
                       <div className="matchup-container">
-                        <Race text={match.player_race} /> vs <Race text={match.opponent_race} />
+                        <Race text={match.player_race[0]} /> vs <Race text={match.player_race[0]} />
                       </div>
                     </td>
                     <td>{match.opponent}</td>

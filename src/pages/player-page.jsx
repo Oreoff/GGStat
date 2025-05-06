@@ -143,7 +143,7 @@ export default function PlayerPage() {
                     <td>{match.duration}</td>
                     <td>
                       <div className="matchup-container">
-                        <Race text={match.player_race[0]} /> vs <Race text={match.player_race[0]} />
+                        <Race text={match.player_race[0]} /> vs <Race text={match.opponent_race[0]} />
                       </div>
                     </td>
                     <td>{match.opponent}</td>

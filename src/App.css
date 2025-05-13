@@ -191,7 +191,6 @@ footer{
   background-color:lightgrey
 } 
 
-/* Table styles for player page */
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -229,7 +228,7 @@ footer{
 
 .matches-table th,
 .matches-table td {
-  padding: 12px 16px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -238,6 +237,7 @@ footer{
 .match-row-win {
   background-color: rgba(0, 255, 153, 0.08);
   border-left: 4px solid #00ff99;
+  padding:4px;
 }
 
 .match-row-loss {
@@ -274,22 +274,18 @@ footer{
 }
 
 .matchup-container .opponent-container {
-  /* New container for opponent info */
   background-color: #2d3748;
   color: #fff;
   border-radius: 4px;
   font-size: 12px;
   display: flex;
-  /* Align race and name */
   align-items: center;
   gap: 8px;
   padding: 4px 8px;
 }
 
 .matchup-container .opponent-container .race {
-  /* Style for the race letter */
   background-color: #1a202c;
-  /* Darker background for the race */
   padding: 4px 6px;
   border-radius: 4px;
   font-weight: bold;
@@ -316,6 +312,7 @@ footer{
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  text-wrap:nowrap;
 }
 
 .info-button {
@@ -397,29 +394,31 @@ footer{
 .more-less-button:hover {
   color: #fff;
 }
-
 .chat-row {
-  background-color: #1e2633;
+  display: none;
 }
+
+.chat-row.chat-visible {
+  display: table-row;
+}
+
 
 .chat-cell {
   padding: 0;
   border-top: none;
+  background-color: #1e2633;
 }
 
 .chat-container {
   max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
   background-color: #101622;
   padding: 0 16px;
 }
 
-.chat-open {
+.chat-container.expand {
   max-height: 200px;
   padding: 16px;
 }
-
 .chat-content h4 {
   color: #00ff99;
   margin-bottom: 8px;
@@ -437,7 +436,58 @@ footer{
   font-style: italic;
   font-size: 14px;
 }
+.about-row {
+  display: none; 
+}
 
+.about-row.about-visible {
+  display: table-row;
+}
+
+.about-cell {
+  padding: 0;
+  background-color: #1e2633;
+  border-top: none;
+}
+
+
+.about-container {
+  max-height: 0;
+  overflow: hidden;
+  background-color: #101622;
+  padding: 0 16px;
+}
+.matchup-sidebar-container
+{
+  display:flex;
+  flex-wrap:nowrap;
+  align-items:center
+}
+.about-container.expand {
+  max-height: 500px; 
+  padding: 16px;
+}
+
+
+.about-container h3,
+.points-container,
+.timeAgo-container,
+.map-container,
+.duration-container,
+.matchup-sidebar-container,
+.opponent-container {
+  margin-bottom: 8px;
+  color: #d0d7e2;
+}
+
+.about-logo {
+  color: #00ff99;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.chat-row {
+  background-color: #1e2633;
+}
 .pagination-container {
   padding: 16px;
   background-color: #0e121b;
@@ -600,6 +650,8 @@ footer{
 {
   width: 100%;
   display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .table-text
 {
@@ -740,6 +792,7 @@ border-radius:10px;
   font-size: 40px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:white;
+  margin-top:40px;
 }
 .recent-matches-table-container
 {
@@ -1092,9 +1145,7 @@ margin-right:40px;
   border-spacing: 0;
 }
 
-.table-cell {
-  padding: 8px 16px;
-}
+
 
 .table-cell-center {
   padding: 0;
@@ -1169,7 +1220,7 @@ margin-right:40px;
   gap: 2px;
 }
 
-Player container
+
 .player-container-flex {
   display: flex;
   align-items: center;
@@ -1194,26 +1245,27 @@ Player container
   gap: 5px;
 } 
 
-/* Race container */
 .race-container {
   display: flex;
   align-items: center;
 } 
 
-/* Pagination container */
 .pagination-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 16px;
 } 
-
-/* Match action buttons */
+.action-buttons
+{
+  display: flex;
+  flex-wrap: wrap;
+}
  .match-actions {
   display: flex;
   gap: 8px;
+  flex-wrap:wrap;
 } 
 
-/* Match chat container */
  .match-chat-container {
   padding: 16px;
   background-color: #ffffff;
@@ -1227,19 +1279,6 @@ Player container
   margin: 4px 0;
   font-size: 0.875rem;
 } 
-
-/* Win/Loss row styles */
-.match-row-win {
-  background-color: #232A34;
-  border: 3px solid #28a745;
-}
-
-.match-row-loss {
-  background-color: #232A34;
-  border: 2px solid #dc3545;
-} 
-
-/* MUI component overrides */
  .mui-pagination-item {
   border-radius: 8px;
   border: 1px solid #ccc;
@@ -1285,16 +1324,64 @@ Player container
   color:white;
   font-size:12px;
 } 
-
-/* Media queries */
+.about-button{
+  display:none;
+}
+@media (max-width: 1000px) {
+  .race-full-text
+  {
+    display:none;
+  }
+}
  @media (max-width: 768px) {
   .country-selector {
     width: 100%;
     max-width: 200px;
   }
+  .about-button
+  {
+    display:flex;
+  }
+  .player-container
+  {
+    flex-wrap:wrap;
+    flex-direction: column;
+    gap:10px;
+    justify-content: center;
+  }
+ 
+  .player-container-flex{
+    flex-direction: row;
+    gap:0px;
+  }
   .country-cell
   {
     display: none;
+  }
+  body{
+    font-size:12px;
+  }
+  .player-data{
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  
+  .info-container
+  {
+    flex-wrap:wrap;
+    justify-content: center;
+  }
+  .update-stats-container
+  {
+    margin:10px 0px;
+  }
+  .league-container
+  {
+    max-width:75px;
+  }
+  .recent-matches-logo
+  {
+    font-size:24px;
   }
   .section-container
   {
@@ -1426,7 +1513,10 @@ Player container
     display:none;
   }
  
-  
+   .matchup-cell, .map-cell, .timeAgo-cell, .points-cell, .duration-cell, .opponent-cell
+  {
+    display:none;
+  }
   
   .table-cell{
     padding:0;
@@ -1491,9 +1581,6 @@ Player container
   }
   .mmr{
     font-size:12px;
-  }
-  .player-container{
-    gap:0px;
   }
   .input-container
   {
@@ -1574,6 +1661,11 @@ Player container
   .modal
   {
     display:flex;
+  }
+  .player-page-avatar
+  {
+    width:100px;
+    height: 100px;
   }
 } 
 

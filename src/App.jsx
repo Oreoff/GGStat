@@ -3,8 +3,8 @@ import Icons from "./pages/img/icons.svg";
 import MainPage from './pages/main-page.jsx';
 import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-
 import {useState, useEffect, useRef} from 'react';
+import { NavLink } from "react-router-dom";
 import './App.css';
 import fetchPlayers from './pages/services/playersFetch.js';
 const App = () =>  {
@@ -16,9 +16,9 @@ const App = () =>  {
     const [searchOpen, setSearchOpen] = useState(false);
     const inputRef = useRef(null);
     const handleSearchClick = () => {
-      setSearchOpen((prev) => !prev);
-      
+      setSearchOpen((prev) => !prev);     
     };
+    
     useEffect(() => {
       if (searchOpen) {
         inputRef.current?.focus();
@@ -35,7 +35,6 @@ const App = () =>  {
           setLoading(false);
         }
       };
-  
       loadPlayers();
     }, []);
     if (loading) return <p className="loading-text">Loading...</p>;
@@ -44,19 +43,18 @@ const App = () =>  {
   function ShowList()
   {
     const container = document.querySelector(".search-list");
-    if(container) container.classList.toggle("active");
+    if(container) container.classList.toggle("search-open");
   }
   function RemoveList()
   {
     const container = document.querySelector(".search-list");
-    if(container) container.classList.remove("active");
+    if(container) container.classList.remove("search-open");
   }
-  
   return (
     <div>
       <Router>
     <header className="container header-container">
-              <h1 className="logo">GGStat</h1>
+              <Link to="/" className='logo-link'><h1 className="logo">GGStat</h1></Link>
               <div className="burger-menu">
               <div className="burger-icon" onClick={() => setMenuOpen(!menuOpen)}>
   <div className={menuOpen ? "line open" : "line"}></div>
@@ -65,56 +63,46 @@ const App = () =>  {
 </div>
   <nav className={`navigation-menu ${menuOpen ? 'open' : ''}`}>
       <ul className = "navigation-menu-list">
-        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'>
+        <li className = "navigation-menu-item"><NavLink to="/" end className='navigation-menu-link'>
         <div className="navigation-menu-svg-container">
         <svg width={20} height={20} className='navgation-menu-svg'>
         <use href={`${Icons}#leaderboard`} />
     </svg>
           </div> 
-        
-    <p className="navigation-menu-text">Leaderboard</p></Link></li>
-    <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link '>
+    <p className="navigation-menu-text">Leaderboard</p></NavLink></li>
+    <li className = "navigation-menu-item"><NavLink to="/country-tops" className='navigation-menu-link '>
         <div className="navigation-menu-svg-container country-top-svg">
         <svg width={20} height={20} className='navgation-menu-svg'>
         <use href={`${Icons}#team-leader 2`} />
     </svg>
-          </div> 
-        
-    <p className="navigation-menu-text">Country top</p></Link></li>
+          </div>      
+    <p className="navigation-menu-text">Country top</p></NavLink></li>
       </ul>
     </nav>
-
               </div>
-              
-
 <nav className={`navigation-menu `}>
-      <ul className = "navigation-menu-list">
-        <li className = "navigation-menu-item"><Link to="/" className='navigation-menu-link'>
-        <div className="navigation-menu-svg-container">
-        <svg  className='navigation-menu-svg' viewBox='0 0 20 20'>
+       <ul className = "navigation-menu-list">
+        <li className = "navigation-menu-item"><NavLink to="/" end className='navigation-menu-link'>
+        <svg width={20} height={20} className='navigation-menu-svg'>
         <use href={`${Icons}#leaderboard`} />
     </svg>
-          </div> 
-        
-    <p className="navigation-menu-text">Leaderboard</p></Link></li>
-    <li className = "navigation-menu-item"><Link to="/country-tops" className='navigation-menu-link '>
-        <div className="navigation-menu-svg-container country-top-svg">
-        <svg className='navigation-menu-svg' viewBox='0 0 20 20'>
+    <p className="navigation-menu-text">Leaderboard</p></NavLink></li>
+    <li className = "navigation-menu-item"><NavLink to="/country-tops" className='navigation-menu-link '>
+
+        <svg width={20} height={20} className='navigation-menu-svg'>
         <use href={`${Icons}#team-leader 2`} />
     </svg>
-          </div> 
-        
-    <p className="navigation-menu-text">Country top</p></Link></li>
+    <p className="navigation-menu-text">Country top</p></NavLink></li>
       </ul>
     </nav>
     <form action="" className="input-container">
-  <div className="search-field-svg">
+  <div className="search-field-button">
     <button
       type="button"
-      className="search-button"
+      className="search-button-item"
       onClick={handleSearchClick}
     >
-      <svg className="navigation-menu-svg" viewBox='0 0 20 20'>
+      <svg className="search-button-svg" viewBox='0 0 20 20'>
         <use href={`${Icons}#Vector`} />
       </svg>
     </button>
@@ -168,14 +156,12 @@ const App = () =>  {
   </ul>
   </form>
   </header>
-
     <Routes>
       <Route path="/" element={<MainPage/>} />
       <Route path="/country-tops" element={<CountryTop/>}/>
       <Route path="/player-page/:name" element={<PlayerPage/>}/>
     </Routes>
   </Router> 
-  
   <footer className="footer">
     <div className="footer-container">
       <p className="copyright all-rights">Copyright © 2025 - All right reserved</p>
@@ -185,5 +171,4 @@ const App = () =>  {
   </div>
   );
 }
-
 export default App;

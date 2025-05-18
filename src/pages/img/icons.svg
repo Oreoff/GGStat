@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-  <symbol id="leaderboard" viewBox="0 0 20 20" fill="none">
+  <symbol id="leaderboard" viewBox="0 0 20 20" fill="currentColor">
     <g clip-path="url(#clip0_2011_92)">
       <path d="M16.6667 13.3333C15.7475 13.3333 15 12.5858 15 11.6667C15 10.7475 15.7475 10 16.6667 10C17.5858 10 18.3333 10.7475 18.3333 11.6667C18.3333 12.5858 17.5858 13.3333 16.6667 13.3333Z" fill="currentColor"></path>
       <path d="M3.33329 13.3333C2.41413 13.3333 1.66663 12.5858 1.66663 11.6667C1.66663 10.7475 2.41413 10 3.33329 10C4.25246 10 4.99996 10.7475 4.99996 11.6667C4.99996 12.5858 4.25246 13.3333 3.33329 13.3333Z" fill="currentColor"></path>
@@ -15,7 +15,7 @@
       </clipPath>
     </defs>
   </symbol>
-  <symbol id="filter" viewBox="0 0 15.999975204467773 14" fill="none">
+  <symbol id="filter" viewBox="0 0 15.999975204467773 14" fill="currentColor">
     <path d="M1 0C0.44772 0 0 0.44772 0 1C0 1.55228 0.44772 2 1 2H12C12.5523 2 13 1.55228 13 1C13 0.44772 12.5523 0 12 0H1Z" fill="currentColor"></path>
     <path d="M1 4C0.44772 4 0 4.44772 0 5C0 5.55228 0.44772 6 1 6H8C8.5523 6 9 5.55228 9 5C9 4.44772 8.5523 4 8 4H1Z" fill="currentColor"></path>
     <path d="M1 8C0.44772 8 0 8.4477 0 9C0 9.5523 0.44772 10 1 10H5C5.55228 10 6 9.5523 6 9C6 8.4477 5.55228 8 5 8H1Z" fill="currentColor"></path>

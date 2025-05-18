@@ -20,7 +20,7 @@ export default function MainPage()
 
   const [page, setPage] = React.useState(1);
   const [playersPerPage,setPlayersPerPage] = React.useState(25);
-  const [rank, setRank] = React.useState('');  
+  const [rank, setRank] = React.useState([]);  
   const [race, setRace] = React.useState('');
   const [players, setPlayers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
@@ -53,8 +53,15 @@ export default function MainPage()
   };
 
   const handleRankChange = (rank) => {
-    setRank(rank);
+   setRank((prevRanks) =>
+    prevRanks.includes(rank)
+      ? prevRanks.filter((r) => r !== rank)
+      : [...prevRanks, rank] 
+  );
+
+
   };
+  const clearRanks = () => setRank([]);
   const handleCountryChange = (event, value) => {
     setCountry(value ? value.code : '');
   };
@@ -108,7 +115,7 @@ export default function MainPage()
           <div className="section-container">
           <div className="section-name-container">
                 <h2 className='section-title'>Leaderboards</h2>
-                <p className="section-description">Welcome to cwal.gg, the StarCraft: Remastered ladder rankings browser. </p>
+                <p className="section-description">Welcome to GGStat, the StarCraft: Remastered ladder rankings browser. </p>
                 <button className="filter-button" onClick={toggleWindow}>
                 <p className="filter-button-text">Filter</p>
                   <svg width={15} height={15} className='buttons-svg-item'>
@@ -275,7 +282,7 @@ export default function MainPage()
             <button className="select-rank-button" onClick={() => handleRankChange("D")}>D</button>
             <button className="select-rank-button" onClick={() => handleRankChange("E")}>E</button>
             <button className="select-rank-button" onClick={() => handleRankChange("F")}>F</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("")}>All</button>
+            <button className="select-rank-button" onClick={() => clearRanks()}>All</button>
             </div></th>
             <th 
               className="table-cell table-cell-race"

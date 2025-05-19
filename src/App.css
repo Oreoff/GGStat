@@ -329,7 +329,6 @@ footer{
 .action-buttons {
   display: flex;
   gap: 8px;
-  justify-content: flex-end;
 }
 
 .info-button,
@@ -639,7 +638,7 @@ footer{
   border-radius:5px;
 
 }
-.buttons-container-item:focus, .buttons-container-item:hover
+.buttons-container-item:hover
 {
   border-color:#00F89F;
   background-color:#00F89F;
@@ -647,7 +646,18 @@ footer{
   fill:#00F89F;
   
 }
-.buttons-container-item:focus svg, .buttons-container-item:hover svg
+.region-chosen
+{
+  border-color:#00F89F;
+  background-color:#00F89F;
+  color:black;
+  fill:#00F89F;
+}
+.region-chosen svg
+{
+  color:#00F89F;
+}
+ .buttons-container-item:hover svg
 {
   color:#00F89F;
 }
@@ -684,7 +694,8 @@ footer{
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:white;
-  
+  text-align: start;
+  padding-left: 10px;
 }
 .table-standing
 {
@@ -696,9 +707,11 @@ background-color:#232B35;
 padding:13px 0px;
 margin:0px 5px;
 border-radius:10px;
+max-width: 40px;
 }
 .table-title
 {
+  text-align: start;
   font-size: 16px;
   color:Gray;
   padding:10px;
@@ -731,7 +744,6 @@ border-radius:10px;
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0
-
 }
 .table-wrapper
 {
@@ -744,20 +756,42 @@ border-radius:10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
 
 }
-.select-rank-button:hover ,.select-rank-button:focus, .select-race-button:hover, .select-race-button:focus{
+.select-rank-button:hover , .select-race-button:hover{
   color:#00F89F;
   border:2px solid #00F89F;
 }
-.terran-button:hover, .terran-button:focus{
+.select-race-button.selected
+{
+  color:#00F89F;
+  border:2px solid #00F89F;
+}
+.contained
+{
+  color:#00F89F;
+  border:2px solid #00F89F;
+}
+.terran-button:hover{
   border:2px solid #3679FE;
   
   color:#3679FE;
 }
-.zerg-button:hover, .zerg-button:focus{
+.terran-button.selected{
+  border:2px solid #3679FE;
+  color:#3679FE;
+}
+.zerg-button:hover{
   border:2px solid #AE36FE;
   color:#AE36FE;
 }
-.protoss-button:hover, .protoss-button:focus{
+.zerg-button.selected{
+  border:2px solid #AE36FE;
+  color:#AE36FE;
+}
+.protoss-button:hover{
+  border:2px solid #F0C722;
+  color:#F0C722;
+}
+.protoss-button.selected{
   border:2px solid #F0C722;
   color:#F0C722;
 }
@@ -767,7 +801,8 @@ border-radius:10px;
 }
 .player-link{
   text-decoration: none;
-  color:black;
+  color:white;
+  font-size:14px;
 }
 .player-page-container
 {
@@ -777,13 +812,12 @@ border-radius:10px;
 }
 
 
-
-
-/* До роботи ще доробити */
 .player-data {
   display: flex;
   gap: 20px; 
   align-items: center; 
+  justify-content: space-between;
+  flex-wrap: wrap;
   padding: 15px; 
   background-color: #181f2a; 
   border-radius: 8px; 
@@ -795,6 +829,7 @@ border-radius:10px;
   gap: 40px;
   max-width: 100%;
   align-items: center; 
+  justify-content: center;
 }
 
 .name-container,
@@ -903,33 +938,46 @@ border-radius:10px;
 
 .loses
 {
-  border: 1px solid red;
-  padding:5px 20px;
-  border-radius: 3px;
+ background-color:#2e3946;
+ padding:8px;
+  border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:white;
   text-wrap: nowrap;
 }
+.loses-span{
+background-color:red;
+  color:black;
+  padding:4px;
+  border-radius: 5px;
+  margin-left:5px;
+}
 .wins
 {
-  color:#232B35;
-  border:2px solid #00F89F;
-  padding:5px 20px;
-  border-radius: 3px;
+  background-color:#2e3946;
+  padding:8px;
+  border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:white;
   text-wrap: nowrap;
+}
+.wins-span{
+  background-color:#00F89F;
+  color:black;
+  padding:4px;
+  border-radius: 5px;
+  margin-left:5px;
 }
 .standing
 {
   border:1px solid lightgray;
-  padding:5px 20px;
+  padding:5px 15px;
   border-radius: 3px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:white;
 }
 .server{
-  padding:5px 20px;
+  padding:5px 15px;
   color:white;
   border:1px solid lightgray;
   border-radius: 3px;
@@ -1067,7 +1115,6 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   background-color:#232B35;
   max-height: 200px;
   overflow-y: auto;
-
 }
 .search-open
 {
@@ -1234,7 +1281,6 @@ margin-right:40px;
   font-family: 'TT Firs Neue Trl', sans-serif;
 } 
 
-/* Button containers */
  .select-rank-button-container {
   display: flex;
   flex-wrap: wrap;
@@ -1264,7 +1310,6 @@ margin-right:40px;
   font-size: 0.8rem;
 } 
 
-/* Country flag container */
 .country-flag-container {
   overflow: hidden;
   border-radius: 5px;
@@ -1376,7 +1421,6 @@ margin-right:40px;
     flex-wrap:wrap;
     flex-direction: column;
     gap:10px;
-    justify-content: center;
   }
  
   .player-container-flex{
@@ -1484,14 +1528,7 @@ margin-right:40px;
   {
     flex-direction: column;
   }
-  .navigation-menu-svg
-  {
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-  vertical-align: middle;
-  fill: currentColor;
-  }
+ 
   .search-field-svg
   {
     width: 15px;
@@ -1505,6 +1542,7 @@ margin-right:40px;
   {
     background-color:#2e3946;
   }
+
   .table-header-row
   {
     display:none;
@@ -1569,7 +1607,6 @@ margin-right:40px;
   .mmr-cell
   {
     max-width: 30px;
-    justify-content:center;
   }
   .player-cell
   {
@@ -1695,6 +1732,10 @@ margin-right:40px;
   .modal
   {
     display:flex;
+  }
+  .contained 
+  {
+    border:2px solid #00F89F;
   }
   .player-page-avatar
   {

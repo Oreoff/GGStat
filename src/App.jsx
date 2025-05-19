@@ -64,18 +64,15 @@ const App = () =>  {
   <nav className={`navigation-menu ${menuOpen ? 'open' : ''}`}>
       <ul className = "navigation-menu-list">
         <li className = "navigation-menu-item"><NavLink to="/" end className='navigation-menu-link'>
-        <div className="navigation-menu-svg-container">
-        <svg width={20} height={20} className='navgation-menu-svg'>
+        <svg width={20} height={20} className='navigation-menu-svg'>
         <use href={`${Icons}#leaderboard`} />
     </svg>
-          </div> 
     <p className="navigation-menu-text">Leaderboard</p></NavLink></li>
     <li className = "navigation-menu-item"><NavLink to="/country-tops" className='navigation-menu-link '>
-        <div className="navigation-menu-svg-container country-top-svg">
-        <svg width={20} height={20} className='navgation-menu-svg'>
+        <svg width={20} height={20} className='navigation-menu-svg'>
         <use href={`${Icons}#team-leader 2`} />
     </svg>
-          </div>      
+       
     <p className="navigation-menu-text">Country top</p></NavLink></li>
       </ul>
     </nav>

@@ -9,6 +9,7 @@ import fetchPlayers from './services/playersFetch.js';
 import { fetchReplayLink } from './services/replayLinkFetch.js';
 import { useParams } from 'react-router-dom';
 import { Pagination } from '@mui/material';
+import { Link } from 'react-router-dom';
 export default function PlayerPage() {
   const { name } = useParams();
   const [openChatIndex, setOpenChatIndex] = React.useState(null);
@@ -99,12 +100,11 @@ export default function PlayerPage() {
               <Race text={setPlayer.race} />
               <League text={setPlayer.rank.league} MMR={setPlayer.rank.points} />
               <p className="standing">#{setPlayer.standing}</p>
-              <p className="wins">{setPlayer.wins} wins</p>
-              <p className="loses">{setPlayer.loses} loses</p>
+              <p className="wins">{setPlayer.wins}<span className='wins-span'>W</span></p>
+              <p className="loses">{setPlayer.loses}<span className='loses-span'>L</span></p>
               <p className="server">{setPlayer.player.region}</p>
             </div>
-          </div>
-          <div className="country-container">
+            <div className="country-container">
         <img src={setPlayer.country.flag} alt="country-flag" className="country-flag player-page-flag"/>
         <p className="country-description">{setPlayer.country.code}</p>
       </div>
@@ -114,6 +114,8 @@ export default function PlayerPage() {
         </div>
         </div>
       </div>
+          </div>
+          
       
       <div className="recent-matches-table-container">
         <h2 className="recent-matches-logo">Recent ranked matches</h2>
@@ -147,7 +149,7 @@ export default function PlayerPage() {
                         <Race text={match.player_race[0]} /> vs <Race text={match.opponent_race[0]} />
                       </div>
                     </td>
-                    <td className="opponent-cell">{match.opponent}</td>
+                    <td className="opponent-cell"><Link to={`/player-page/${encodeURIComponent(match.opponent)}`} className="player-link">{match.opponent}</Link></td>
                     <td className='actions-cell'>
                       <div className="action-buttons">
                         <button className="info-button" onClick={() => toggleChat(index)}>View chat</button>

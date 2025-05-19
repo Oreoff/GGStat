@@ -26,6 +26,8 @@ export default function MainPage()
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
     const [bar, setBar] = React.useState(false);
+    const [region, setRegion] = React.useState("");
+
     const toggleWindow = () => {
       setBar(!bar);
     };
@@ -51,15 +53,20 @@ export default function MainPage()
   const handlePlayersChange = (event) => {
     setPlayersPerPage(event.target.value);
   };
+const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
 
+      const countriesWithPlayers = countries.filter(country =>
+        playerCountryCodes.includes(country.code)
+      ).map(country => ({
+        ...country,
+        label: country.label,
+      }));
   const handleRankChange = (rank) => {
    setRank((prevRanks) =>
     prevRanks.includes(rank)
       ? prevRanks.filter((r) => r !== rank)
       : [...prevRanks, rank] 
   );
-
-
   };
   const clearRanks = () => setRank([]);
   const handleCountryChange = (event, value) => {
@@ -70,15 +77,18 @@ export default function MainPage()
   };
   const handleChangePage = (event, value) => {
     setPage(value);
+
   };
  
   const SetKoreans = (value) => 
   {
     setCountry("KR");
+    setRegion("Korea");
   }
   const setGlobal = (value) =>
   {
     setCountry("");
+    setRegion("");
   }
   const CustomPopper = (props) => {
     return (
@@ -88,12 +98,14 @@ export default function MainPage()
   const setNonKoreans = (value) =>
     {
       setCountry("!KR");
+          setRegion("Non-Korea");
     }
     const clearAll = () =>
     {
       setCountry("");
-      setRank("");
+       setRank([]);
       setRace("");
+      setRegion("");
     }
   const filteredPlayers = players.filter((row) => {
     const matchesCountry = country === "!KR"
@@ -101,7 +113,7 @@ export default function MainPage()
     : country
     ? row.country.flag.includes(country.toLowerCase())
     : true;
-    const matchesRank = rank ? row.rank.league.includes(rank): true;
+    const matchesRank = rank ?  rank.length === 0|| rank.includes(row.rank.league) : true;
     const matchesRace = race ? row.race.includes(race): true;
     return matchesCountry && matchesRank && matchesRace;
   });
@@ -123,19 +135,19 @@ export default function MainPage()
                       </svg></button>
             </div>
             <div className="buttons-container">
-                <button className="buttons-container-item" onClick={setGlobal}>
+                <button className={`buttons-container-item ${region === ""? "region-chosen":""}`} onClick={setGlobal}>
                   
                           <svg width={20} height={20} className='buttons-svg-item'>
                           <use href={`${Icons}#statisctics 1`} />
                       </svg>
                             
                             Global</button>
-                <button className="buttons-container-item" onClick={SetKoreans}> 
+                <button className={`buttons-container-item ${region === "Korea"? "region-chosen":""}`} onClick={SetKoreans}> 
                           <svg width={20} height={20} className='buttons-svg-item'>
                           <use href={`${Icons}#korea`} />
                       </svg>
                              Korea</button>
-                <button className="buttons-container-item" onClick={setNonKoreans}>
+                <button className={`buttons-container-item ${region === "Non-Korea"? "region-chosen":""}`} onClick={setNonKoreans}>
                 
                           <svg width={20} height={20} className='buttons-svg-item'>
                           <use href={`${Icons}#team-leader 2`} />
@@ -162,7 +174,7 @@ export default function MainPage()
               className="table-cell table-cell-country"
             > <Autocomplete
             id="country-select-demo"
-            options={countries}
+            options={countriesWithPlayers}
             autoHighlight
             getOptionLabel={(option) => option.label}
             onChange={handleCountryChange}
@@ -275,23 +287,23 @@ export default function MainPage()
               className="table-cell table-cell-rank"
             >
               <div className="select-rank-button-container">
-            <button className="select-rank-button" onClick={() => handleRankChange("S")}>S</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("A")}>A</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("B")}>B</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("C")}>C</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("D")}>D</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("E")}>E</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("F")}>F</button>
-            <button className="select-rank-button" onClick={() => clearRanks()}>All</button>
+            <button className={`select-rank-button ${rank.includes("S") ? "contained" : ""}`} onClick={() => handleRankChange("S")}>S</button>
+            <button className={`select-rank-button ${rank.includes("A") ? "contained" : ""}`} onClick={() => handleRankChange("A")}>A</button>
+            <button className={`select-rank-button ${rank.includes("B") ? "contained" : ""}`} onClick={() => handleRankChange("B")}>B</button>
+            <button className={`select-rank-button ${rank.includes("C") ? "contained" : ""}`} onClick={() => handleRankChange("C")}>C</button>
+            <button className={`select-rank-button ${rank.includes("D") ? "contained" : ""}`} onClick={() => handleRankChange("D")}>D</button>
+            <button className={`select-rank-button ${rank.includes("E") ? "contained" : ""}`} onClick={() => handleRankChange("E")}>E</button>
+            <button className={`select-rank-button ${rank.includes("F") ? "contained" : ""}`} onClick={() => handleRankChange("F")}>F</button>
+            <button className={`select-rank-button ${rank.length === 0 ? "contained" : ""}`}onClick={() => clearRanks()}>All</button>
             </div></th>
             <th 
               className="table-cell table-cell-race"
             >
               <div className="select-race-button-container">
-                <button className="terran-button select-race-button " onClick={() => handleRaceChange("T")}>T</button>
-                <button className="zerg-button select-race-button" onClick={() => handleRaceChange("Z")}>Z</button>
-                <button className="protoss-button select-race-button" onClick={() => handleRaceChange("P")}>P</button>
-                <button className="select-race-button" onClick={() => handleRaceChange("")}>All</button>
+                <button className={`terran-button select-race-button ${race ==="T"?"selected":""}`} onClick={() => handleRaceChange("T")}>T</button>
+                <button className={`zerg-button select-race-button ${race ==="Z"?"selected":""}`} onClick={() => handleRaceChange("Z")}>Z</button>
+                <button className={`protoss-button select-race-button ${race ==="P"?"selected":""}`} onClick={() => handleRaceChange("P")}>P</button>
+                <button className={`select-race-button ${race ===""?"selected":""}`} onClick={() => handleRaceChange("")}>All</button>
               </div>
             </th>
           </tr>
@@ -393,19 +405,19 @@ export default function MainPage()
             >
         <div className="filter-container">
            <div className="buttons-container modal">
-                <button className="buttons-container-item" onClick={setGlobal}>
+                <button className={`buttons-container-item ${region === ""? "region-chosen":""}`} onClick={setGlobal}>
                   
                           <svg width={20} height={20} className='buttons-svg-item'>
                           <use href={`${Icons}#statisctics 1`} />
                       </svg>
                             
                             Global</button>
-                <button className="buttons-container-item" onClick={SetKoreans}> 
+                <button className={`buttons-container-item ${region === "Korea"? "region-chosen":""}`} onClick={SetKoreans}> 
                           <svg width={20} height={20} className='buttons-svg-item'>
                           <use href={`${Icons}#korea`} />
                       </svg>
                              Korea</button>
-                <button className="buttons-container-item" onClick={setNonKoreans}>
+                <button className={`buttons-container-item ${region === "Non-Korea"? "region-chosen":""}`} onClick={setNonKoreans}>
                 
                           <svg width={20} height={20} className='buttons-svg-item'>
                           <use href={`${Icons}#team-leader 2`} />
@@ -415,7 +427,7 @@ export default function MainPage()
            
             <Autocomplete
   id="country-select-demo"
-  options={countries}
+  options={countriesWithPlayers}
   autoHighlight
   getOptionLabel={(option) => option.label}
   onChange={handleCountryChange}
@@ -526,21 +538,21 @@ export default function MainPage()
 />
 <p className="select-rank-label">Choose rank</p>
     <div className="select-rank-button-container modal">
-            <button className="select-rank-button" onClick={() => handleRankChange("S")}>S</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("A")}>A</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("B")}>B</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("C")}>C</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("D")}>D</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("E")}>E</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("F")}>F</button>
-            <button className="select-rank-button" onClick={() => handleRankChange("")}>All</button>
+            <button className={`select-rank-button ${rank.includes("S") ? "contained" : ""}`} onClick={() => handleRankChange("S")}>S</button>
+            <button className={`select-rank-button ${rank.includes("A") ? "contained" : ""}`} onClick={() => handleRankChange("A")}>A</button>
+            <button className={`select-rank-button ${rank.includes("B") ? "contained" : ""}`} onClick={() => handleRankChange("B")}>B</button>
+            <button className={`select-rank-button ${rank.includes("C") ? "contained" : ""}`} onClick={() => handleRankChange("C")}>C</button>
+            <button className={`select-rank-button ${rank.includes("D") ? "contained" : ""}`} onClick={() => handleRankChange("D")}>D</button>
+            <button className={`select-rank-button ${rank.includes("E") ? "contained" : ""}`} onClick={() => handleRankChange("E")}>E</button>
+            <button className={`select-rank-button ${rank.includes("F") ? "contained" : ""}`} onClick={() => handleRankChange("F")}>F</button>
+            <button className={`select-rank-button ${rank.length === 0 ? "contained" : ""}`}onClick={() => clearRanks()}>All</button>
             </div>
             <p className="select-race-label">Choose race</p>
             <div className="select-race-button-container">
-                <button className="terran-button select-race-button " onClick={() => handleRaceChange("T")}>T</button>
-                <button className="zerg-button select-race-button" onClick={() => handleRaceChange("Z")}>Z</button>
-                <button className="protoss-button select-race-button" onClick={() => handleRaceChange("P")}>P</button>
-                <button className="select-race-button" onClick={() => handleRaceChange("")}>All</button>
+               <button className={`terran-button select-race-button ${race ==="T"?"selected":""}`} onClick={() => handleRaceChange("T")}>T</button>
+                <button className={`zerg-button select-race-button ${race ==="Z"?"selected":""}`} onClick={() => handleRaceChange("Z")}>Z</button>
+                <button className={`protoss-button select-race-button ${race ==="P"?"selected":""}`} onClick={() => handleRaceChange("P")}>P</button>
+                <button className={`select-race-button ${race ===""?"selected":""}`} onClick={() => handleRaceChange("")}>All</button>
               </div>
               <div className="close-button-container">
                 <button className="close-button" onClick={toggleWindow}>Close</button>

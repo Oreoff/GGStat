@@ -756,10 +756,7 @@ max-width: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
 
 }
-.select-rank-button:hover , .select-race-button:hover{
-  color:#00F89F;
-  border:2px solid #00F89F;
-}
+
 .select-race-button.selected
 {
   color:#00F89F;
@@ -1299,6 +1296,8 @@ margin-right:40px;
 .player-container-flex {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
 }
 
 .player-avatar {
@@ -1405,6 +1404,10 @@ margin-right:40px;
   .race-full-text
   {
     display:none;
+  }
+  .MuiAutocomplete-root
+  {
+max-width: 100px;
   }
 }
  @media (max-width: 768px) {

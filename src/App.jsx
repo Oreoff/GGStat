@@ -123,29 +123,9 @@ const App = () =>  {
           <li
             key={index}
             className='search-list-item'
-            style={{
-              padding: '10px',
-              marginBottom: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              display: 'flex',
-              alignItems: 'center',
-            }}
           >
-            <img
-             src={player.player.avatar}
-             alt="Avatar"
-             onError={(e) => {
-               e.target.onerror = null; 
-               e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
-             }}
-             width="50"
-             height="50"
-             className="player-avatar"
-            />
             <div>
-              <p style={{ margin: 0, fontWeight: 'bold' }}>{player.player.name}</p>
-              <p style={{ margin: 0, color: '#888' }}>{player.country.name}</p>
+              <p className='search-field-text'>{player.player.name}</p>
             </div>
           </li>
           </Link>

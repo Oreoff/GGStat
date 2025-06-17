@@ -27,6 +27,7 @@ export default function MainPage()
     const [error, setError] = React.useState(null);
     const [bar, setBar] = React.useState(false);
     const [region, setRegion] = React.useState("");
+    const [filter, setFilter] = React.useState("");
 
     const toggleWindow = () => {
       setBar(!bar);
@@ -90,6 +91,7 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
     setCountry("");
     setRegion("");
   }
+  const isFilterActive = (rank.length > 0) || race || country;
   const CustomPopper = (props) => {
     return (
       <Popper {...props} modifiers={[{ name: 'offset', options: { offset: [0, 0] } }]} />
@@ -128,11 +130,12 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
           <div className="section-name-container">
                 <h2 className='section-title'>Leaderboards</h2>
                 <p className="section-description">Welcome to GGStat, the StarCraft: Remastered ladder rankings browser. </p>
-                <button className="filter-button" onClick={toggleWindow}>
-                <p className="filter-button-text">Filter</p>
-                  <svg width={15} height={15} className='buttons-svg-item'>
-                          <use href={`${Icons}#filter`} />
-                      </svg></button>
+                <button className={`filter-button ${isFilterActive ? 'filter-active' : ''}`} onClick={toggleWindow}>
+  <p className="filter-button-text">Filter</p>
+  <svg width={15} height={15} className='buttons-svg-item'>
+    <use href={`${Icons}#filter`} />
+  </svg>
+</button>
             </div>
             <div className="buttons-container">
                 <button className={`buttons-container-item ${region === ""? "region-chosen":""}`} onClick={setGlobal}>
@@ -314,14 +317,9 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
               <td 
                 className="table-cell table-cell-standing"
               ><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></td>
-              <td 
-                className="table-cell"
-              >
+              <td className="table-cell" >
               <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
-                <div className="player-container player-container-flex">
-                 
-
-                  
+                <div className="player-container player-container-flex">     
                   <img
                     src={row.player.avatar}
                     alt="Avatar"
@@ -424,8 +422,10 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
                       </svg>
                             Non-Korea</button>
             </div>
-           
+           <div className="modal-country-container">
+            <p className="modal-country-container-text"> Choose a country</p>
             <Autocomplete
+            className='modal-country-selector'
   id="country-select-demo"
   options={countriesWithPlayers}
   autoHighlight
@@ -536,6 +536,8 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
     />
   )}
 />
+</div>
+            
 <p className="select-rank-label">Choose rank</p>
     <div className="select-rank-button-container modal">
             <button className={`select-rank-button ${rank.includes("S") ? "contained" : ""}`} onClick={() => handleRankChange("S")}>S</button>
@@ -555,8 +557,8 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
                 <button className={`select-race-button ${race ===""?"selected":""}`} onClick={() => handleRaceChange("")}>All</button>
               </div>
               <div className="close-button-container">
-                <button className="close-button" onClick={toggleWindow}>Close</button>
                 <button className="close-button" onClick={clearAll}>Clear all</button>
+                <button className="close-button" onClick={toggleWindow}>Show results</button>
               </div>
         </div>
         </div>

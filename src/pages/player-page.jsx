@@ -100,8 +100,8 @@ export default function PlayerPage() {
               <Race text={setPlayer.race} />
               <League text={setPlayer.rank.league} MMR={setPlayer.rank.points} />
               <p className="standing">#{setPlayer.standing}</p>
-              <p className="wins">{setPlayer.wins}<span className='wins-span'>W</span></p>
-              <p className="loses">{setPlayer.loses}<span className='loses-span'>L</span></p>
+              <p className="wins"><span className='wins-span'>W</span>{setPlayer.wins}</p>
+              <p className="loses"><span className='loses-span'>L</span>{setPlayer.loses}</p>
               <p className="server">{setPlayer.player.region}</p>
             </div>
             <div className="country-container">

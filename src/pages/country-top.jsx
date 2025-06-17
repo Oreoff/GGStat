@@ -93,7 +93,7 @@ export default function CountryTop() {
                   </td>
                   <td className="table-cell country-top-cell player-cell">
                     <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
-                     <div className="player-container">
+                     <div className="player-container-flex">
                      <div style={{ display: "flex", alignItems: "center" }}>
                      <img
                     src={row.player.avatar}

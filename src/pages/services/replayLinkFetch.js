@@ -1,13 +1,24 @@
 export async function fetchReplayLink(matchId) {
-    try {
-      const response = await fetch(`http://localhost:5120/api/matches/${matchId}/replay`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data.replayLink;
-    } catch (error) {
-      console.error("Error fetching replay link:", error);
+  try {
+    const id = matchId.trim();
+    const response = await fetch(`https://localhost:5000/api/matches/${id}/replay`);
+
+    if (!response.ok) {
+      console.warn(`Failed to fetch replay link. Status: ${response.status}`);
       return null;
     }
+
+    const data = await response.json();
+
+    if (data && typeof data.replayLink === 'string') {
+      return data.replayLink;
+    } else {
+      console.warn("Replay link not found in response:", data);
+      return null;
+    }
+
+  } catch (error) {
+    console.error("Error fetching replay link:", error);
+    return null;
   }
+}

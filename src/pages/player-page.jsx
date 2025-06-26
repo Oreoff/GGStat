@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import League from './league';
 import * as React from 'react';
 import Race from './race';
-import fetchPlayers from './services/playersFetch.js';
+import playerPageFetch from './services/playerPageFetch.js';
 import { fetchReplayLink } from './services/replayLinkFetch.js';
 import { useParams } from 'react-router-dom';
 import { Pagination } from '@mui/material';
@@ -15,7 +15,6 @@ export default function PlayerPage() {
   const [openChatIndex, setOpenChatIndex] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  const [players, setPlayers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const [replayLink, setReplayLink] = React.useState(null);
@@ -33,19 +32,21 @@ export default function PlayerPage() {
     }
   };
   React.useEffect(() => {
-    const loadPlayers = async (match) => {
-      try {
-        const data = await fetchPlayers();
-        setPlayers(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadPlayer = async () => {
+    try {
+      const data = await playerPageFetch(name);
+      setInfo(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadPlayers();
-  }, []);
+  if (name) {
+    loadPlayer();
+  }
+}, [name]);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   const handlePageChange = (event, value) => {
@@ -65,9 +66,8 @@ export default function PlayerPage() {
     window.location.href = target;
   }
   const playerName = name ? decodeURIComponent(name).toLowerCase() : '';
-  const setPlayer = players.find(p => p.player.name.toLowerCase() === playerName);
-  const matches = setPlayer ? setPlayer.matches : [];
-
+const setPlayer = Info;
+const matches = setPlayer ? setPlayer.matches : [];
   if (!setPlayer) {
     return <p>Player not found</p>;
   }
@@ -80,7 +80,7 @@ export default function PlayerPage() {
         
         <div className="player-container">
         <img
-                    src={setPlayer.player.avatar}
+                    src={setPlayer.avatar}
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
@@ -93,20 +93,20 @@ export default function PlayerPage() {
           <div className="player-data">
           
             <div className="name-container">
-              <p className="name">{setPlayer.player.name}</p>
-              <p className="tag">/{setPlayer.player.alias}/</p>
+              <p className="name">{setPlayer.name}</p>
+              <p className="tag">/{setPlayer.alias}/</p>
             </div>
             <div className="info-container">
               <Race text={setPlayer.race} />
-              <League text={setPlayer.rank.league} MMR={setPlayer.rank.points} />
+              <League text={setPlayer.league} MMR={setPlayer.points} />
               <p className="standing">#{setPlayer.standing}</p>
               <p className="wins"><span className='wins-span'>W</span>{setPlayer.wins}</p>
               <p className="loses"><span className='loses-span'>L</span>{setPlayer.loses}</p>
-              <p className="server">{setPlayer.player.region}</p>
+              <p className="server">{setPlayer.region}</p>
             </div>
             <div className="country-container">
-        <img src={setPlayer.country.flag} alt="country-flag" className="country-flag player-page-flag"/>
-        <p className="country-description">{setPlayer.country.code}</p>
+        <img src={setPlayer.flag} alt="country-flag" className="country-flag player-page-flag"/>
+        <p className="country-description">{setPlayer.code}</p>
       </div>
           <div className="update-stats-container">
           <button className="refresh-stats-button">Refresh stats</button>
@@ -149,7 +149,7 @@ export default function PlayerPage() {
                         <Race text={match.player_race[0]} /> vs <Race text={match.opponent_race[0]} />
                       </div>
                     </td>
-                    <td className="opponent-cell"><Link to={`/player-page/${encodeURIComponent(match.opponent)}`} className="player-link">{match.opponent}</Link></td>
+                    <td className="opponent-cell"><Link to={`/player-page/${encodeURIComponent(match.opponent.trim())}`} className="player-link">{match.opponent}</Link></td>
                     <td className='actions-cell'>
                       <div className="action-buttons">
                         <button className="info-button" onClick={() => toggleChat(index)}>View chat</button>

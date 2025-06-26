@@ -7,10 +7,10 @@ import {useState, useEffect, useRef} from 'react';
 import { NavLink } from "react-router-dom";
 import './App.css';
 import fetchPlayers from './pages/services/playersFetch.js';
+import searchFetch from './pages/services/searchFetch.js';
 const App = () =>  {
   const [query,setQuery] = useState('');
   const [players, setPlayers] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
@@ -25,21 +25,22 @@ const App = () =>  {
       }
     }, [searchOpen]);
     useEffect(() => {
-      const loadPlayers = async () => {
-        try {
-          const data = await fetchPlayers();
-          setPlayers(data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-      loadPlayers();
-    }, []);
-    if (loading) return <p className="loading-text">Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-  const filteredPlayers = players.filter(player => player.player.name.toLowerCase().includes(query.toLowerCase()));
+  const loadPlayers = async () => {
+    if (!query.trim()) {
+      setPlayers([]);
+      return;
+    }
+
+    try {
+      const data = await searchFetch(query);
+      setPlayers(data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  loadPlayers();
+}, [query]);
   function ShowList()
   {
     const container = document.querySelector(".search-list");
@@ -118,18 +119,20 @@ const App = () =>  {
   />
   <ul className="search-list">
     
-  {filteredPlayers.map((player, index) => (
-    <Link to={`/player-page/${encodeURIComponent(player.player.name)}`}className="player-link" onClick = {()=>RemoveList()}>
-          <li
-            key={index}
-            className='search-list-item'
-          >
-            <div>
-              <p className='search-field-text'>{player.player.name}</p>
-            </div>
-          </li>
-          </Link>
-        ))}
+  {players.map((name, index) => (
+  <Link
+    to={`/player-page/${encodeURIComponent(name)}`}
+    className="player-link"
+    onClick={() => RemoveList()}
+    key={index}
+  >
+    <li className="search-list-item">
+      <div>
+        <p className="search-field-text">{name}</p>
+      </div>
+    </li>
+  </Link>
+))}
   </ul>
   </form>
   </header>

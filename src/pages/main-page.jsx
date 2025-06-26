@@ -54,7 +54,7 @@ export default function MainPage()
   const handlePlayersChange = (event) => {
     setPlayersPerPage(event.target.value);
   };
-const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
+const playerCountryCodes = [...new Set(players.map(p => p.code))];
 
       const countriesWithPlayers = countries.filter(country =>
         playerCountryCodes.includes(country.code)
@@ -318,10 +318,10 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
                 className="table-cell table-cell-standing"
               ><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></td>
               <td className="table-cell" >
-              <Link to={`/player-page/${encodeURIComponent(row.player.name)}`} className="player-link">
+              <Link to={`/player-page/${encodeURIComponent(row.name)}`} className="player-link">
                 <div className="player-container player-container-flex">     
                   <img
-                    src={row.player.avatar}
+                    src={row.avatar}
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
@@ -332,8 +332,8 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
                     className="player-avatar"
                   />
                   <div>
-                    <p className="table-text">{row.player.name}</p>
-                    <p className="table-text player-region-text">{row.player.region}</p>
+                    <p className="table-text">{row.name}</p>
+                    <p className="table-text player-region-text">{row.region}</p>
                   </div>
                   
             
@@ -345,11 +345,11 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
               >
               <div className="country-flag-container">
               <img
-                    src={row.country.flag}
+                    src={row.flag}
                     alt="Flag"
                     className="country-flag"
                   />
-                <p className="table-text">{row.country.code}</p>
+                <p className="table-text">{row.code}</p>
               </div>
                   
 
@@ -358,7 +358,7 @@ const playerCountryCodes = [...new Set(players.map(p => p.country.code))];
                 className="table-cell rank-cell"
               >
                 <div className="race-container">
-                  <League text={row.rank.league}MMR={row.rank.points} />
+                  <League text={row.league}MMR={row.points} />
                 </div>
               </td>
               <td 

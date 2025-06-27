@@ -111,11 +111,11 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
     }
   const filteredPlayers = players.filter((row) => {
     const matchesCountry = country === "!KR"
-    ? row.country.flag !== "https://flagcdn.com/w40/kr.png" 
+    ? row.flag !== "https://flagcdn.com/w40/kr.png" 
     : country
-    ? row.country.flag.includes(country.toLowerCase())
+    ? row.flag.includes(country.toLowerCase())
     : true;
-    const matchesRank = rank ?  rank.length === 0|| rank.includes(row.rank.league) : true;
+    const matchesRank = rank ?  rank.length === 0|| rank.includes(row.league) : true;
     const matchesRace = race ? row.race.includes(race): true;
     return matchesCountry && matchesRank && matchesRace;
   });

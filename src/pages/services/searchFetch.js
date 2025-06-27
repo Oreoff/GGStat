@@ -2,7 +2,7 @@ export default async function searchFetch(name) {
   if (!name?.trim()) return [];
 
   try {
-    const getResponse = await fetch(`https://localhost:5000/api/search/${encodeURIComponent(name)}`, {
+    const getResponse = await fetch(`http://localhost:5000/api/search/${encodeURIComponent(name)}`, {
       method: 'GET',
     });
 

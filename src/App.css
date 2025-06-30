@@ -679,6 +679,7 @@ footer{
   width: 100%;
   display:flex;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 .table-text
 {
@@ -708,15 +709,15 @@ max-width: 40px;
   color:Gray;
   padding:10px;
 }
-.rank,.players{
+.league,.players{
   max-width:100px;
 }
-.select-rank-button-container,.select-race-button-container
+.select-league-button-container,.select-race-button-container
 {
   display:flex;
   gap:10px;
 }
-.select-rank-button,.select-race-button
+.select-league-button,.select-race-button
 {
   background-color:#232B35;
   display:block;
@@ -1018,7 +1019,7 @@ border-radius:5px;
 font-family: 'TT Firs Neue Trl', sans-serif;
 
 }
-.select-rank-label
+.select-league-label
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
   font-size: 16px;
@@ -1232,7 +1233,7 @@ margin-right:40px;
   min-width: 100px;
 }
 
-.table-cell-rank {
+.table-cell-league {
   padding: 0;
   min-width: 80px;
 }
@@ -1273,7 +1274,7 @@ margin-right:40px;
   font-family: 'TT Firs Neue Trl', sans-serif;
 } 
 
- .select-rank-button-container {
+ .select-league-button-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1634,7 +1635,7 @@ color: white;
     font-size:12px;
     padding:10px;
   }
-  .rank-cell
+  .league-cell
   {
     max-width: 25px;
   }
@@ -1690,7 +1691,7 @@ color: white;
   {
     justify-content:center; 
   }
-  .select-rank-button,
+  .select-league-button,
   .select-race-button
   {
     background-color:#0e121b;

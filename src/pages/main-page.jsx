@@ -1,135 +1,154 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import Autocomplete from '@mui/material/Autocomplete';
-import Paper from '@mui/material/Paper';
-import { Pagination } from '@mui/material';import { PaginationItem} from '@mui/material';
-import { Link } from 'react-router-dom';
-import League from './league.jsx'; 
-import Race from './race';
+import Popper from '@mui/material/Popper';
+import { Pagination } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import League from './league.jsx';
+import Race from './race.jsx';
 import Icons from "./img/icons.svg";
 import { countries } from './data/countries.js';
 import fetchPlayers from './services/playersFetch.js';
-import Popper from '@mui/material/Popper';
-export default function MainPage()
-{
-  const [country, setCountry] = React.useState('');
+import { Link } from 'react-router-dom';
 
-  const [page, setPage] = React.useState(1);
-  const [playersPerPage,setPlayersPerPage] = React.useState(25);
-  const [rank, setRank] = React.useState([]);  
-  const [race, setRace] = React.useState('');
+export default function MainPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [players, setPlayers] = React.useState([]);
-    const [loading, setLoading] = React.useState(true);
-    const [error, setError] = React.useState(null);
-    const [bar, setBar] = React.useState(false);
-    const [region, setRegion] = React.useState("");
-    const [filter, setFilter] = React.useState("");
+  const [totalCount, setTotalCount] = React.useState(0);
 
-    const toggleWindow = () => {
-      setBar(!bar);
-    };
-    const closeModal = () => setBar(false);
-    React.useEffect(() => {
-      const loadPlayers = async () => {
-        try {
-          const data = await fetchPlayers();
-          setPlayers(data);
-          
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      loadPlayers();
-    }, []);
-    console.log("Players:" + players);
-    if (loading) return <p className="loading-text">Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-  const handlePlayersChange = (event) => {
-    setPlayersPerPage(event.target.value);
-  };
-const playerCountryCodes = [...new Set(players.map(p => p.code))];
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [bar, setBar] = React.useState(false);
 
-      const countriesWithPlayers = countries.filter(country =>
-        playerCountryCodes.includes(country.code)
-      ).map(country => ({
-        ...country,
-        label: country.label,
-      }));
-  const handleRankChange = (rank) => {
-   setRank((prevRanks) =>
-    prevRanks.includes(rank)
-      ? prevRanks.filter((r) => r !== rank)
-      : [...prevRanks, rank] 
-  );
+  const [country, setCountry] = React.useState(searchParams.get('country') || '');
+  const [race, setRace] = React.useState(searchParams.get('race') || '');
+  const [league, setleague] = React.useState(searchParams.getAll('league') || []);
+  const [region, setRegion] = React.useState('');
+  const [page, setPage] = React.useState(parseInt(searchParams.get('page')) || 1);
+  const [playersPerPage] = React.useState(25);
+
+  const toggleWindow = () => setBar(!bar);
+  const closeModal = () => setBar(false);
+
+  const isFilterActive = (league.length > 0) || !!race || !!country;
+
+  const setGlobal = () => {
+    setCountry('');
+    setRegion('');
+    setPage(1);
+    updateQueryParams({ country: '', race: '', league: [], page: 1 });
   };
-  const clearRanks = () => setRank([]);
+
+  const SetKoreans = () => {
+    setCountry('KR');
+    setRegion('Korea');
+    setPage(1);
+    updateQueryParams({ country: 'KR', race, league, page: 1 });
+  };
+
+  const setNonKoreans = () => {
+    setCountry('!KR');
+    setRegion('Non-Korea');
+    setPage(1);
+    updateQueryParams({ country: '!KR', race, league, page: 1 });
+  };
+
+  const clearleagues = () => {
+    setleague([]);
+    setPage(1);
+    updateQueryParams({ country, race, league: [], page: 1 });
+  };
+
+  const updateQueryParams = (newParams = {}) => {
+    const params = new URLSearchParams();
+
+    const newPage = newParams.page ?? page;
+    const newCountry = newParams.country ?? country;
+    const newRace = newParams.race ?? race;
+    const newLeague = newParams.league ?? league;
+
+    if (newPage > 1) params.set('page', newPage.toString());
+    if (newCountry) params.set('country', newCountry);
+    if (newRace) params.set('race', newRace);
+    if (newLeague.length > 0) newLeague.forEach((r) => params.append('league', r));
+
+    setSearchParams(params);
+  };
+
   const handleCountryChange = (event, value) => {
-    setCountry(value ? value.code : '');
+    const code = value ? value.code : '';
+    setCountry(code);
+    setPage(1);
+    updateQueryParams({ country: code, race, league, page: 1 });
   };
-  const handleRaceChange = (race) => {
-    setRace(race);
+
+  const handleRaceChange = (value) => {
+    setRace(value);
+    setPage(1);
+    updateQueryParams({ country, race: value, league, page: 1 });
   };
+
+  const handleleagueChange = (value) => {
+    const updated = league.includes(value)
+      ? league.filter((r) => r !== value)
+      : [...league, value];
+    setleague(updated);
+    setPage(1);
+    updateQueryParams({ country, race, league: updated, page: 1 });
+  };
+
+  const clearAll = () => {
+    setCountry('');
+    setRace('');
+    setleague([]);
+    setPage(1);
+    setRegion('');
+    setSearchParams({});
+  };
+
   const handleChangePage = (event, value) => {
     setPage(value);
+    updateQueryParams({ country, race, league, page: value });
+  };
 
-  };
- 
-  const SetKoreans = (value) => 
-  {
-    setCountry("KR");
-    setRegion("Korea");
-  }
-  const setGlobal = (value) =>
-  {
-    setCountry("");
-    setRegion("");
-  }
-  const isFilterActive = (rank.length > 0) || race || country;
-  const CustomPopper = (props) => {
-    return (
-      <Popper {...props} modifiers={[{ name: 'offset', options: { offset: [0, 0] } }]} />
-    );
-  };
-  const setNonKoreans = (value) =>
-    {
-      setCountry("!KR");
-          setRegion("Non-Korea");
+   const loadPlayers = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchPlayers({ country, race, league, page });
+      console.log("Fetched data:", data);
+      if (data) {
+        setPlayers(data.players || []);
+        setTotalCount(data.totalCount || 0);
+      } else {
+        setPlayers([]);
+        setTotalCount(0);
+      }
+    } catch (err) {
+      console.error('Failed to load players:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-    const clearAll = () =>
-    {
-      setCountry("");
-       setRank([]);
-      setRace("");
-      setRegion("");
-    }
-  const filteredPlayers = players.filter((row) => {
-    const matchesCountry = country === "!KR"
-    ? row.flag !== "https://flagcdn.com/w40/kr.png" 
-    : country
-    ? row.flag.includes(country.toLowerCase())
-    : true;
-    const matchesRank = rank ?  rank.length === 0|| rank.includes(row.league) : true;
-    const matchesRace = race ? row.race.includes(race): true;
-    return matchesCountry && matchesRank && matchesRace;
-  });
-  const paginatedPlayers = filteredPlayers.slice(
-    (page - 1) * playersPerPage,
-    page * playersPerPage
+  };
+
+  React.useEffect(() => {
+    loadPlayers();
+  }, [country, race, league, page]);
+  const paginatedPlayers = players;
+
+  if (loading) return <p className="loading-text">Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  const CustomPopper = (props) => (
+    <Popper {...props} modifiers={[{ name: 'offset', options: { offset: [0, 0] } }]} />
   );
-
     return(
         <div className="container">
           <div className="section-container">
           <div className="section-name-container">
                 <h2 className='section-title'>Leaderboards</h2>
-                <p className="section-description">Welcome to GGStat, the StarCraft: Remastered ladder rankings browser. </p>
+                <p className="section-description">Welcome to GGStat, the StarCraft: Remastered ladder leagueings browser. </p>
                 <button className={`filter-button ${isFilterActive ? 'filter-active' : ''}`} onClick={toggleWindow}>
   <p className="filter-button-text">Filter</p>
   <svg width={15} height={15} className='buttons-svg-item'>
@@ -177,7 +196,7 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
               className="table-cell table-cell-country"
             > <Autocomplete
             id="country-select-demo"
-            options={countriesWithPlayers}
+            options={countries}
             autoHighlight
             getOptionLabel={(option) => option.label}
             onChange={handleCountryChange}
@@ -287,17 +306,17 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
             )}
           /></th>
             <th 
-              className="table-cell table-cell-rank"
+              className="table-cell table-cell-league"
             >
-              <div className="select-rank-button-container">
-            <button className={`select-rank-button ${rank.includes("S") ? "contained" : ""}`} onClick={() => handleRankChange("S")}>S</button>
-            <button className={`select-rank-button ${rank.includes("A") ? "contained" : ""}`} onClick={() => handleRankChange("A")}>A</button>
-            <button className={`select-rank-button ${rank.includes("B") ? "contained" : ""}`} onClick={() => handleRankChange("B")}>B</button>
-            <button className={`select-rank-button ${rank.includes("C") ? "contained" : ""}`} onClick={() => handleRankChange("C")}>C</button>
-            <button className={`select-rank-button ${rank.includes("D") ? "contained" : ""}`} onClick={() => handleRankChange("D")}>D</button>
-            <button className={`select-rank-button ${rank.includes("E") ? "contained" : ""}`} onClick={() => handleRankChange("E")}>E</button>
-            <button className={`select-rank-button ${rank.includes("F") ? "contained" : ""}`} onClick={() => handleRankChange("F")}>F</button>
-            <button className={`select-rank-button ${rank.length === 0 ? "contained" : ""}`}onClick={() => clearRanks()}>All</button>
+              <div className="select-league-button-container">
+            <button className={`select-league-button ${league.includes("S") ? "contained" : ""}`} onClick={() => handleleagueChange("S")}>S</button>
+            <button className={`select-league-button ${league.includes("A") ? "contained" : ""}`} onClick={() => handleleagueChange("A")}>A</button>
+            <button className={`select-league-button ${league.includes("B") ? "contained" : ""}`} onClick={() => handleleagueChange("B")}>B</button>
+            <button className={`select-league-button ${league.includes("C") ? "contained" : ""}`} onClick={() => handleleagueChange("C")}>C</button>
+            <button className={`select-league-button ${league.includes("D") ? "contained" : ""}`} onClick={() => handleleagueChange("D")}>D</button>
+            <button className={`select-league-button ${league.includes("E") ? "contained" : ""}`} onClick={() => handleleagueChange("E")}>E</button>
+            <button className={`select-league-button ${league.includes("F") ? "contained" : ""}`} onClick={() => handleleagueChange("F")}>F</button>
+            <button className={`select-league-button ${league.length === 0 ? "contained" : ""}`}onClick={() => clearleagues()}>All</button>
             </div></th>
             <th 
               className="table-cell table-cell-race"
@@ -319,7 +338,7 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
               ><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></td>
               <td className="table-cell" >
               <Link to={`/player-page/${encodeURIComponent(row.name)}`} className="player-link">
-                <div className="player-container player-container-flex">     
+                <div className="player-container-flex">     
                   <img
                     src={row.avatar}
                     alt="Avatar"
@@ -355,7 +374,7 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
 
               </td>
               <td 
-                className="table-cell rank-cell"
+                className="table-cell league-cell"
               >
                 <div className="race-container">
                   <League text={row.league}MMR={row.points} />
@@ -375,7 +394,7 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
     
     <div className="pagination-wrapper">
     <Pagination
-  count={Math.ceil(filteredPlayers.length / playersPerPage)}
+  count={Math.ceil(totalCount / playersPerPage)}
   page={page}
   onChange={handleChangePage}
   shape="square"
@@ -538,16 +557,16 @@ const playerCountryCodes = [...new Set(players.map(p => p.code))];
 />
 </div>
             
-<p className="select-rank-label">Choose rank</p>
-    <div className="select-rank-button-container modal">
-            <button className={`select-rank-button ${rank.includes("S") ? "contained" : ""}`} onClick={() => handleRankChange("S")}>S</button>
-            <button className={`select-rank-button ${rank.includes("A") ? "contained" : ""}`} onClick={() => handleRankChange("A")}>A</button>
-            <button className={`select-rank-button ${rank.includes("B") ? "contained" : ""}`} onClick={() => handleRankChange("B")}>B</button>
-            <button className={`select-rank-button ${rank.includes("C") ? "contained" : ""}`} onClick={() => handleRankChange("C")}>C</button>
-            <button className={`select-rank-button ${rank.includes("D") ? "contained" : ""}`} onClick={() => handleRankChange("D")}>D</button>
-            <button className={`select-rank-button ${rank.includes("E") ? "contained" : ""}`} onClick={() => handleRankChange("E")}>E</button>
-            <button className={`select-rank-button ${rank.includes("F") ? "contained" : ""}`} onClick={() => handleRankChange("F")}>F</button>
-            <button className={`select-rank-button ${rank.length === 0 ? "contained" : ""}`}onClick={() => clearRanks()}>All</button>
+<p className="select-league-label">Choose league</p>
+    <div className="select-league-button-container modal">
+            <button className={`select-league-button ${league.includes("S") ? "contained" : ""}`} onClick={() => handleleagueChange("S")}>S</button>
+            <button className={`select-league-button ${league.includes("A") ? "contained" : ""}`} onClick={() => handleleagueChange("A")}>A</button>
+            <button className={`select-league-button ${league.includes("B") ? "contained" : ""}`} onClick={() => handleleagueChange("B")}>B</button>
+            <button className={`select-league-button ${league.includes("C") ? "contained" : ""}`} onClick={() => handleleagueChange("C")}>C</button>
+            <button className={`select-league-button ${league.includes("D") ? "contained" : ""}`} onClick={() => handleleagueChange("D")}>D</button>
+            <button className={`select-league-button ${league.includes("E") ? "contained" : ""}`} onClick={() => handleleagueChange("E")}>E</button>
+            <button className={`select-league-button ${league.includes("F") ? "contained" : ""}`} onClick={() => handleleagueChange("F")}>F</button>
+            <button className={`select-league-button ${league.length === 0 ? "contained" : ""}`}onClick={() => clearleagues()}>All</button>
             </div>
             <p className="select-race-label">Choose race</p>
             <div className="select-race-button-container">

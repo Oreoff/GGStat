@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {useState, useEffect, useRef} from 'react';
 import { NavLink } from "react-router-dom";
 import './App.css';
-import fetchPlayers from './pages/services/playersFetch.js';
 import searchFetch from './pages/services/searchFetch.js';
 const App = () =>  {
   const [query,setQuery] = useState('');
@@ -30,7 +29,6 @@ const App = () =>  {
       setPlayers([]);
       return;
     }
-
     try {
       const data = await searchFetch(query);
       setPlayers(data);
@@ -38,7 +36,6 @@ const App = () =>  {
       setError(err.message);
     }
   };
-
   loadPlayers();
 }, [query]);
   function ShowList()

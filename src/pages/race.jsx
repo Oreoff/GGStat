@@ -9,6 +9,7 @@ export default function Race ({ text}) {
     } else if (text.includes("protoss")|| text.includes("P") || text.includes("p")) {
       className = 'protoss';
     }
+    else className = 'unknown'
   return (
     <div className="race-container">
 <p className={className}>{text}</p>

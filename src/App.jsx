@@ -41,12 +41,14 @@ const App = () =>  {
   function ShowList()
   {
     const container = document.querySelector(".search-list");
-    if(container) container.classList.toggle("search-open");
+    if(container) container.classList.add("search-open");
   }
   function RemoveList()
   {
     const container = document.querySelector(".search-list");
     if(container) container.classList.remove("search-open");
+     const input = document.querySelector(".input-item"); 
+  if (input) input.value = "";
   }
   return (
     <div>

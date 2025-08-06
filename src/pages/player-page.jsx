@@ -7,6 +7,7 @@ import { fetchReplayLink } from './services/replayLinkFetch.js';
 import { useParams } from 'react-router-dom';
 import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Icons from "./img/icons.svg";
 export default function PlayerPage() {
   const { name } = useParams();
   const [openChatIndex, setOpenChatIndex] = React.useState(null);
@@ -51,8 +52,10 @@ export default function PlayerPage() {
     setPage(value);
     setOpenChatIndex(null);
   };
-
-
+function capitalize(word) {
+  if (!word) return '';
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
   const toggleChat = (index) => {
     setOpenChatIndex(prevIndex => (prevIndex === index ? null : index));
   };
@@ -77,7 +80,9 @@ const matches = setPlayer ? setPlayer.matches : [];
       <div className="player-page-container">
         
         <div className="player-container">
-        <img
+        
+          <div className="player-data">
+          <img
                     src={setPlayer.avatar}
                     alt="Avatar"
                     onError={(e) => {
@@ -88,29 +93,38 @@ const matches = setPlayer ? setPlayer.matches : [];
                     height="100"
                     className="player-avatar player-page-avatar"
                   />
-          <div className="player-data">
-          
+                  <div className="player-stats-container">
             <div className="name-container">
               <p className="name">{setPlayer.name}</p>
               <p className="tag">/{setPlayer.alias}/</p>
             </div>
             <div className="info-container">
-              <Race text={setPlayer.race} />
-              <League text={setPlayer.league} MMR={setPlayer.points} />
               <p className="standing">#{setPlayer.standing}</p>
+              <Race text={setPlayer.race} ClassName="player-page-race"/>
+              <League text={setPlayer.league} MMR={setPlayer.points} className="player-page-league"/>
+              
               <p className="wins"><span className='wins-span'>W</span>{setPlayer.wins}</p>
               <p className="loses"><span className='loses-span'>L</span>{setPlayer.loses}</p>
-              <p className="server">{setPlayer.region}</p>
             </div>
-            <div className="country-container">
+                  </div>
+
+                  </div>
+                  <div className="refresh-container">
+<div className="country-container">
         <img src={setPlayer.flag} alt="country-flag" className="country-flag player-page-flag"/>
         <p className="country-description">{setPlayer.code}</p>
       </div>
           <div className="update-stats-container">
-          <button className="refresh-stats-button">Refresh stats</button>
-          <p className="refresh-stats-text">Last updated 99999 mins ago</p>
+            <svg width={15} height={15} className="clock-svg">
+                <use href={`${Icons}#clock`} />
+              </svg>
+          <p className="refresh-stats-text">Last updated<span className='refresh-time'>99999 mins ago</span></p>
+        <svg width={15} height={15} className="refresh-svg">
+                <use href={`${Icons}#refresh`} />
+              </svg>
         </div>
-        </div>
+                  </div>
+            
       </div>
           </div>
           
@@ -144,7 +158,7 @@ const matches = setPlayer ? setPlayer.matches : [];
                     <td className="duration-cell">{match.duration}</td>
                     <td className="matchup-cell">
                       <div className="matchup-container">
-                        <Race text={match.player_race[0]} /> vs <Race text={match.opponent_race[0]} />
+                      <p className="player-race-text">{capitalize(match.player_race)} vs {capitalize(match.opponent_race)}</p>
                       </div>
                     </td>
                     <td className="opponent-cell"><Link to={`/player-page/${encodeURIComponent(match.opponent.trim())}`} className="player-link">{match.opponent}</Link></td>
@@ -216,21 +230,28 @@ const matches = setPlayer ? setPlayer.matches : [];
             count={Math.ceil(matches.length / rowsPerPage)}
             page={page}
             onChange={handlePageChange}
-            shape="square"
-            sx={{
-              '& .MuiPaginationItem-root': {
-                color: 'white',
-                border: '1px solid gray',
-                '&:hover': {
-                  backgroundColor: '#333',
-                  color: '#00F89F',
-                },
-                '&.Mui-selected': {
-                  backgroundColor: '#00F89F',
-                  color: '#232B35',
-                },
-              },
-            }}
+            shape="rounded"
+  sx={{
+    '& .MuiPaginationItem-root': {
+      color: 'gray',
+      borderRadius: '10px',
+      backgroundColor: '#1C2026',
+      border: '2px solid #1C2026',
+      fontSize: '12px',
+      '& svg': {
+        color: '#00F89F', 
+      },
+      '&:hover': {
+        color: '#00F89F',
+        borderColor:' #00F89F',
+      },
+      '&.Mui-selected': {
+        color: '#00F89F',
+        borderColor:' #00F89F',
+        backgroundColor: '#232B35',
+      },
+    },
+  }}
           />
         </div>
       </div>

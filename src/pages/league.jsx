@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-export default function League({ text = '', MMR = '' }) {
+export default function League({ text = '', MMR = '' ,className = ''}) {
   let textColor = '#000';
   if (typeof text !== 'string') {
     console.warn('Expected "text" to be a string');
@@ -22,7 +22,7 @@ export default function League({ text = '', MMR = '' }) {
     textColor = '#DAA520';
   }
   return (
-    <div className='league-container'>
+    <div className={`league-container ${className}`}>
     <p className="rating" style={{ backgroundColor: textColor }}>  
       {text}     
     </p>

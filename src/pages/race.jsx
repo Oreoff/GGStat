@@ -1,4 +1,4 @@
-export default function Race ({ text}) {
+export default function Race ({ text, ClassName = ''}) {
       
     let className = '';
   
@@ -11,7 +11,7 @@ export default function Race ({ text}) {
     }
     else className = 'unknown'
   return (
-    <div className="race-container">
+    <div className={`race-container ${ClassName}`}>
 <p className={className}>{text}</p>
 <p className="race-full-text">{className}</p>
     </div>

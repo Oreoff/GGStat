@@ -19,7 +19,7 @@ button
   padding-bottom: 100px;
   max-width:1440px;
 }
-p{
+p,td,th,span,button,div,h1,h2,h3,h4,h5,h6{
   font-family: 'TT Firs Neue Trl', sans-serif;
 }
 .loading-text
@@ -646,7 +646,13 @@ footer{
   width: 100%;
   display:flex;
   flex-wrap: wrap;
+  padding-bottom:20px;
+}
+.player-stats-container
+{
+  display:flex;
   flex-direction: column;
+  gap:20px
 }
 .table-text
 {
@@ -754,6 +760,7 @@ max-width: 40px;
 .player-page-container
 {
   display: flex;
+
   gap:40px;
   max-width: 100%;
 }
@@ -764,32 +771,48 @@ max-width: 40px;
   gap: 20px; 
   align-items: center; 
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 15px; 
-  background-color: #232B35; 
+ 
   border-radius: 8px; 
   margin-bottom: 20px; 
 }
 
 .player-container {
   display: flex;
-  gap: 40px;
   max-width: 100%;
   align-items: center; 
-  justify-content: center;
+  justify-content: space-between;
+    background-color: #232B35;
+    margin:0 20px;
+    border-radius: 20px;
+     flex-wrap:nowrap;
 }
-
-.name-container,
-.info-container {
+.refresh-container {
   display: flex;
+  align-items: flex-start;
   gap: 10px;
+  height:100%;
+  padding-top:15px;
+}
+.name-container{
+  display: flex;
+  gap: 30px;
   align-items: center;
 }
-
+.info-container {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap:nowrap;
+}
 .country-container {
   display: flex;
   gap: 10px;
   align-items: center;
+  background-color: #1C2026;
+  padding:8.5px 15px;
+  border-radius: 10px;
 }
 
 .country-description {
@@ -811,9 +834,13 @@ max-width: 40px;
 .update-stats-container {
   display: flex;
   justify-content: flex-end; 
-  flex-direction: column; 
+  flex-direction: row; 
   align-items: center; 
-  gap: 20px; 
+  gap: 10px; 
+  background-color: #1C2026;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin-right:20px;
 }
 .refresh-stats-button
 {
@@ -823,7 +850,21 @@ max-width: 40px;
   border:1px solid #00ff99;
   border-radius:5px;
   transition: 300ms ease;
-
+}
+.refresh-time
+{
+  display:block;
+  color:white
+}
+.refresh-svg
+{
+  color:#00F89F;
+  margin-left:10px;
+}
+.clock-svg
+{
+  color:gray;
+ 
 }
 .refresh-stats-button:hover
 {
@@ -832,22 +873,10 @@ max-width: 40px;
 }
 .refresh-stats-text
 {
-  color:white;
+  color:gray;
+  font-size:12px;
+  text-align: center;
 }
-.update-stats-container > div {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #a0aec0; 
-  font-size: 12px;
-}
-
-.update-stats-container img { 
-  width: 16px; 
-  height: 16px;
-  cursor: pointer; 
-}
-
 .player-avatar { 
   width: 50px; 
   height: 50px;
@@ -889,42 +918,49 @@ max-width: 40px;
 .loses
 {
  background-color:#1C2026;
- padding:10px;
+ padding:5px;
   border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:#EB4550;
   text-wrap: nowrap;
+  font-size:12px;
 }
 .loses-span{
 background-color:#EB4550;
   color:black;
-  padding:4px 10px;
+  padding:3px 5px;
   border-radius: 5px;
   margin-right:5px;
+  font-weight: 600;
 }
 .wins
 {
   background-color:#1C2026;
-  padding:10px;
+  padding:5px;
   border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:#00F89F;
   text-wrap: nowrap;
+  font-size:12px;
 }
 .wins-span{
   background-color:#00F89F;
   color:black;
-  padding:4px 7px;
+  padding:3px 5px;
   border-radius: 5px;
   margin-right:5px;
+  font-weight: 600;
 }
 .standing
 {
-  border:1px solid lightgray;
-  padding:5px 15px;
-  border-radius: 3px;
+  background-color:#1C2026;
+  padding:7px 10px;
+  border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
-  color:white;
+  color:gray;
+  text-wrap: nowrap;
+  font-size:12px;
+  font-weight: 600;
 }
 .server{
   padding:5px 15px;
@@ -1099,6 +1135,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   text-align: center;
   border-radius:5px;
   margin:5px;
+  font-weight: 600;
 }
 .zerg{
   padding:11px 15px;
@@ -1109,6 +1146,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   text-align: center;
   max-width: 20px;
   margin:5px;
+  font-weight: 600;
 }
 .protoss
 {
@@ -1120,6 +1158,8 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   text-align: center;
   max-width: 20px;
   margin:5px;
+  font-weight: 600;
+  font-size:12px;
 }
 .search-list
 {
@@ -1391,38 +1431,33 @@ color:gray;
   background-color: #333;
 }
 
-.mui-pagination-item:hover {
-  background-color: #555;
-}
-
-.mui-pagination-item-selected {
-  background-color: #2196f3;
-  color: #fff;
-  border-color: #2196f3;
-}
-
-.mui-pagination-item-main {
-  border-radius: 8px;
-  border: 1px solid gray;
-  width: 40px;
-  height: 40px;
-  font-weight: bold;
-  color: gray;
-  background-color: #1C2026;
-}
-
-.mui-pagination-item-main:hover {
-  background-color: #00F89F;
-}
-
-.mui-pagination-item-main-selected {
-  background-color: #1C2026;
-  color: #00F89F;
-  border-color: #00F89F;
-}
-
 .about-button{
   display:none;
+}
+.player-page-league {
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  font-size: 12px;
+  padding:5px;
+  border-radius: 5px;
+}
+.player-page-league>.rating{
+  font-size:12px;
+  padding:3px 5px;
+}
+.player-page-race {
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  font-size: 12px;
+  border-radius: 5px;
+  padding:0px;
+  margin:0px;
+}
+.player-page-race> .race-full-text{
+  display:none;
+}
+.player-page-race> .terran,.zerg,.protoss
+{
+  background-color:#1C2026;
+  padding:2px 5px;
 }
 @media (max-width: 1024px) {
  .country-autocomplete-input
@@ -1503,16 +1538,13 @@ color:gray;
   .player-data{
     flex-direction: column;
     flex-wrap: wrap;
+    margin-bottom:0px;
   }
   
   .info-container
   {
-    flex-wrap:wrap;
+
     justify-content: center;
-  }
-  .update-stats-container
-  {
-    margin:10px 0px;
   }
   .league-container
   {
@@ -1639,8 +1671,9 @@ color: white;
   .country-top {
     display: flex;
     align-items: center;
-
-    
+  }
+  .country-container{
+    padding: 7.7px 15px;
   }
   .table-header-row.country-top
   {
@@ -1719,10 +1752,6 @@ color: white;
   .race-cell{
     max-width: 10px;
   }
-  .race-container
-  {
-    background-color:#232B35;
-  }
   .rating{
     font-size:12px;
     padding:7px 10px;
@@ -1754,7 +1783,14 @@ color: white;
   .input-item.active {
     display: inline-block;
   }
- 
+
+  .player-page-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+
+  }
   .input-container
   {
     align-items: start;

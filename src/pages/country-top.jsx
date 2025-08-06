@@ -73,7 +73,8 @@ export default function CountryTop() {
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
-                      e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
+                      e.target.src = '/src/pages/img/logo.png';
+
                     }}
                     width="50"
                     height="50"

@@ -1,17 +1,21 @@
 @import url('https://fonts.cdnfonts.com/css/tt-firs-neue-trl');
  body
 {
-background-color:#232B35;
+background-color:#1C2026;
 }
 button
 {
   cursor: pointer;
 }
+.filter-container
+{
+  display: none;
+}
 .container{
   margin:0 auto;
   padding-top:40px;
-  background-color:#232B35;
-  border-bottom:1px solid #616060;
+  background-color:#1C2026;
+  border-bottom:1px solid #232B35;
   padding-bottom: 100px;
   max-width:1440px;
 }
@@ -26,31 +30,7 @@ p{
   margin:50px;
   text-align: center; 
 }
-.filter-container
-{
-  display:block;
-  position:fixed;
-  max-width: 300px;
-  top:5%;
-  left:5%;
-  background-color:#232B35;
-  border:1px solid lightgray;
-  border-radius: 6px;
-  padding:10px;
-  background-color: #232B35;
-  overflow-y: auto;
-  z-index:5;
-}
-.backdrop
-{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  backdrop-filter: blur(8px);
-  z-index:4;
-}
+
 .filter-button
 {
   display:none;
@@ -58,8 +38,9 @@ p{
 .navigation-menu-svg
 {
   padding:10px;
-  background-color:#2e3946;
+  background-color:#232B35;
   border-radius:5px;
+  color:gold;
 }
 .section-title
 {
@@ -74,11 +55,12 @@ p{
   {
     width: 15px;
     height: 15px;
-    background-color:#2e3946;
+    background-color:#232B35;
     border:none;
   }
   .search-button-svg{
     color:gray;
+    transition: 300ms linear;
   }
 .section-description
 {
@@ -98,7 +80,7 @@ p{
   align-items:center;
   justify-content: space-between;
   padding:10px ;
-  background-color:#232B35;
+  background-color:#1C2026;
   max-width:100%;
 }
 .logo-link
@@ -132,7 +114,7 @@ font-weight: 600;
 }
 .search-button
 {
-background-color:#2e3946;
+background-color:#232B35;
 border:none;
 color:gray;
 }
@@ -199,18 +181,22 @@ color:gray;
   position:absolute;
   right:5%;
   top:15%;
-  background-color:#2e3946;
+  background-color:#232B35;
   border-radius:5px;
-  padding: 3px;
+  padding: 3px 6px;
   color:grey;
+  outline: #00F89F;
 }
 
-.input-item
+.input-item:focus
 {
-  font-size:14px;
-  border:0px;
+  outline: none;
+  border:1px solid #00F89F;
+  color:white;
 }
-
+.search-button-svg.focused {
+  color: #00F89F;
+}
 .buttons-container
 {
   margin-bottom: 10px;
@@ -221,14 +207,16 @@ footer{
 
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow-y: visible;
   margin-bottom: 20px;
 }
-
+.table-header-row
+{
+  overflow: visible;
+}
 .table-wrapper {
   background-color: #181f2a;
   border-radius: 8px;
-  overflow: hidden;
   padding: 0;
   margin-bottom: 20px;
 }
@@ -260,7 +248,7 @@ footer{
 
 .match-row-loss {
   background-color: rgba(255, 77, 77, 0.08);
-  border-left: 4px solid #ff4d4d;
+  border-left: 4px solid #EB4550;
 }
 
 .matchup-container {
@@ -466,8 +454,6 @@ footer{
   background-color: #1e2633;
   border-top: none;
 }
-
-
 .about-container {
   max-height: 0;
   overflow: hidden;
@@ -484,8 +470,6 @@ footer{
   max-height: 500px; 
   padding: 16px;
 }
-
-
 .about-container h3,
 .points-container,
 .timeAgo-container,
@@ -565,30 +549,6 @@ footer{
 .matches-table tbody tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .selectors-container
 {
   display: flex;
@@ -605,8 +565,8 @@ footer{
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:white;
-  background-color:#232B35;
-  border:1px solid #2e3946;
+  background-color:#1C2026;
+  border:1px solid #232B35;
   border-radius:5px;
   padding: 5px;
   display:flex;
@@ -614,20 +574,27 @@ footer{
   gap:10px;
   transition:300ms linear;
   height: 45px;
+  text-wrap: nowrap;
 }
 .buttons-svg-container
 {
-  background-color:#2e3946;
+  background-color:#232B35;
   border-radius:5px;
   transition:300ms linear;
 }
 .buttons-svg-item{
   padding: 5px;
   color:#626262;
-  background-color:#2e3946;
   border-radius:5px;
-
+  background-color:#232B35;
 }
+.filter-button-svg
+{
+  color:gray;
+  transition:300ms linear;
+  padding:5px;
+}
+
 .buttons-container-item:hover
 {
   border-color:#00F89F;
@@ -653,7 +620,7 @@ footer{
 }
 .table
 {
-  background-color:#2e3946;
+  background-color:#232B35;
 }
 
 .country-flag
@@ -670,7 +637,7 @@ footer{
   gap:20px;
 }
 .table-row{
-  border: 10px solid #232B35;
+  border: 10px solid #1C2026;
   border-radius:50%;
   text-align: center;
 }
@@ -696,7 +663,7 @@ text-align: center;
 }
 .standing-container
 {
-background-color:#232B35;
+background-color:#1C2026;
 padding:13px 0px;
 margin:0px 5px;
 border-radius:10px;
@@ -719,7 +686,7 @@ max-width: 40px;
 }
 .select-league-button,.select-race-button
 {
-  background-color:#232B35;
+  background-color:#1C2026;
   display:block;
   color:gray;
   border:0;
@@ -728,26 +695,16 @@ max-width: 40px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   padding:8px 13px;
   transition: 300ms ease;
-  border: 2px solid #232B35;
+  border: 1px solid #1C2026;
+  font-weight: 600;
 }
 
 .table
 {
-
     width: 100%;
     border-collapse: collapse;
-    border-spacing: 0
-}
-.table-wrapper
-{
- 
-    width: 100%;
-    overflow-x: auto;
-    max-width: 100%;
-    background-color: #232B35;
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
-
+    border-spacing: 0;
+    overflow-y: visible;
 }
 
 .select-race-button.selected
@@ -809,7 +766,7 @@ max-width: 40px;
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 15px; 
-  background-color: #2e3946; 
+  background-color: #232B35; 
   border-radius: 8px; 
   margin-bottom: 20px; 
 }
@@ -861,7 +818,7 @@ max-width: 40px;
 .refresh-stats-button
 {
   padding:10px 15px;
-  background-color:#232B35;
+  background-color:#1C2026;
   color:white;
   border:1px solid #00ff99;
   border-radius:5px;
@@ -931,15 +888,15 @@ max-width: 40px;
 
 .loses
 {
- background-color:#232B35;
+ background-color:#1C2026;
  padding:10px;
   border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
-  color:red;
+  color:#EB4550;
   text-wrap: nowrap;
 }
 .loses-span{
-background-color:red;
+background-color:#EB4550;
   color:black;
   padding:4px 10px;
   border-radius: 5px;
@@ -947,7 +904,7 @@ background-color:red;
 }
 .wins
 {
-  background-color:#232B35;
+  background-color:#1C2026;
   padding:10px;
   border-radius: 5px;
   font-family: 'TT Firs Neue Trl', sans-serif;
@@ -993,24 +950,89 @@ background-color:red;
 {
   display:flex;
   text-align: center;
-  background-color:#232B35;
+  background-color:#1C2026;
   align-items:center;
   margin:0;
   gap:10px;
   width:100%;
-  border-radius:10px;
+  border-radius:15px;
   padding:5px;
 }
-.country-selector.modal .MuiAutocomplete-root{
-  background-color: lightgray;
-}
-
-
-.css-1tlcqt-MuiAutocomplete-root .MuiOutlinedInput-root .MuiAutocomplete-endAdornment
+.country-autocomplete-input
 {
+  background-color:#1C2026;
+  border:none;
+  border-radius:5px;
+  font-size: 14px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  padding:10px;
   color:white;
+  padding-left:40px;
+  padding-right:30px;
+   position: relative;
+   outline :#00F89F;
 }
+.country-selector-flag
+{
+  padding-right:10px;
+}
+.country-autocomplete-container
+{
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+.country-globus-svg
+{
+  position: absolute;
+  top:5px;
+  left:5px;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  color: gray; 
+  background-color: #232B35;
+  padding: 5px;
+  border-radius: 5px;
+}
+.country-play-svg
+{
+  position: absolute;
+  top:10px;
+  right:10px;
+  z-index: 1;
+  width: 10px;
+  height: 20px;
+  color: gray;
+}
+.country-autocomplete-container:has(input:focus) svg {
+  color: #00F89F;
+}
+.country-autocomplete-container:has(input:focus) .country-play-svg {
+  transform: rotate(90deg);
+}
+.country-list
+{
+  position:absolute;
+  background-color:#1C2026;
+  list-style: none;
+  max-height: 300px;
+  width:100%;
+  top:35px;
+  overflow-y: auto;
+}
+.country-item
+{
+  display:flex;
+  align-items:center;
 
+  padding:5px;
+  color:white;
+  font-size:14px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  cursor: pointer;
+  font-weight: 400;
+}
 .rating{
   font-size:16px;
   font-weight: 600;
@@ -1044,7 +1066,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
 }
 .pagination-container
 {
-  background-color:#2e3946;
+  background-color:#232B35;
   padding:5px;
   border-radius:10px;
   display: flex;
@@ -1055,9 +1077,9 @@ font-family: 'TT Firs Neue Trl', sans-serif;
 {
   display:flex;
   align-items:center;
-  background-color:#232B35;
+  background-color:#1C2026;
   margin:5px;
-  border-radius:5px;
+  border-radius:10px;
   padding-right:5px;
 }
 .race-full-text
@@ -1072,7 +1094,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   padding:11px 15px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:#3679FE;
-  background-color:#2e3946;
+  background-color:#232B35;
   max-width: 20px;
   text-align: center;
   border-radius:5px;
@@ -1082,7 +1104,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   padding:11px 15px;
   font-family: 'TT Firs Neue Trl', sans-serif;
   color:#AE36FE;
-  background-color:#2e3946;
+  background-color:#232B35;
   border-radius:5px;
   text-align: center;
   max-width: 20px;
@@ -1093,7 +1115,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   padding:11px 15px;
   color:#F0C722;
   font-family: 'TT Firs Neue Trl', sans-serif;
-  background-color:#2e3946;
+  background-color:#232B35;
   border-radius:5px; 
   text-align: center;
   max-width: 20px;
@@ -1105,7 +1127,7 @@ font-family: 'TT Firs Neue Trl', sans-serif;
   left:0px;
   top:40px;
   display:none;
-  background-color:#2e3946;
+  background-color:#232B35;
   max-height: 200px;
   overflow-y: auto;
   border-radius:6px;
@@ -1137,7 +1159,7 @@ margin-right:40px;
 .input-item{
   width: 200px;
   padding:10px;
-  background-color:#232B35;
+  background-color:#1C2026;
   border:1px solid grey;
   border-radius: 6px;
   color:white;
@@ -1155,7 +1177,7 @@ margin-right:40px;
   gap:10px
 }
 .footer{
-  background-color:#232B35;
+  background-color:#1C2026;
   border-top:1px solid gray;
   padding:50px;
 }
@@ -1174,24 +1196,47 @@ margin-right:40px;
 }
 .table-wrapper {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: visible;
   max-width: 100%;
-  background-color: #232B35;
+  background-color: #1C2026;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .close-button
 {
-  background-color:#232B35;
-  border:1px solid gray;
-  border-radius: 6px;
+  background-color:#1C2026;
+  border:none;
+  border-radius: 10px;
   color:white;
   font-size: 16px;
   font-family: 'TT Firs Neue Trl' , sans-serif;
-  padding:10px 15px;
+  padding:15px 40px;
   transition: 300ms ease;
   cursor: pointer;
-  
+  display:flex;
+  align-items: center;
+  justify-content: center;
+   width: 100%;
+}
+.reset-button-container
+{
+  display:flex;
+  gap:10px;
+  flex-wrap:nowrap;
+}
+
+.secondary{
+color:gray;
+}
+.primary
+{
+  background-color: #00F89F;
+  color: black;
+  border: 2px solid #00F89F;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 .close-button-container
 {
@@ -1213,9 +1258,6 @@ margin-right:40px;
   border-collapse: collapse;
   border-spacing: 0;
 }
-
-
-
 .table-cell-center {
   padding: 0;
   text-align: center;
@@ -1231,6 +1273,7 @@ margin-right:40px;
 .table-cell-country {
   padding: 5px;
   min-width: 100px;
+  display: flex;
 }
 
 .table-cell-league {
@@ -1247,16 +1290,6 @@ margin-right:40px;
   padding: 0;
   border-radius: 15px;
 } 
-
-/* Country selector styles */
- .country-box .MuiAutocomplete-option{
-  background-color: #232B35;
-  color: white;
-  font-size: 16px;
-  font-family: 'TT Firs Neue Trl', sans-serif;
-  display: flex;
-  align-items: center;
-}
 
 .country-box img {
   border-radius: 5px;
@@ -1322,7 +1355,7 @@ margin-right:40px;
 .pagination-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 16px;
+  margin:16px 0px;
 } 
 .action-buttons
 {
@@ -1375,7 +1408,7 @@ margin-right:40px;
   height: 40px;
   font-weight: bold;
   color: gray;
-  background-color: #232B35;
+  background-color: #1C2026;
 }
 
 .mui-pagination-item-main:hover {
@@ -1383,7 +1416,7 @@ margin-right:40px;
 }
 
 .mui-pagination-item-main-selected {
-  background-color: #232B35;
+  background-color: #1C2026;
   color: #00F89F;
   border-color: #00F89F;
 }
@@ -1391,17 +1424,57 @@ margin-right:40px;
 .about-button{
   display:none;
 }
-@media (max-width: 1000px) {
-  .MuiAutocomplete-root
-  {
-max-width: 100px;
-  }
+@media (max-width: 1024px) {
+ .country-autocomplete-input
+ {
+  max-width: 100px;
+ }
 }
  @media (max-width: 768px) {
   .country-selector {
     width: 100%;
     max-width: 200px;
   }
+  .backdrop
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  backdrop-filter: blur(8px);
+  z-index:5;
+}
+.filter-container
+{
+  display:block;
+  max-width: 350px;
+  background-color:#232B35;
+  border-radius: 6px;
+  padding:20px;
+  overflow-y: auto;
+  z-index:5;
+}
+.section-description
+{
+  display: none;
+}
+.section-name-container
+{
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color:#232B35;
+  align-items: center;
+  border-radius: 10px;
+  padding:10px;
+}
+.section-title{
+  font-size:20px;
+}
   .about-button
   {
     display:flex;
@@ -1412,7 +1485,10 @@ max-width: 100px;
     flex-direction: column;
     gap:10px;
   }
- 
+ .select-race-button-container
+ {
+  justify-content: flex-start;
+ }
   .player-container-flex{
     flex-direction: row;
     gap:0px;
@@ -1441,6 +1517,7 @@ max-width: 100px;
   .league-container
   {
     max-width:75px;
+    border-radius:10px;
   }
   .recent-matches-logo
   {
@@ -1467,23 +1544,40 @@ max-width: 100px;
     width:30px;
     height:30px;
   }
+  .filter-buttons-container
+  {
+    display:flex;
+    justify-content: center;
+    gap:5px;
+  }
   .filter-button
   {
     display:flex;
-    background-color:#232B35;
-    border:1px solid gray;
+    background-color:#1C2026;
+    border:1px solid #1C2026;
     border-radius:5px;
     padding:2px 10px;
     align-items:center;
     gap:10px;
-    margin-top:10px;
-    margin-left:10px;
+    cursor: pointer;
+    justify-content: center;
   }
+  .clear-button
+  {
+    padding:5px 10px;
+  }
+  .hidden{
+  display: none;
+}
+.show-up
+{
+display:flex;
+}
 .filter-button-text
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
-  color:gray;
-  font-size:12px;
+  color:white;
+  font-size:14px;
 } 
   .filter-active
   {
@@ -1505,10 +1599,8 @@ color: white;
   }
   
   .pagination-wrapper {
-    overflow-x: auto;
-    padding: 0 10px;
+    padding: 0 5px;
   }
-
   .logo{
     font-size:13px;
   }
@@ -1533,7 +1625,7 @@ color: white;
   }
   .search-button-svg
   {
-    background-color:#2e3946;
+    background-color:#232B35;
   }
 
   .table-header-row
@@ -1629,11 +1721,11 @@ color: white;
   }
   .race-container
   {
-    background-color:#2e3946;
+    background-color:#232B35;
   }
   .rating{
     font-size:12px;
-    padding:10px;
+    padding:7px 10px;
   }
   .league-cell
   {
@@ -1641,7 +1733,7 @@ color: white;
   }
   .terran,.zerg,.protoss
   {
-    background-color:#232B35;
+    background-color:#1C2026;
     font-size:12px;
   }
   .mmr{
@@ -1691,11 +1783,6 @@ color: white;
   {
     justify-content:center; 
   }
-  .select-league-button,
-  .select-race-button
-  {
-    background-color:#0e121b;
-  }
   .modal-country-container-text{
     margin-top:20px;
   }
@@ -1710,7 +1797,7 @@ color: white;
     position:absolute;
     top:37px;
     left:-70px;
-    background-color:#232B35;
+    background-color:#1C2026;
     border:2px solid gray;
     border-top:none;
     padding:10px;
@@ -1735,6 +1822,7 @@ color: white;
   .modal
   {
     display:flex;
+    justify-content: flex-start;
   }
   
   .contained 

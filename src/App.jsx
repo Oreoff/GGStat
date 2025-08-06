@@ -13,9 +13,12 @@ const App = () =>  {
     const [error, setError] = useState(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
+     const [isFocused, setIsFocused] = useState(false);
+
     const inputRef = useRef(null);
     const handleSearchClick = () => {
       setSearchOpen((prev) => !prev);     
+      setIsFocused((prev) => !prev);
     };
     
     useEffect(() => {
@@ -99,7 +102,7 @@ const App = () =>  {
       className="search-button-item"
       onClick={handleSearchClick}
     >
-      <svg className="search-button-svg" viewBox='0 0 20 20'>
+      <svg className={`search-button-svg ${isFocused ? 'focused' : ''}`} viewBox='0 0 20 20'>
         <use href={`${Icons}#Vector`} />
       </svg>
     </button>
@@ -115,6 +118,8 @@ const App = () =>  {
     ShowList();
   }
    }
+    onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
   />
   <ul className="search-list">
     

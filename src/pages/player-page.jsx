@@ -1,7 +1,4 @@
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+
 import League from './league';
 import * as React from 'react';
 import Race from './race';
@@ -35,6 +32,7 @@ export default function PlayerPage() {
   const loadPlayer = async () => {
     try {
       const data = await playerPageFetch(name);
+      
       setInfo(data);
     } catch (err) {
       setError(err.message);
@@ -84,7 +82,7 @@ const matches = setPlayer ? setPlayer.matches : [];
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
-                      e.target.src = 'https://p1.hiclipart.com/preview/716/196/996/blizzard-flat-iconset-starcraft-remastered-png-clipart.jpg';
+                      e.target.src = '/src/pages/img/logo.png';
                     }}
                     width="100"
                     height="100"

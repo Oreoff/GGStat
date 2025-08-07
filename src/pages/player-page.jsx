@@ -17,6 +17,7 @@ export default function PlayerPage() {
   const [error, setError] = React.useState(null);
   const [replayLink, setReplayLink] = React.useState(null);
   const [Info, setInfo] = React.useState(null);
+  const [openAboutIndex, setOpenAboutIndex] = React.useState(null);
   const handleFetchReplay = async (match) => {
     setLoading(true);
     const link = await fetchReplayLink(match.match_id);
@@ -60,12 +61,13 @@ function capitalize(word) {
     setOpenChatIndex(prevIndex => (prevIndex === index ? null : index));
   };
   const toggleAbout = (index) => {
-    setInfo(prevIndex => (prevIndex === index ? null : index));
+    setOpenAboutIndex(prev => (prev === index ? null : index));
   };
   const handleClick = (target) =>
   {
     window.location.href = target;
   }
+  
   const playerName = name ? decodeURIComponent(name).toLowerCase() : '';
 const setPlayer = Info;
 const matches = setPlayer ? setPlayer.matches : [];
@@ -188,9 +190,9 @@ const matches = setPlayer ? setPlayer.matches : [];
     </div>
   </td>
 </tr>
-                  <tr className={`about-row ${Info === index ? 'about-visible' : ''}`}>
+                  <tr className={`about-row ${openAboutIndex === index ? 'about-visible' : ''}`}>
   <td colSpan={8} className="about-cell">
-    <div className={`about-container ${Info === index ? 'expand' : ''}`}>
+    <div className={`about-container ${openAboutIndex === index ? 'expand' : ''}`}>
       <h3 className="about-logo">Replay info</h3>
 
       <div className="points-container">
@@ -211,7 +213,7 @@ const matches = setPlayer ? setPlayer.matches : [];
       </div>
       <div className="matchup-sidebar-container">
         <p className="map-text">Matchup:</p>
-        <Race text={match.player_race[0]} /> vs <Race text={match.opponent_race[0]} />
+        <p className="player-race-text">{capitalize(match.player_race)} vs {capitalize(match.opponent_race)}</p>
       </div>
       <div className="opponent-container">
         <p className="opponent-text">Opponent:</p>

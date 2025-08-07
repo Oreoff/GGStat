@@ -1454,7 +1454,7 @@ color:gray;
 .player-page-race> .race-full-text{
   display:none;
 }
-.player-page-race> .terran,.zerg,.protoss
+.player-page-race> .terran,.player-page-race>.zerg,.player-page-race>.protoss
 {
   background-color:#1C2026;
   padding:2px 5px;

@@ -17,6 +17,7 @@ button
   align-items: center;
   height: 100vh; 
   background-color: #1C2026; 
+  flex-direction: column;
 }
 .loader {
   width: 40px;

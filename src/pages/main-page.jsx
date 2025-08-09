@@ -387,7 +387,7 @@ const selectedCountryLabel = React.useMemo(
                     className="player-avatar"
                   />
                   <div>
-                    <p className="table-text">{row.name}</p>
+                    <p className="table-text">{row.name}<span className="alias">  /{row.alias}/</span></p>
                     <p className="table-text player-region-text">{row.region}</p>
                   </div>
                   

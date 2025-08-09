@@ -90,7 +90,7 @@ function ReplaceFlag(countryCode) {
                     height="50"
                     />
                         <div>
-                          <p className="table-text">{row.name}</p>
+                          <p className="table-text">{row.name}  <span className="alias">/{row.alias}/</span></p>
                           <p className="table-text" >
                             {row.region}
                           </p>

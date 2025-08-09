@@ -1,7 +1,7 @@
 
 import Autocomplete from '@mui/material/Autocomplete';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, replace } from 'react-router-dom';
 import { countries } from './data/countries.js';
 import countryTopFetch from './services/countryTopFetch.js';
 import Icons from "./img/icons.svg";
@@ -29,11 +29,21 @@ export default function CountryTop() {
     loadPlayers();
   }, []);
 
-  if (loading) return <p className="loading-text">Loading...</p>;
+  if (loading) return <div className="loader-container">
+   <div class="loader"></div>
+   <p className="loading-text">Loading....</p> </div>;
   if (error) return <p>Error: {error}</p>;
 
 
-
+function ReplaceFlag(countryCode) {
+  if(countryCode == 'RU'){
+    return '/src/pages/img/free russia.png';
+  }
+  else if(countryCode == 'BY'){
+    return '/src/pages/img/free belarus.png';
+    }
+    else return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+}
   return (
     <div className="container">
       <h2 className="section-title">Top 1 for each country</h2>
@@ -57,7 +67,7 @@ export default function CountryTop() {
                   <div className="country-flag-container">
                   <img
                     className="country-flag"  
-                    src={row.flag}
+                    src={ReplaceFlag(row.code)}
                     alt="Flag"
                     
                   />

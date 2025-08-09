@@ -118,7 +118,6 @@ const closeWindow = () => {
     setPage(value);
     updateQueryParams({ country, race, league, page: value });
   };
- 
 const countryAutocompleteRef = React.useRef(null);
 
 React.useEffect(() => {
@@ -177,7 +176,9 @@ const selectedCountryLabel = React.useMemo(
   }, [country, race, league, page]);
   const paginatedPlayers = players;
 
-  if (loading) return <p className="loading-text">Loading...</p>;
+  if (loading) return <div className="loader-container">
+   <div class="loader"></div>
+   <p className="loading-text">Loading....</p> </div>;
   if (error) return <p>Error: {error}</p>;
 
   const CustomPopper = (props) => (
@@ -187,7 +188,15 @@ const selectedCountryLabel = React.useMemo(
   
 
   console.log("Filtered countries:", filteredCountries);
- 
+ function ReplaceFlag(countryCode) {
+  if(countryCode == 'RU'){
+    return '/src/pages/img/free russia.png';
+  }
+  else if(countryCode == 'BY'){
+    return '/src/pages/img/free belarus.png';
+    }
+    else return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+}
   return(
         <div className="container">
           <div className="section-container">
@@ -316,7 +325,7 @@ const selectedCountryLabel = React.useMemo(
           }}
         >
           <img
-            src={`https://flagcdn.com/w20/${c.code.toLowerCase()}.png`}
+            src={ReplaceFlag(c.code)}
             alt={`${c.label} flag`}
             className='country-selector-flag'
           />
@@ -391,7 +400,7 @@ const selectedCountryLabel = React.useMemo(
               >
               <div className="country-flag-container">
               <img
-                    src={row.flag}
+                    src={ReplaceFlag(row.code)}
                     alt="Flag"
                     className="country-flag"
                   />
@@ -546,7 +555,7 @@ const selectedCountryLabel = React.useMemo(
           }}
         >
           <img
-            src={`https://flagcdn.com/w20/${c.code.toLowerCase()}.png`}
+            src={ReplaceFlag(c.code)}
             alt={`${c.label} flag`}
             className='country-selector-flag'
           />

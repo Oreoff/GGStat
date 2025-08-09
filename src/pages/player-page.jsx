@@ -47,7 +47,8 @@ export default function PlayerPage() {
     loadPlayer();
   }
 }, [name]);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <div className="loader-container">
+   <div class="loader"></div> </div>;
   if (error) return <p>Error: {error}</p>;
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -74,7 +75,16 @@ const matches = setPlayer ? setPlayer.matches : [];
   if (!setPlayer) {
     return <p>Player not found</p>;
   }
+function ReplaceFlag(countryCode) {
+  if(countryCode == 'RU'){
+    return '/src/pages/img/free russia.png';
+  }
 
+  else if(countryCode == 'BY'){
+    return '/src/pages/img/free-belarus.png';
+    }
+    else return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+}
   const paginatedMatches = matches.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   return (
@@ -113,7 +123,7 @@ const matches = setPlayer ? setPlayer.matches : [];
                   </div>
                   <div className="refresh-container">
 <div className="country-container">
-        <img src={setPlayer.flag} alt="country-flag" className="country-flag player-page-flag"/>
+        <img src={ReplaceFlag(setPlayer.code)} alt="country-flag" className="country-flag player-page-flag"/>
         <p className="country-description">{setPlayer.code}</p>
       </div>
           <div className="update-stats-container">

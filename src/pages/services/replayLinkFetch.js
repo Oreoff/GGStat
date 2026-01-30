@@ -1,7 +1,7 @@
 export async function fetchReplayLink(matchId) {
   try {
     const id = matchId.trim();
-    const response = await fetch(`https://localhost:7130/api/matches/${id}/replay`);
+    const response = await fetch(`http://localhost:5000/api/matches/${id}/replay`);
 
     if (!response.ok) {
       console.warn(`Failed to fetch replay link. Status: ${response.status}`);

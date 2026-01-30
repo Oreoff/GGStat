@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

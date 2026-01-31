@@ -5,11 +5,19 @@ export default defineConfig
 plugins: [react()],
 server: 
 {
-    hmr: false,
+     proxy: {
+      '/api': {
+        target: 'http://localhost:5120',
+        changeOrigin: true,
+        secure: false
+      }
+    },
+     
     port:3000,
     open:true,
     watch: {
         usePolling: true
       }
+      
 }
 })

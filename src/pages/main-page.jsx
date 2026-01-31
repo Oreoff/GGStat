@@ -157,7 +157,7 @@ const selectedCountryLabel = React.useMemo(
       setAvailableCountries(fetchedAvailableCountries);
       console.log("Fetched data:", data);
       if (data) {
-        setPlayers(data.players || []);
+       setPlayers(Array.isArray(data.players) ? data.players : []);
         setTotalCount(data.totalCount || 0);
       } else {
         setPlayers([]);
@@ -367,7 +367,7 @@ const selectedCountryLabel = React.useMemo(
           </tr>
         </thead>
         <tbody>
-          {paginatedPlayers.map((row, index) => (
+          {players.map((row, index) => (
             <tr key={index} className="table-row">
               <td 
                 className="table-cell table-cell-standing"

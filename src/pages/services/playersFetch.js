@@ -13,7 +13,7 @@ export default async function fetchPlayers({ country, race, league, page }) {
     params.append('limit', limit);
     params.append('offset', offset);
 
-    const url = `http://localhost:5000/api/players?${params.toString()}`;
+    const url = `/api/players?${params.toString()}`;
 
     const getResponse = await fetch(url, {
       method: 'GET',

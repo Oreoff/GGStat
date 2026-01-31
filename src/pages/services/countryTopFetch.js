@@ -1,7 +1,7 @@
 export default async function countryTopFetch() {
   try {
     
-    const getResponse = await fetch('http://localhost:5000/api/country-top', {
+    const getResponse = await fetch('/api/country-top', {
       method: 'GET',
     
     });

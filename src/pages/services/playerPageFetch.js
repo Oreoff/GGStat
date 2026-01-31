@@ -1,7 +1,7 @@
 export default async function playerPageFetch(name) {
   try {
     
-    const getResponse = await fetch(`http://localhost:5000/api/player-page/${name}`, {
+    const getResponse = await fetch(`/api/player-page/${name}`, {
       method: 'GET',
     
     });

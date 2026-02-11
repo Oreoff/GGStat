@@ -1,7 +1,9 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { Select, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
-
+import logo from './img/logo.png';
+import free_belarus from './img/free belarus.png';
+import free_russia from './img/free russia.png';
 import Popper from '@mui/material/Popper';
 import { Pagination } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
@@ -17,7 +19,7 @@ export default function MainPage() {
 
   const [players, setPlayers] = React.useState([]);
   const [totalCount, setTotalCount] = React.useState(0);
-
+  const [isAutoFilled, setIsAutoFilled] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const [bar, setBar] = React.useState(false);
@@ -190,10 +192,10 @@ const selectedCountryLabel = React.useMemo(
   console.log("Filtered countries:", filteredCountries);
  function ReplaceFlag(countryCode) {
   if(countryCode == 'RU'){
-    return '/src/pages/img/free russia.png';
+    return free_russia;
   }
   else if(countryCode == 'BY'){
-    return '/src/pages/img/free belarus.png';
+    return free_belarus;
     }
     else return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
 }
@@ -203,6 +205,7 @@ const selectedCountryLabel = React.useMemo(
           <div className="section-name-container">
                 <h2 className='section-title'>Leaderboards</h2>
                 <p className="section-description">Welcome to GGStat, the StarCraft: Remastered ladder leagueings browser. </p>
+                
                 <div className="filter-buttons-container">
 <button className={`filter-button ${isFilterActive ? 'filter-active' : ''}`} onClick={toggleWindow}>
   <p className="filter-button-text">Filter</p>
@@ -218,6 +221,7 @@ const selectedCountryLabel = React.useMemo(
                 </div>
                 
             </div>
+             
             <div className="buttons-container">
                 <button className={`buttons-container-item ${region === ""? "region-chosen":""}`} onClick={setGlobal}>
                   
@@ -239,7 +243,7 @@ const selectedCountryLabel = React.useMemo(
                             Non-Korea</button>
             </div>
           </div>
-
+<p className="section-updated">Last updated: 30-01-2026</p>
             <div className="table-container">
             <div className="table-wrapper" >
       <table 
@@ -273,7 +277,14 @@ const selectedCountryLabel = React.useMemo(
   setInputValue(v);
   setShowSuggestions(true);
 }}
-    onFocus={() => setShowSuggestions(true)}
+
+    onFocus={ ()=> {
+      if(isAutoFilled){
+       setInputValue('');
+      setIsAutoFilled(false);
+    }
+      setShowSuggestions(true)
+    }}
       onKeyDown={(e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -283,6 +294,7 @@ const selectedCountryLabel = React.useMemo(
       if (exact) {
         handleCountryChange(null, exact);
         setInputValue(exact.label);
+        
       } else if (inputValue.trim() === '') {
 
         setCountry('');
@@ -293,6 +305,7 @@ const selectedCountryLabel = React.useMemo(
           setInputValue(matching[0].label);
         }
       }
+      setIsAutoFilled(true);
       setShowSuggestions(false);
     }
   }}
@@ -322,6 +335,7 @@ const selectedCountryLabel = React.useMemo(
             handleCountryChange(null, c);
             setInputValue(c.label);
             setShowSuggestions(false);
+              setIsAutoFilled(true);
           }}
         >
           <img
@@ -373,14 +387,14 @@ const selectedCountryLabel = React.useMemo(
                 className="table-cell table-cell-standing"
               ><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></td>
               <td className="table-cell" >
-              <Link to={`/player-page/${encodeURIComponent(row.name)}`} className="player-link">
+              <Link to={`/player/${encodeURIComponent(row.name)}`} className="player-link">
                 <div className="player-container-flex">     
                   <img
                     src={row.avatar}
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
-                      e.target.src = '/src/pages/img/logo.png';
+                      e.target.src = logo;
                     }}
                     width="50"
                     height="50"

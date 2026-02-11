@@ -66,12 +66,12 @@ const App = () =>  {
 </div>
   <nav className={`navigation-menu ${menuOpen ? 'open' : ''}`}>
       <ul className = "navigation-menu-list">
-        <li className = "navigation-menu-item"><NavLink to="/" end className='navigation-menu-link'>
+        <li className = "navigation-menu-item"><NavLink to="/" end className='navigation-menu-link' onClick={() => setMenuOpen(false)}>
         <svg width={20} height={20} className='navigation-menu-svg'>
         <use href={`${Icons}#leaderboard`} />
     </svg>
     <p className="navigation-menu-text">Leaderboard</p></NavLink></li>
-    <li className = "navigation-menu-item"><NavLink to="/country-tops" className='navigation-menu-link '>
+    <li className = "navigation-menu-item"><NavLink to="/country-tops" className='navigation-menu-link ' onClick={() => setMenuOpen(false)} >
         <svg width={20} height={20} className='navigation-menu-svg'>
         <use href={`${Icons}#team-leader 2`} />
     </svg>
@@ -125,7 +125,7 @@ const App = () =>  {
     
   {players.map((name, index) => (
   <Link
-    to={`/player-page/${encodeURIComponent(name)}`}
+    to={`/player/${encodeURIComponent(name)}`}
     className="player-link"
     onClick={() => RemoveList()}
     key={index}
@@ -143,12 +143,13 @@ const App = () =>  {
     <Routes>
       <Route path="/" element={<MainPage/>} />
       <Route path="/country-tops" element={<CountryTop/>}/>
-      <Route path="/player-page/:name" element={<PlayerPage/>}/>
+      <Route path="/player/:name" element={<PlayerPage/>}/>
     </Routes>
   </Router> 
   <footer className="footer">
     <div className="footer-container">
       <p className="copyright all-rights">Copyright © 2025 - All right reserved</p>
+      <p className="copyright">Made by Red.Streamline & Oreoff</p>
       <p className="copyright">This site is not affiliated with, endorsed, sponsored, or specifically approved by Blizzard Entertainment, Inc., and Blizzard Entertainment, Inc. is not responsible for it. Images from StarCraft are © Blizzard Entertainment, Inc. All rights reserved. StarCraft, Brood War and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
     </div>
   </footer>

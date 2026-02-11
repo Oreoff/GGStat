@@ -4,6 +4,9 @@ import * as React from 'react';
 import { Link, replace } from 'react-router-dom';
 import { countries } from './data/countries.js';
 import countryTopFetch from './services/countryTopFetch.js';
+import logo from './img/logo.png';
+import free_belarus from './img/free belarus.png';
+import free_russia from './img/free russia.png';
 import Icons from "./img/icons.svg";
 import Popper from '@mui/material/Popper';
 import Paper from '@mui/material/Paper';
@@ -37,10 +40,10 @@ export default function CountryTop() {
 
 function ReplaceFlag(countryCode) {
   if(countryCode == 'RU'){
-    return '/src/pages/img/free russia.png';
+    return free_russia;
   }
   else if(countryCode == 'BY'){
-    return '/src/pages/img/free belarus.png';
+    return free_belarus;
     }
     else return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
 }
@@ -71,11 +74,22 @@ function ReplaceFlag(countryCode) {
                     alt="Flag"
                     
                   />
-                  <p className="table-text">{row.code}</p>
+                  <div className="country-text-container">
+<p className="table-text country-table-text">{row.code}</p>
+                 <Link
+  to={{
+    pathname: "/",
+    search: "?country=" + row.code,
+  }}
+  className="show-rating-link"
+>
+Rating
+</Link>
+                  </div>      
                 </div>
                   </td>
                   <td className="table-cell country-top-cell player-cell">
-                    <Link to={`/player-page/${encodeURIComponent(row.name)}`} className="player-link">
+                    <Link to={`/player/${encodeURIComponent(row.name)}`} className="player-link">
                      <div className="player-container-flex">
                      <div style={{ display: "flex", alignItems: "center" }}>
                      <img
@@ -83,7 +97,7 @@ function ReplaceFlag(countryCode) {
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
-                      e.target.src = '/src/pages/img/logo.png';
+                          e.target.src = logo;
 
                     }}
                     width="50"

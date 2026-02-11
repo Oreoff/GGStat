@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { Pagination } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Icons from "./img/icons.svg";
+import logo from './img/logo.png';
 export default function PlayerPage() {
   const { name } = useParams();
   const [openChatIndex, setOpenChatIndex] = React.useState(null);
@@ -99,7 +100,7 @@ function ReplaceFlag(countryCode) {
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
-                      e.target.src = '/src/pages/img/logo.png';
+                      e.target.src = logo;
                     }}
                     width="100"
                     height="100"
@@ -143,6 +144,7 @@ function ReplaceFlag(countryCode) {
       
       <div className="recent-matches-table-container">
         <h2 className="recent-matches-logo">Recent ranked matches</h2>
+        <h2 className="recent-matches-logo">(not available yet)</h2>
       </div>
       <div className="table-container">
         <div className="table-wrapper">

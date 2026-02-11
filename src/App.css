@@ -92,6 +92,14 @@ p,td,th,span,button,div,h1,h2,h3,h4,h5,h6{
   color:grey;
   font-family: 'TT Firs Neue Trl', sans-serif;
   font-size:14px;
+    margin-bottom:10px;
+}
+.section-updated
+{
+  color:grey;
+  font-family: 'TT Firs Neue Trl', sans-serif;
+  font-size:14px;
+  margin:10px 0px 10px 10px;
 }
 *, *::before,*::after{
   padding:0px;
@@ -321,8 +329,22 @@ footer{
   border-radius: 4px;
   font-weight: bold;
 }
-
-
+.show-rating-link
+{
+  text-decoration: none;
+  color:white;
+  border: 2px solid #00F89F;
+  border-radius: 10px;
+  padding: 3px 6px;
+  text-wrap:nowrap;
+}
+.country-text-container
+{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
 
 .match-details {
   color: #a0aec0;
@@ -686,6 +708,7 @@ footer{
   text-align: start;
   padding-left: 10px;
 }
+
 .table-standing
 {
 color:gray;
@@ -1524,11 +1547,16 @@ color:gray;
 {
   display: none;
 }
+.section-updated
+{
+  font-size:10px;
+}
 .section-name-container
 {
   display:flex;
   justify-content: space-between;
   width: 100%;
+  gap:10px;
   background-color:#232B35;
   align-items: center;
   border-radius: 10px;
@@ -1660,8 +1688,8 @@ color: white;
   .pagination-wrapper {
     padding: 0 5px;
   }
-  .logo{
-    font-size:13px;
+  .logo, .logo-link{
+    display:none;
   }
   .burger-menu
   {
@@ -1672,7 +1700,9 @@ color: white;
   {
     flex-direction: column;
   }
- 
+  .show-rating-link{
+    font-size:10px;
+  }
   .search-field-svg
   {
     width: 15px;
@@ -1802,7 +1832,8 @@ color: white;
   .input-item
   {
     font-size: 9px;
-    width:100px;
+    width:150px;
+    margin-left:5px;
   }
   .navigation-menu-link{
     font-size:12px;
@@ -1833,6 +1864,15 @@ color: white;
   .table-text{
     font-size:12px;
   }
+  .country-table-text
+{
+  padding:0;
+}
+.country-text-container
+{
+  flex-direction: column;
+  gap:3px;
+}
   .header-container
   {
     width: 100%;
@@ -1859,7 +1899,8 @@ color: white;
    display:flex;
     position:absolute;
     top:37px;
-    left:-70px;
+    left:-12px;
+    width: 100vw;
     background-color:#1C2026;
     border:2px solid gray;
     border-top:none;

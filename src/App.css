@@ -145,6 +145,15 @@ font-weight: 600;
   background-color: #00F89F;
   transition: all 0.3s ease;
 }
+.line.open.line-top {
+ transform: translateY(8px) rotate(45deg);
+}
+.line.open.line-bottom {
+ transform: translateY(-8px) rotate(-45deg);
+}
+.line.open.line-middle {
+  opacity: 0;
+}
 .search-button
 {
 background-color:#232B35;
@@ -182,7 +191,7 @@ color:gray;
   justify-content: center;
   padding:1px 5px;
   align-items:center;
-  gap:10px;
+  gap:5px;
   border-radius:6px;
    border:2px solid #525050;
 }
@@ -618,7 +627,7 @@ footer{
   padding: 5px;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:5px;
   transition:300ms linear;
   height: 45px;
   text-wrap: nowrap;

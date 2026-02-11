@@ -53,6 +53,10 @@ const App = () =>  {
      const input = document.querySelector(".input-item"); 
   if (input) input.value = "";
   }
+  function ToggleClassForBurgerMenu()
+  {
+    const burgerIcon = document.querySelector(".burger-icon");
+  }
   return (
     <div>
       <Router>
@@ -60,9 +64,9 @@ const App = () =>  {
               <Link to="/" className='logo-link'><h1 className="logo">GGStat</h1></Link>
               <div className="burger-menu">
               <div className="burger-icon" onClick={() => setMenuOpen(!menuOpen)}>
-  <div className={menuOpen ? "line open" : "line"}></div>
-  <div className={menuOpen ? "line open" : "line"}></div>
-  <div className={menuOpen ? "line open" : "line"}></div>
+  <div className={menuOpen ? "line open line-top" : "line line-top"}></div>
+  <div className={menuOpen ? "line open line-middle" : "line line-middle"}></div>
+  <div className={menuOpen ? "line open line-bottom" : "line line-bottom"}></div>
 </div>
   <nav className={`navigation-menu ${menuOpen ? 'open' : ''}`}>
       <ul className = "navigation-menu-list">

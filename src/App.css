@@ -1834,15 +1834,10 @@ color: white;
   .mmr{
     font-size:12px;
   }
-  .input-container
-  {
-    margin-right:10px;
-  }
   .input-item
   {
     font-size: 9px;
     width:150px;
-    margin-left:5px;
   }
   .navigation-menu-link{
     font-size:12px;
@@ -1908,10 +1903,10 @@ color: white;
    display:flex;
     position:absolute;
     top:37px;
-    left:-12px;
-    width: 100vw;
+    left:-10px;
+    width: calc(100vw - 10px);
     background-color:#1C2026;
-    border:2px solid gray;
+    border-bottom:2px solid gray;
     border-top:none;
     padding:10px;
     z-index:5;

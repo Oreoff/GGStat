@@ -333,11 +333,15 @@ const selectedCountryLabel = React.useMemo(
       role="listbox"
       className='country-list'
     >
-      {matching.length === 0 && (
-        <li className='no-matches' role="option">
-          No matches
-        </li>
-      )}
+      <li className="country-item"
+      role="option"
+      onClick={() => {
+        handleCountryChange(null, null);
+        setInputValue('');
+        setShowSuggestions(false);
+        setIsAutoFilled(true);
+      }}
+      >Show all</li>
       {matching.map((c) => (
         <li
           key={c.code}
@@ -360,6 +364,7 @@ const selectedCountryLabel = React.useMemo(
           </span>
         </li>
       ))}
+      
     </ul>
   )}
   <svg width={20} height={20} className='country-play-svg'>

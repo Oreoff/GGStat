@@ -175,7 +175,7 @@ function ReplaceFlag(countryCode) {
                       <p className="player-race-text">{capitalize(match.player_race)} vs {capitalize(match.opponent_race)}</p>
                       </div>
                     </td>
-                    <td className="opponent-cell"><Link to={`/player-page/${encodeURIComponent(match.opponent.trim())}`} className="player-link">{match.opponent}</Link></td>
+                    <td className="opponent-cell"><Link to={`/player/${encodeURIComponent(match.opponent.trim())}`} className="player-link">{match.opponent}</Link></td>
                     <td className='actions-cell'>
                       <div className="action-buttons">
                         <button className="info-button" onClick={() => toggleChat(index)}>View chat</button>

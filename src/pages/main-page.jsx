@@ -176,6 +176,18 @@ const selectedCountryLabel = React.useMemo(
   React.useEffect(() => {
     loadPlayers();
   }, [country, race, league, page]);
+  React.useEffect(() => {
+  if (!country) {
+    setInputValue('');
+    return;
+  }
+  const found = countries.find(c => c.code === country);
+  if (found) {
+    setInputValue(found.label);
+    setIsAutoFilled(true);
+  }
+}, [country]);
+
   const paginatedPlayers = players;
 
   if (loading) return <div className="loader-container">

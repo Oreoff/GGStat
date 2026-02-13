@@ -1,4 +1,4 @@
-export default async function fetchPlayers({ country, race, league, page }) {
+export default async function fetchPlayers({ country, race, league, page, IsUnique}) {
   try {
     const params = new URLSearchParams();
     if (country) params.append('country_code', country);
@@ -6,7 +6,7 @@ export default async function fetchPlayers({ country, race, league, page }) {
     if (league && league.length > 0) {
       league.forEach(r => params.append('league', r));
     }
-
+   params.append('isUnique', IsUnique ? 'true' : 'false');
     const limit = 25;
     const offset = (page - 1) * limit;
 
@@ -14,7 +14,6 @@ export default async function fetchPlayers({ country, race, league, page }) {
     params.append('offset', offset);
 
     const url = `/api/players?${params.toString()}`;
-
     const getResponse = await fetch(url, {
       method: 'GET',
     });

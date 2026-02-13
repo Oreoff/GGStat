@@ -5,6 +5,7 @@ import PlayerPage from './pages/player-page.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import {useState, useEffect, useRef} from 'react';
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './App.css';
 import searchFetch from './pages/services/searchFetch.js';
 const App = () =>  {
@@ -14,7 +15,6 @@ const App = () =>  {
     const [menuOpen, setMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
      const [isFocused, setIsFocused] = useState(false);
-
     const inputRef = useRef(null);
     const handleSearchClick = () => {
       setSearchOpen((prev) => !prev);     
@@ -41,6 +41,11 @@ const App = () =>  {
   };
   loadPlayers();
 }, [query]);
+
+const handleLogoClick = () => {
+ navigate("/", { replace: true });
+ window.location.reload();
+};
   function ShowList()
   {
     const container = document.querySelector(".search-list");
@@ -61,7 +66,14 @@ const App = () =>  {
     <div>
       <Router>
     <header className="container header-container">
-              <Link to="/" className='logo-link'><h1 className="logo">GGStat</h1></Link>
+              <Link 
+  to="/" 
+  replace 
+  className='logo-link'
+  onClick={handleLogoClick}
+>
+  <h1 className="logo">GGStat</h1>
+</Link>
               <div className="burger-menu">
               <div className="burger-icon" onClick={() => setMenuOpen(!menuOpen)}>
   <div className={menuOpen ? "line open line-top" : "line line-top"}></div>
@@ -153,7 +165,7 @@ const App = () =>  {
   <footer className="footer">
     <div className="footer-container">
       <p className="copyright all-rights">Copyright © 2025 - All right reserved</p>
-      <p className="copyright">Made by Red.Streamline & Oreoff</p>
+      <p className="copyright">Made by 🇺🇦 Red.Streamline & 🇺🇦 Oreoff</p>
       <p className="copyright">This site is not affiliated with, endorsed, sponsored, or specifically approved by Blizzard Entertainment, Inc., and Blizzard Entertainment, Inc. is not responsible for it. Images from StarCraft are © Blizzard Entertainment, Inc. All rights reserved. StarCraft, Brood War and Blizzard Entertainment are trademarks or registered trademarks of Blizzard Entertainment, Inc. in the U.S. and/or other countries.</p>
     </div>
   </footer>

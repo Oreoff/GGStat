@@ -1,4 +1,8 @@
 @import url('https://fonts.cdnfonts.com/css/tt-firs-neue-trl');
+*, *::before,*::after{
+  padding:0px;
+  margin:0;
+}
  body
 {
 background-color:#1C2026;
@@ -11,6 +15,7 @@ button
 {
   display: none;
 }
+
 .loader-container {
   display: flex;
   justify-content: center;
@@ -101,9 +106,21 @@ p,td,th,span,button,div,h1,h2,h3,h4,h5,h6{
   font-size:14px;
   margin:10px 0px 10px 10px;
 }
-*, *::before,*::after{
-  padding:0px;
-  margin:0;
+.is-unique-selector
+{
+  margin: 0 0 20px 10px;
+  padding:5px 10px;
+  font-size: 16px;
+  border: 2px solid #00F89F;
+  background-color: #1C2026;
+  color: white;
+  border-radius: 5px;
+  transition:300ms linear;
+}
+.is-unique-selector:hover, .is-unique-selector:focus
+{
+  background-color:#00F89F;
+  color:black;
 }
 
 .header-container
@@ -851,6 +868,35 @@ max-width: 40px;
   gap: 10px;
   height:100%;
   padding-top:15px;
+}
+.alter-accounts-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top:20px;
+}
+.alter-accounts-title {
+  color: #00F89F;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.alter-account-link {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+}
+.alter-accounts-list
+{
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+}
+.alter-account-item
+{
+  list-style: none;
 }
 .name-container{
   display: flex;
@@ -1945,6 +1991,11 @@ color: white;
   .modal-country-selector
   {
     max-width: 100%;
+  }
+  .alter-accounts-list
+  {
+    flex-direction: column;
+    gap:10px;
   }
 } 
 

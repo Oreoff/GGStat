@@ -59,6 +59,7 @@ function capitalize(word) {
   if (!word) return '';
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
+const alters = Info ? Info.accounts.split('|').map(acc => acc.trim()) : [];
   const toggleChat = (index) => {
     setOpenChatIndex(prevIndex => (prevIndex === index ? null : index));
   };
@@ -120,8 +121,9 @@ function ReplaceFlag(countryCode) {
               <p className="loses"><span className='loses-span'>L</span>{setPlayer.loses}</p>
             </div>
                   </div>
-
+                  
                   </div>
+
                   <div className="refresh-container">
 <div className="country-container">
         <img src={ReplaceFlag(setPlayer.code)} alt="country-flag" className="country-flag player-page-flag"/>
@@ -141,7 +143,17 @@ function ReplaceFlag(countryCode) {
       </div>
           </div>
           
-      
+                        <div className="alter-accounts-container">
+        <h3 className="alter-accounts-title">Accounts</h3>
+        <ul className="alter-accounts-list">
+{alters.map((alter, index) => (
+          <li key={index} className="alter-account-item">
+            <Link to={`/player/${encodeURIComponent(alter)}`} className="alter-account-link">{alter}</Link>
+          </li>
+        ))}
+        </ul>
+        
+      </div>
       <div className="recent-matches-table-container">
         <h2 className="recent-matches-logo">Recent ranked matches</h2>
         <h2 className="recent-matches-logo">(not available yet)</h2>

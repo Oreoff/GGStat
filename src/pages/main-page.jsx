@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import countryFetch from './services/countryFetch.js'
 export default function MainPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-
+ const IsUnique = searchParams.get('isUnique') === 'true';
   const [players, setPlayers] = React.useState([]);
   const [totalCount, setTotalCount] = React.useState(0);
   const [isAutoFilled, setIsAutoFilled] = React.useState(false);
@@ -42,27 +42,27 @@ const [showSuggestions, setShowSuggestions] = React.useState(false);
     setCountry('');
     setRegion('');
     setPage(1);
-    updateQueryParams({ country: '', race: '', league: [], page: 1 });
+    updateQueryParams({ country: '', race: '', league: [], page: 1, isUnique: IsUnique });
   };
 
   const SetKoreans = () => {
     setCountry('KR');
     setRegion('Korea');
     setPage(1);
-    updateQueryParams({ country: 'KR', race, league, page: 1 });
+    updateQueryParams({ country: 'KR', race, league, page: 1, isUnique: IsUnique });
   };
 
   const setNonKoreans = () => {
     setCountry('!KR');
     setRegion('Non-Korea');
     setPage(1);
-    updateQueryParams({ country: '!KR', race, league, page: 1 });
+    updateQueryParams({ country: '!KR', race, league, page: 1, isUnique: IsUnique });
   };
 
   const clearleagues = () => {
     setleague([]);
     setPage(1);
-    updateQueryParams({ country, race, league: [], page: 1 });
+    updateQueryParams({ country, race, league: [], page: 1, isUnique: IsUnique });
   };
 
   const updateQueryParams = (newParams = {}) => {
@@ -72,12 +72,14 @@ const [showSuggestions, setShowSuggestions] = React.useState(false);
     const newCountry = newParams.country ?? country;
     const newRace = newParams.race ?? race;
     const newLeague = newParams.league ?? league;
-
+    const newIsUnique = newParams.isUnique ?? IsUnique;
+    
+    
     if (newPage > 1) params.set('page', newPage.toString());
     if (newCountry) params.set('country', newCountry);
     if (newRace) params.set('race', newRace);
     if (newLeague.length > 0) newLeague.forEach((r) => params.append('league', r));
-
+    if (newIsUnique) params.set('isUnique', 'true');
     setSearchParams(params);
   };
 
@@ -103,7 +105,17 @@ const [showSuggestions, setShowSuggestions] = React.useState(false);
     setPage(1);
     updateQueryParams({ country, race, league: updated, page: 1 });
   };
-
+ const HandleIsUniqueChange = () => {
+  const newValue = !IsUnique;
+  setPage(1);
+  updateQueryParams({
+    country,
+    race,
+    league,
+    page: 1,
+    isUnique: newValue
+  });
+};
   const clearAll = () => {
     setCountry('');
     setRace('');
@@ -154,7 +166,7 @@ const selectedCountryLabel = React.useMemo(
    const loadPlayers = async () => {
     setLoading(true);
     try {
-      const data = await fetchPlayers({ country, race, league, page });
+      const data = await fetchPlayers({ country, race, league, page, IsUnique});
       const fetchedAvailableCountries = await countryFetch();
       setAvailableCountries(fetchedAvailableCountries);
       console.log("Fetched data:", data);
@@ -175,7 +187,7 @@ const selectedCountryLabel = React.useMemo(
 
   React.useEffect(() => {
     loadPlayers();
-  }, [country, race, league, page]);
+  }, [country, race, league, page, IsUnique]);
   React.useEffect(() => {
   if (!country) {
     setInputValue('');
@@ -255,7 +267,9 @@ const selectedCountryLabel = React.useMemo(
                             Non-Korea</button>
             </div>
           </div>
-<p className="section-updated">Last updated: 30-01-2026</p>
+<p className="section-updated">Last updated: 13-02-2026</p>
+<p className="section-updated">Total players: {totalCount}</p>
+<button className='is-unique-selector' onClick={() => HandleIsUniqueChange(!IsUnique)}>{IsUnique ? 'Show All Players' : 'Show Unique Players'}</button>
             <div className="table-container">
             <div className="table-wrapper" >
       <table 
@@ -269,7 +283,9 @@ const selectedCountryLabel = React.useMemo(
             ><p className="table-text table-title">Place</p></th>
             <th 
               className="table-cell table-cell-player"
-            ><p className="table-text table-title">Player</p></th>
+            ><p className="table-text table-title">Player
+            </p>
+             </th>
             <th 
               className="table-cell table-cell-country"
             > <div
@@ -402,7 +418,7 @@ const selectedCountryLabel = React.useMemo(
             <tr key={index} className="table-row">
               <td 
                 className="table-cell table-cell-standing"
-              ><div className="standing-container"><p className="table-text table-standing">{row.standing}</p></div></td>
+              ><div className="standing-container"><p className="table-text table-standing">{(page - 1) * 25 + index + 1}</p></div></td>
               <td className="table-cell" >
               <Link to={`/player/${encodeURIComponent(row.name)}`} className="player-link">
                 <div className="player-container-flex">     
@@ -569,11 +585,15 @@ const selectedCountryLabel = React.useMemo(
       role="listbox"
       className='country-list'
     >
-      {matching.length === 0 && (
-        <li className='no-matches' role="option">
-          No matches
-        </li>
-      )}
+    <li className="country-item"
+      role="option"
+      onClick={() => {
+        handleCountryChange(null, null);
+        setInputValue('');
+        setShowSuggestions(false);
+        setIsAutoFilled(true);
+      }}
+      >Show all</li>
       {matching.map((c) => (
         <li
           key={c.code}

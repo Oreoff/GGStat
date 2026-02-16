@@ -59,6 +59,7 @@ function ReplaceFlag(countryCode) {
                 <th className="table-cell country-top-cell header-cell"><h3 className='table-title'>
                 Country
       </h3></th>
+      <th className="table-cell country-top-cell header-cell count-cell"><h3 className='table-title'>Count of players</h3></th>
                 <th className="table-cell country-top-cell header-cell"><h3 className='table-title'>Player</h3></th>
                 <th className="table-cell country-top-cell header-cell"><h3 className='table-title'>MMR</h3></th>
               </tr>
@@ -88,6 +89,7 @@ Rating
                   </div>      
                 </div>
                   </td>
+                  <td className="table-cell country-top-cell count-cell count-cell"><p className="table-text">{row.playersCount}</p></td>
                   <td className="table-cell country-top-cell player-cell">
                     <Link to={`/player/${encodeURIComponent(row.name)}`} className="player-link">
                      <div className="player-container-flex">

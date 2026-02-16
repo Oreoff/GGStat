@@ -59,7 +59,6 @@ function capitalize(word) {
   if (!word) return '';
   return word.charAt(0).toUpperCase() + word.slice(1);
 }
-const alters = Info ? Info.accounts.split('|').map(acc => acc.trim()) : [];
   const toggleChat = (index) => {
     setOpenChatIndex(prevIndex => (prevIndex === index ? null : index));
   };
@@ -87,7 +86,7 @@ function ReplaceFlag(countryCode) {
     }
     else return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
 }
-  const paginatedMatches = matches.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  const paginatedMatches = setPlayer.player.matches.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   return (
     <div className="container">
@@ -97,7 +96,7 @@ function ReplaceFlag(countryCode) {
         
           <div className="player-data">
           <img
-                    src={setPlayer.avatar}
+                    src={setPlayer.player.avatar}
                     alt="Avatar"
                     onError={(e) => {
                       e.target.onerror = null; 
@@ -109,16 +108,16 @@ function ReplaceFlag(countryCode) {
                   />
                   <div className="player-stats-container">
             <div className="name-container">
-              <p className="name">{setPlayer.name}</p>
-              <p className="tag">/{setPlayer.alias}/</p>
+              <p className="name">{setPlayer.player.name}</p>
+              <p className="tag">/{setPlayer.player.alias}/</p>
             </div>
             <div className="info-container">
-              <p className="standing">#{setPlayer.standing}</p>
-              <Race text={setPlayer.race} ClassName="player-page-race"/>
-              <League text={setPlayer.league} MMR={setPlayer.points} className="player-page-league"/>
+              <p className="standing">#{setPlayer.player.standing}</p>
+              <Race text={setPlayer.player.race} ClassName="player-page-race"/>
+              <League text={setPlayer.player.league} MMR={setPlayer.player.points} className="player-page-league"/>
               
-              <p className="wins"><span className='wins-span'>W</span>{setPlayer.wins}</p>
-              <p className="loses"><span className='loses-span'>L</span>{setPlayer.loses}</p>
+              <p className="wins"><span className='wins-span'>W</span>{setPlayer.player.wins}</p>
+              <p className="loses"><span className='loses-span'>L</span>{setPlayer.player.loses}</p>
             </div>
                   </div>
                   
@@ -126,8 +125,8 @@ function ReplaceFlag(countryCode) {
 
                   <div className="refresh-container">
 <div className="country-container">
-        <img src={ReplaceFlag(setPlayer.code)} alt="country-flag" className="country-flag player-page-flag"/>
-        <p className="country-description">{setPlayer.code}</p>
+        <img src={ReplaceFlag(setPlayer.player.code)} alt="country-flag" className="country-flag player-page-flag"/>
+        <p className="country-description">{setPlayer.player.code}</p>
       </div>
           <div className="update-stats-container">
             <svg width={15} height={15} className="clock-svg">
@@ -146,12 +145,26 @@ function ReplaceFlag(countryCode) {
                         <div className="alter-accounts-container">
         <h3 className="alter-accounts-title">Accounts</h3>
         <ul className="alter-accounts-list">
-{alters.map((alter, index) => (
-          <li key={index} className="alter-account-item">
-            <Link to={`/player/${encodeURIComponent(alter)}`} className="alter-account-link">{alter}</Link>
-          </li>
-        ))}
-        </ul>
+  {setPlayer.alterAccounts.map((alter, index) => (
+    <li key={index} className="alter-account-item">
+      {alter.isQualified ? (
+        <Link
+          to={`/player/${encodeURIComponent(alter.name)}`}
+          className="alter-account-link"
+        >
+          <p className="alter-account-name">{alter.name}</p>
+          <League
+            text={alter.league}
+            MMR={alter.mmr}
+            className="alter-account-league"
+          />
+        </Link>
+      ) : (
+        <p className="alter-account-name">{alter.name}</p>
+      )}
+    </li>
+  ))}
+</ul>
         
       </div>
       <div className="recent-matches-table-container">
@@ -253,7 +266,7 @@ function ReplaceFlag(countryCode) {
         </div>
         <div className="pagination-container">
           <Pagination
-            count={Math.ceil(matches.length / rowsPerPage)}
+            count={Math.ceil(setPlayer.player.matches.length / rowsPerPage)}
             page={page}
             onChange={handlePageChange}
             shape="rounded"

@@ -145,25 +145,33 @@ function ReplaceFlag(countryCode) {
                         <div className="alter-accounts-container">
         <h3 className="alter-accounts-title">Accounts</h3>
         <ul className="alter-accounts-list">
-  {setPlayer.alterAccounts.map((alter, index) => (
-    <li key={index} className="alter-account-item">
-      {alter.isQualified ? (
+ {setPlayer.alterAccounts.map((alter, index) => (
+  <li key={index} className="alter-account-item">
+    {alter.isQualified ? (
+      <>
         <Link
           to={`/player/${encodeURIComponent(alter.name)}`}
-          className="alter-account-link"
+          className="alter-account-left"
         >
-          <p className="alter-account-name">{alter.name}</p>
           <League
             text={alter.league}
             MMR={alter.mmr}
             className="alter-account-league"
           />
         </Link>
-      ) : (
-        <p className="alter-account-name">{alter.name}</p>
-      )}
-    </li>
-  ))}
+
+        <Link
+          to={`/player/${encodeURIComponent(alter.name)}`}
+          className="alter-account-right"
+        >
+          <p className="alter-account-name">{alter.name}</p>
+        </Link>
+      </>
+    ) : (
+      <p className="alter-account-name">{alter.name}</p>
+    )}
+  </li>
+))}
 </ul>
         
       </div>

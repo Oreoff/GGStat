@@ -881,15 +881,7 @@ max-width: 40px;
   font-size: 16px;
   margin-bottom: 10px;
 }
-.alter-account-link {
-  border-radius: 6px;
-  text-decoration: none;
-  display:flex; 
-  flex-direction: row-reverse;
-  align-items: center;
-  border:1px solid gray;
-  justify-content: space-between;
-}
+
 .alter-account-name {
   color: gray;
   
@@ -906,9 +898,21 @@ max-width: 40px;
   justify-content: center;
   gap:20px;
 }
-.alter-account-item
-{
-  list-style: none;
+.alter-account-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px;
+
+  border:1px solid #232B35;
+}
+
+.alter-account-left,
+.alter-account-right {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
 }
 .name-container{
   display: flex;

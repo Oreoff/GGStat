@@ -882,16 +882,20 @@ max-width: 40px;
   margin-bottom: 10px;
 }
 .alter-account-link {
-  padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: 6px;
   text-decoration: none;
   display:flex; 
-  flex-direction: column;
+  flex-direction: row-reverse;
   align-items: center;
+  border:1px solid gray;
 }
 .alter-account-name {
-  color: white;
+  color: gray;
+  
+  padding:3px 5px;
   font-size: 14px;
+  text-align: center;
+  text-wrap: nowrap;
 }
 
 .alter-accounts-list
@@ -1557,19 +1561,23 @@ color:gray;
   background-color:#232B35;
   border-radius:8px;
   color:black;
+  padding:0px;
 }
 .alter-account-league>.rating
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
   background-color:#1C2026;
   border-radius:5px;
+  border-radius:5px 0px 0px 5px;
   padding:3px 5px;
+  font-size:14px;
 }
 .alter-account-league>.mmr
 {
   font-family: 'TT Firs Neue Trl', sans-serif;
+  font-size:14px;
   
-border-radius:5px;
+border-radius:0px 5px 5px 0px;
   padding:3px 5px;
 
 }

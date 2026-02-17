@@ -888,6 +888,7 @@ max-width: 40px;
   flex-direction: row-reverse;
   align-items: center;
   border:1px solid gray;
+  justify-content: space-between;
 }
 .alter-account-name {
   color: gray;
